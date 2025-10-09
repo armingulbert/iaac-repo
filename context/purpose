@@ -1,1 +1,11 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Purpose of the Site</title>
+</head>
+<body>
+  <h1>Purpose of the Site</h1>
+  <p>Explain why you built this portfolio and what it aims to show.</p>
+</body>
+</html>
