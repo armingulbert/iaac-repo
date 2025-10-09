@@ -1,10 +1,18 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Welcome to My Site</title>
-  </head>
-  <body>
-    <h1>Hello from Armin!</h1>
-    <p>This is my first GitHub Page.</p>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>IAAC Portfolio Home</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <h1>Welcome to My IAAC Portfolio</h1>
+  <nav>
+    <a href="context/index.html">Context</a> |
+    <a href="project/index.html">Project</a> |
+    <a href="coursework/index.html">Coursework</a> |
+    <a href="under-the-hood/index.html">Under-the-hood</a>
+  </nav>
+  <p>This site captures my key artifacts and deliverables from IAAC studies.</p>
+</body>
 </html>
