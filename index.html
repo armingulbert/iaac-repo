@@ -4,15 +4,89 @@
   <meta charset="UTF-8">
   <title>IAAC Portfolio Home</title>
   <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      font-family: 'Courier New', Courier, monospace;
+      color: #bbd3f7;
+      background: url('assets/images/cyberpunk-city.jpg') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+    }
+    .overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(10,30,60,0.7);
+      z-index: 1;
+    }
+    .content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      text-align: center;
+      width: 90%;
+    }
+    h1 {
+      font-size: 2.25rem;
+      margin-bottom: 0.5em;
+      font-family: inherit;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    h2 {
+      font-size: 1.25rem;
+      font-weight: normal;
+      margin-bottom: 1em;
+    }
+    nav {
+      margin-top: 2em;
+      margin-bottom: 2em;
+    }
+    nav a {
+      color: #bbd3f7;
+      text-decoration: none;
+      background: rgba(30, 60, 100, 0.3);
+      padding: 0.5em 1.2em;
+      margin: 0 0.5em;
+      border-radius: 3px;
+      font-size: 1.1em;
+      transition: background 0.2s;
+      display: inline-block;
+    }
+    nav a:hover {
+      background: rgba(80,120,200,0.5);
+      color: #fff;
+    }
+    p {
+      margin-top: 1em;
+      font-size: 1rem;
+    }
+  </style>
 </head>
 <body>
-  <h1>Welcome to My IAAC Portfolio</h1>
-  <nav>
-    <a href="context/index.html">Context</a> |
-    <a href="the-project/index.html">The project</a> |
-    <a href="repository/index.html">Repository</a> |
-    <a href="under-the-hood/index.html">Under-the-hood</a>
-  </nav>
-  <p>This site captures my key artifacts and deliverables from IAAC studies.</p>
+  <div class="overlay"></div>
+  <div class="content">
+    <h1>IAAC Portfolio</h1>
+    <h2>Key Artifacts & Deliverables</h2>
+    <nav>
+      <a href="context/index.html">Context</a>
+      <a href="the project/index.html">Project</a>
+      <a href="repository/index.html">Coursework</a>
+      <a href="under-the-hood/index.html">Under-the-hood</a>
+    </nav>
+    <p>
+      Welcome to my IAAC studies portfolio.<br>
+      Explore context, project milestones, coursework, and documentation.<br>
+      <br>
+      <span style="font-size:0.95em;opacity:0.85;">
+        Cyberpunk experience inspired by Esper Machine.<br>
+        Click a section to begin.
+      </span>
+    </p>
+  </div>
 </body>
 </html>
