@@ -153,6 +153,61 @@
   /* shift left by the side gutter = (viewport - content width)/2 */
   margin-left: calc((min(1200px, 100vw) - 100vw) / 2);
 }
+/* Make the rail as tall as the text column and push the image to the bottom */
+.left-rail { align-items: stretch; }
+.left-rail .rail {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;   /* <- bottom align */
+  height: 100%;
+}
+.left-rail .rail img {
+  width: 190px;
+  height: 530px;
+  object-fit: cover;
+  border-radius: 0 0 var(--radius-card) var(--radius-card);
+  transform: scaleX(-1);
+  box-shadow: 0 2px 12px var(--color-shadow);
+  margin: 0;                   /* override DS auto-centering */
+}
+/* --- Stylized Next Steps List --- */
+.next-steps-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: step-counter;
+}
+
+.next-steps-list li {
+  counter-increment: step-counter;
+  display: flex;
+  align-items: flex-start;
+  gap: 1em;
+  padding: 1em 0;
+  border-bottom: 1px dotted var(--color-border);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.next-steps-list li::before {
+  content: counter(step-counter);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #E24E36;           /* your orange accent */
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-top: 0.2em;
+}
+
+.next-steps-list li:last-child {
+  border-bottom: none;
+}
 
     
 </style>
