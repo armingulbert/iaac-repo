@@ -1,4 +1,7 @@
-/* ========== DESIGN SYSTEM: IAAC PORTFOLIO  ========== */
+/* ========== DESIGN SYSTEM: IAAC PORTFOLIO) ========== */
+
+/* -------- GOOGLE FONTS -------- */
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lato:wght@400;700;900&display=swap');
 
 /* -------- VARIABLES -------- */
 :root {
@@ -10,7 +13,8 @@
   --color-border: #e5e7eb;
   --color-shadow: rgba(0,0,0,0.10);
 
-  --font-main: 'Lato', 'Oswald', Arial, Helvetica, sans-serif;
+  --font-main: 'Lato', Arial, Helvetica, sans-serif;
+  --font-display: 'Abril Fatface', serif;
   --font-size-base: 1rem;
   --font-size-h1: 2.1rem;
   --font-size-h2: 1.3rem;
@@ -38,16 +42,32 @@ body {
   padding: var(--space-lg) var(--space-md);
 }
 
-h1, h2, h3 {
-  font-family: var(--font-main);
-  color: var(--color-primary);
+h1 {
+  font-family: var(--font-display);
+  font-size: var(--font-size-h1);
+  font-weight: 400;
   margin-top: 0;
   margin-bottom: var(--space-sm);
+  color: var(--color-primary);
 }
 
-h1 { font-size: var(--font-size-h1); font-weight: 800; }
-h2 { font-size: var(--font-size-h2); font-weight: 700; }
-h3 { font-size: 1.08rem; font-weight: 600; }
+h2 {
+  font-family: var(--font-main);
+  font-size: var(--font-size-h2);
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: var(--space-sm);
+  color: var(--color-primary);
+}
+
+h3 {
+  font-family: var(--font-main);
+  font-size: 1.08rem;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: var(--space-sm);
+  color: var(--color-primary);
+}
 
 a {
   color: var(--color-link);
