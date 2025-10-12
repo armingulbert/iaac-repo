@@ -103,6 +103,48 @@
       font-size: 1.1rem;
       margin-top: var(--space-md);
     }
+
+    <style>
+  /* your existing page styles ... */
+
+
+  /* --- LAYOUT FIX FOR IMAGE ALIGNMENT --- */
+  .left-rail {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: var(--space-lg);
+    align-items: start;
+    margin-bottom: var(--space-lg);
+  }
+  .left-rail .rail img {
+    width: 190px;
+    height: 530px;
+    object-fit: cover;
+    border-radius: 0 0 var(--radius-card) var(--radius-card);
+    transform: scaleX(-1);
+    box-shadow: 0 2px 12px var(--color-shadow);
+  }
+
+  .aside-block {
+    display: grid;
+    grid-template-columns: 1fr 160px;
+    gap: var(--space-md);
+    align-items: start;
+  }
+  .aside-block .thumb {
+    width: 135px;
+    height: 240px;
+    object-fit: cover;
+    border-radius: 24px;
+    justify-self: end;
+    box-shadow: 0 2px 12px var(--color-shadow);
+  }
+  .page-number {
+    text-align: right;
+    margin-top: var(--space-md);
+  }
+</style>
+
   </style>
 </head>
 <body>
@@ -122,52 +164,37 @@
     </div>
   </header>
 
+  
+
   <!-- PAGE BODY -->
   <main class="page">
     <div class="content">
       <div class="layout">
         <!-- LEFT COLUMN -->
-        <section>
-          <figure class="left-figure">
-            <img class="mirror"
-                 src="/iaac-repo/assets/media/Firefly_teacher struggling with teaching students 326508.jpg"
-                 alt="Teacher struggling with teaching students" />
-          </figure>
+        <section class="left-rail">
+  <div class="rail">
+    <img class="mirror"
+         src="../../../assets/media/firefly-teacher-struggling-326508.jpg"
+         alt="Teacher struggling with teaching students" />
+  </div>
 
-          <h2>The Brief &amp; Context</h2>
-          <p>
-            At the first session of Studio 1 our group received an assignment to define a topics that we individually research
-            to have better understanding how different factors can impact humans and other species’ life.
-            As I was raised by a teacher mother I was always surrounded by teaching and the difficulties of it. As an adult,
-            I started to have more discussions with her on the rising difficulites of the profession of hers and others
-            (ie. friends of her, teachers in my network...etc.)
-          </p>
+  <div>
+    <h2>The Brief &amp; Context</h2>
+    <p>At the first session of Studio 1 our group received an assignment to define a topics that we individually research to have better understanding how different factors can impact humans and other species’ life. As I was raised by a teacher mother I was always surrounded by teaching and the difficulties of it. As an adult, I started to have more discussions with her on the rising difficulites of the profession of hers and others (ie. friends of her, teachers in my network...etc.)</p>
 
-          <h2>Fact / Validity Check</h2>
-          <p>
-            The National Education Association ran a research in 2024, discovering the well-being / difficulties teachers face daily.
-            The survey concluded that stress and burnout is the top consering factor, and it is heavily impacted by student/discipline.
-            In 2025, the University of Missouri surveyed teachers if they plan to leave their current job. The research showed due to lack of
-            support, workload and challenging students make them leave their profession. The Education Week magazine introduced the
-            Teacher-Morale-Index to see the state of teaching in the US. Their latest index concluded that on a −100 to +100 scale the current
-            TMI is at −13. The OECD has framework for well-being of teachers.
-          </p>
-          <p>
-            <strong>Sources:</strong><br />
-            1. CEA, 2024:
-            <a href="https://cea.org/wp-content/uploads/2024/11/2024-CEA-member-survey-results.pdf">2024 CEA member survey results (PDF)</a><br />
-            2. EdWeek 2024:
-            <a href="https://www.edweek.org/teaching-learning/introducing-the-teacher-morale-index/2024/03">Introducing the Teacher Morale Index</a><br />
-            3. OECD 2020:
-            <a href="https://www.oecd.org/content/dam/oecd/en/publications/reports/2020/01/teachers-well-being_bdafdeaf/c36fc9d3-en.pdf">Teachers’ well-being (PDF)</a>
-          </p>
+    <h2>Fact / Validity Check</h2>
+    <p>The National Education Association ran a research in 2024, discovering the well-being / difficulties teachers face daily. The survey concluded that stress and burnout is the top consering factor, and it is heavily impacted by student/discipline. In 2025, the University of Missouri surveyed teachers if they plan to leave their current job. The research showed due to lack of support, workload and challenging students make them leave their profession. The Education Week magazine introduced the Teacher-Morale-Index to see the state of teaching in the US. Their latest index concluded that on a −100 to +100 scale the current TMI is at −13. The OECD has framework for well-being of teachers.</p>
+    <p><strong>Sources:</strong><br>
+      1. <a href="https://cea.org/wp-content/uploads/2024/11/2024-CEA-member-survey-results.pdf">CEA 2024 (PDF)</a><br>
+      2. <a href="https://www.edweek.org/teaching-learning/introducing-the-teacher-morale-index/2024/03">EdWeek 2024</a><br>
+      3. <a href="https://www.oecd.org/content/dam/oecd/en/publications/reports/2020/01/teachers-well-being_bdafdeaf/c36fc9d3-en.pdf">OECD 2020 (PDF)</a>
+    </p>
 
-          <h2>Formulated Statement</h2>
-          <p>Based on the desk research, discussions with teachers the following statement gives the scope of my work:</p>
-          <div class="statement">
-            The future will require<br />a new prototype of teachers
-          </div>
-        </section>
+    <h2>Formulated Statement</h2>
+    <p>Based on the desk research, discussions with teachers the following statement gives the scope of my work:</p>
+    <div class="statement">The future will require<br>a new prototype of teachers</div>
+  </div>
+</section>
 
         <!-- RIGHT COLUMN -->
         <aside>
@@ -218,25 +245,28 @@
             </table>
           </div>
 
-          <h2 class="mt-lg">Next steps</h2>
-          <ol>
-            <li>Validate the problem statement and research method</li>
-            <li>Adjust statement and / or research method (optional step)</li>
-            <li>Organize 1st round interviews and school visits</li>
-            <li>Run deeper desk research on problem statement</li>
-            <li>Compile interview guide</li>
-            <li>Input gathering: Interviews and focus group; School visits</li>
-            <li>Compile, share and assess survey</li>
-            <li>Synthesizing results</li>
-            <li>Formulate research summary report</li>
-          </ol>
+         <section class="aside-block">
+  <div>
+    <h2>Next steps</h2>
+    <ol>
+      <li>Validate the problem statement and research method</li>
+      <li>Adjust statement and / or research method (optional step)</li>
+      <li>Organize 1st round interviews and school visits</li>
+      <li>Run deeper desk research on problem statement</li>
+      <li>Compile interview guide</li>
+      <li>Input gathering: Interviews and focus group; School visits</li>
+      <li>Compile, share and assess survey</li>
+      <li>Synthesizing results</li>
+      <li>Formulate research summary report</li>
+    </ol>
+    <div class="page-number">2</div>
+  </div>
 
-          <img
-            src="/iaac-repo/assets/media/Firefly_teacher struggling with teaching students 195437.jpg"
-            alt="Teacher illustration" style="max-width: 240px;" />
-          <div class="page-number">2</div>
-        </aside>
-      </div>
+  <img class="thumb"
+       src="../../../assets/media/firefly-teacher-struggling-195437.jpg"
+       alt="Teacher illustration">
+</section>
+
     </div>
   </main>
 
