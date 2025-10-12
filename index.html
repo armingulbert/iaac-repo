@@ -5,92 +5,125 @@
   <title>The Log – IAAC Portfolio</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="design-system/design-system.css">
-  <!-- Abril Fatface and Lato fonts are imported in design-system.css -->
   <style>
-    body {
-      background: #1c1c1c;
-      min-height: 100vh;
+    :root {
+      --hero-bg: #222;
+      --card-bg: #e24e36;
+      --footer-bg: #fff;
+      --footer-color: #222;
+    }
+    html, body {
+      height: 100%;
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      min-height: 100vh;
+      width: 100vw;
+      background: var(--hero-bg);
+      display: flex;
+      flex-direction: column;
+      font-family: var(--font-main);
+    }
+    .main-grid {
+      flex: 1 1 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr;
+      height: calc(100vh - 80px);
+      min-height: 520px;
+    }
+    .hero-panel {
+      background: var(--hero-bg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      padding-left: 8vw;
+      padding-right: 4vw;
     }
     .hero-title {
       font-family: var(--font-display);
-      font-size: 5rem;
+      font-size: 5vw;
       color: #fff;
       margin: 0;
       letter-spacing: -2px;
-      text-align: center;
-      margin-top: 2.5em;
+      line-height: 1;
+      text-align: left;
     }
-    .hero-subtitle {
+    .hero-desc {
       font-family: var(--font-main);
-      font-size: 2rem;
-      color: #e24e36;
+      font-size: 1.5vw;
+      color: var(--card-bg);
       font-weight: 700;
-      text-align: center;
-      margin-bottom: 2.5em;
-      margin-top: 0.5em;
+      margin-top: 1.2vw;
+      margin-bottom: 0;
+      text-align: left;
+      max-width: 30vw;
     }
-    .cards-row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 3em;
-      margin-bottom: 4em;
+    .card-panel {
+      background: var(--card-bg);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 0;
+      padding: 5vw 3vw 1vw 3vw;
+      align-items: stretch;
+      justify-items: start;
+      height: 100%;
     }
-    .card-home {
-      background: #e24e36;
-      border-radius: var(--radius-card);
-      box-shadow: 0 2px 16px var(--color-shadow);
-      width: 320px;
-      height: 340px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: flex-end;
-      position: relative;
-      padding: 2.5em 2em 2em 2em;
-      margin-top: 2em;
-      margin-bottom: 2em;
-      color: #fff;
-      overflow: hidden;
+    .card-menu {
+      align-self: start;
+      justify-self: start;
+      margin-top: 0;
+      margin-bottom: 0;
+      padding: 0;
     }
-    .card-home h2 {
+    .card-menu-bottom {
+      align-self: end;
+      justify-self: start;
+      margin-bottom: 2vw;
+    }
+    .menu-title {
       font-family: var(--font-display);
-      font-size: 2.2rem;
+      font-size: 2.3vw;
+      font-weight: 700;
       color: #fff;
-      margin: 0 0 0.4em 0;
-      font-weight: 400;
-      letter-spacing: -1px;
+      margin-bottom: 0.3vw;
+      margin-top: 0;
+      line-height: 1;
     }
-    .card-home .card-subtitle {
+    .menu-subtitle {
       font-family: var(--font-main);
       font-style: italic;
-      font-size: 1.25rem;
       color: #fff;
-      margin-bottom: 1.6em;
+      font-size: 1.3vw;
+      margin-bottom: 1vw;
       margin-top: 0;
     }
-    .card-home .card-btn {
+    .menu-link {
       font-family: var(--font-main);
       font-weight: 700;
-      text-transform: uppercase;
-      font-size: 1.1rem;
+      font-size: 1vw;
       color: #fff;
+      text-decoration: underline;
       background: none;
       border: none;
-      text-decoration: underline;
       cursor: pointer;
-      padding: 0.5em 1.2em;
-      margin-left: -0.5em;
+      padding: 0;
+      margin-top: 0.2vw;
       margin-bottom: 0;
+      display: inline-block;
       transition: color 0.2s;
     }
-    .card-home .card-btn:hover {
-      color: #2699fb;
+    .menu-link:hover {
+      color: #fffbe6;
+      text-decoration: underline;
     }
     .footer {
-      background: #fff;
-      color: #1c1c1c;
+      background: var(--footer-bg);
+      color: var(--footer-color);
       height: 80px;
       width: 100vw;
       display: flex;
@@ -99,63 +132,85 @@
       font-family: var(--font-main);
       font-style: italic;
       font-size: 1.1rem;
-      position: fixed;
+      position: relative;
       bottom: 0;
       left: 0;
       z-index: 10;
       box-shadow: 0 -2px 16px var(--color-shadow);
     }
-    @media (max-width:900px){
-      .cards-row{
-        flex-direction:column;
-        align-items:center;
+    @media (max-width: 900px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        height: auto;
       }
-      .card-home{
-        width:90vw;
-        min-width:220px;
+      .hero-panel {
+        align-items: center;
+        padding: 5vw 2vw 2vw 2vw;
       }
-      .hero-title{font-size:3rem;}
-      .hero-subtitle{font-size:1.15rem;}
+      .hero-title {font-size: 3rem;}
+      .hero-desc {font-size: 1.1rem;}
+      .card-panel {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        padding: 5vw 2vw 2vw 2vw;
+      }
+      .menu-title {font-size: 1.5rem;}
+      .menu-subtitle {font-size: 1.1rem;}
+      .menu-link {font-size: 1rem;}
     }
-    @media (max-width:500px){
-      .footer{padding-left:1em;}
+    @media (max-width: 600px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        height: auto;
+      }
+      .hero-panel, .card-panel {
+        padding: 2em 1em 1em 1em;
+      }
+      .card-panel {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(4, 1fr);
+      }
+      .menu-title {font-size: 1.2rem;}
+      .menu-subtitle {font-size: 1rem;}
+      .menu-link {font-size: 0.95rem;}
+      .footer {padding-left: 1em;}
     }
   </style>
 </head>
 <body>
-  <main>
-    <h1 class="hero-title">The Log</h1>
-    <div class="hero-subtitle">
-      A Journal and Portfolio Site<br>
-      capturing my studies at IAAC
-    </div>
-    <div class="cards-row">
-      <!-- Card 1 -->
-      <div class="card-home">
-        <h2>Context</h2>
-        <div class="card-subtitle">Subheader</div>
-        <a href="context/index.html" class="card-btn">UNDERSTAND</a>
+  <div class="main-grid">
+    <section class="hero-panel">
+      <h1 class="hero-title">The Log</h1>
+      <div class="hero-desc">
+        A Journal and Portfolio Site<br>
+        capturing my studies at IAAC
       </div>
-      <!-- Card 2 -->
-      <div class="card-home">
-        <h2>My Project</h2>
-        <div class="card-subtitle">Subheader</div>
-        <a href="the-project/index.html" class="card-btn">DISCOVER</a>
+    </section>
+    <section class="card-panel">
+      <div class="card-menu">
+        <div class="menu-title">Context</div>
+        <div class="menu-subtitle">Subheader</div>
+        <a href="context/index.html" class="menu-link">UNDERSTAND</a>
       </div>
-      <!-- Card 3 -->
-      <div class="card-home">
-        <h2>Repository</h2>
-        <div class="card-subtitle">Subheader</div>
-        <a href="repository/index.html" class="card-btn">FIND DOCS</a>
+      <div class="card-menu">
+        <div class="menu-title">My Project</div>
+        <div class="menu-subtitle">Subheader</div>
+        <a href="the-project/index.html" class="menu-link">DISCOVER</a>
       </div>
-      <!-- Card 4 -->
-      <div class="card-home">
-        <h2>Glossary</h2>
-        <div class="card-subtitle">Subheader</div>
-        <a href="under-the-hood/index.html" class="card-btn">LEARN MORE</a>
+      <div class="card-menu card-menu-bottom">
+        <div class="menu-title">Repository</div>
+        <div class="menu-subtitle">Subheader</div>
+        <a href="coursework/index.html" class="menu-link">FIND DOCS</a>
       </div>
-    </div>
-  </main>
+      <div class="card-menu card-menu-bottom">
+        <div class="menu-title">Glossary</div>
+        <div class="menu-subtitle">Subheader</div>
+        <a href="under-the-hood/index.html" class="menu-link">LEARN MORE</a>
+      </div>
+    </section>
+  </div>
   <footer class="footer">
     Smallprint
   </footer>
