@@ -5,190 +5,240 @@
   <title>Challenge Statement – Studio 1</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <link rel="stylesheet" href="design-system/design-system.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet" />
+  <!-- IAAC Design System -->
+  <link rel="stylesheet" href="/iaac-repo/design-system/design-system.css" />
 
   <style>
-    :root { --base-w: 1440; --base-h: 1024; }
+    /* ---------- Page-specific (minimal) ---------- */
 
-    html, body {
-      margin: 0; padding: 0; background:#fff; color:#000;
-      font-family:"Lato", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      font-weight:400; line-height:1.4;
-      overflow-x:hidden; /* no side scrollbars on ultra-wide */
+    /* Full-width hero using DS colors & spacing */
+    .hero {
+      background: #E24E36; /* project accent for this page */
+      color: #fff;
+      padding: var(--space-lg) var(--space-md) calc(var(--space-lg) * 1.2);
+    }
+    .hero .content { max-width: 1200px; } /* a bit wider than default */
+
+    .badge {
+      display: inline-block;
+      background: #fff;
+      color: #000;
+      border-radius: 999px;
+      padding: 0.4em 0.9em;
+      font-weight: 700;
+      font-size: .9rem;
+      margin-bottom: var(--space-sm);
+    }
+    .hero h1 {
+      color: #fff;
+      font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+      margin-bottom: .2em;
+    }
+    .hero p { color: #fff; max-width: 60ch; }
+
+    /* Main layout */
+    .page {
+      background: #fff;
+      box-shadow: 0 2px 12px var(--color-shadow);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-card);
+      margin-top: calc(var(--space-lg) * -1.2);  /* lift into hero */
+      margin-bottom: var(--space-lg);
+    }
+    .page .content { max-width: 1200px; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: var(--space-lg);
+    }
+    @media (max-width: 980px){
+      .layout { grid-template-columns: 1fr; }
     }
 
-    /* Full-width scaling canvas */
-    .stage{
-      --target-w: 100vw;                 /* <<< full width */
-      --scale: calc(var(--target-w)/var(--base-w));
-      width: var(--target-w);
-      height: calc(1px*var(--base-h)*var(--scale));
-      margin: 0 auto; position: relative; background:#fff;
+    /* Left rail image */
+    .left-figure img { border-radius: 0 0 var(--radius-card) var(--radius-card); }
+    .mirror { transform: scaleX(-1); }
+
+    /* Statement highlight */
+    .statement {
+      background: #E24E36;
+      color: #fff;
+      border-radius: var(--radius-card);
+      padding: var(--space-md);
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      line-height: 1.3;
     }
-    .canvas{
-      position:absolute; left:0; top:0;
-      width:1440px; height:1024px;
-      transform: scale(var(--scale));
-      transform-origin: top left;
+
+    /* Research table */
+    .table-wrap { overflow-x: auto; }
+    table.methods {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;      /* wrap long text, avoid overflow */
+      border: 1px solid var(--color-border);
     }
-
-    /* Body text not bold anywhere */
-    p, li, td, .brief-context, .fact-validity, .formulated-statement,
-    .discovery-approach, .next-steps, .subtitle, .author-date { font-weight:400 !important; }
-
-    .display-title, .right-number{ font-family:"Abril Fatface", serif !important; font-weight:400 !important; }
-
-    /* Header */
-    .header-bg{ position:absolute; left:0; top:0; width:1440px; height:292px; background:#E24E36; z-index:1; }
-    .studio-badge{ position:absolute; left:19px; top:36px; width:95px; height:39px; background:#fff; border-radius:36px; display:flex; align-items:center; justify-content:center; z-index:3; font-weight:700; font-size:14px; }
-    .main-title{ position:absolute; left:19px; top:86px; width:685px; height:84px; font-size:48px; line-height:65px; color:#fff; z-index:3; }
-    .subtitle{ position:absolute; left:19px; top:175px; width:685px; height:97px; color:#fff; z-index:3; font-size:16px; line-height:19px; }
-    .author-date{ position:absolute; left:20px; top:250px; width:563px; height:24px; color:#fff; z-index:3; font-size:10px; line-height:12px; }
-
-    /* Left column */
-    .brief-context{ position:absolute; left:19px; top:304px; width:685px; height:158px; z-index:4; font-size:16px; line-height:19px; }
-    .fact-validity{ position:absolute; left:207px; top:483px; width:497px; height:368px; z-index:4; font-size:16px; line-height:19px; }
-    .fact-validity a{ color:#4658F4; text-decoration:underline; word-break:break-all; }
-    .formulated-statement{ position:absolute; left:207px; top:855px; width:497px; height:69px; z-index:4; font-size:16px; line-height:19px; }
-    .statement-box{ position:absolute; left:207px; top:924px; width:517px; height:81px; background:#E24E36; border-radius:8px; z-index:5; display:flex; align-items:center; padding-left:9px; }
-    .statement-text{ font-family:"Abril Fatface", serif; font-weight:400; font-size:18px; color:#fff; line-height:24px; width:477px; height:59px; }
-
-    /* Images — point to /assets/media */
-    .left-img{
-      position:absolute; left:0; top:494px; width:192px; height:530px;
-      background:url("../assets/media/firefly-teacher-struggling-326508.jpg") center/cover no-repeat;
-      border-radius:0 0 32px 0; transform:scaleX(-1); z-index:2;
+    .methods thead th {
+      background: #E24E36;
+      color: #fff;
+      text-align: left;
+      padding: 10px 12px;
+      font-weight: 700;
     }
-    .right-img{
-      position:absolute; left:1305px; top:785px; width:135px; height:240px;
-      background:url("../assets/media/firefly-teacher-struggling-195437.jpg") center/cover no-repeat;
-      border-radius:24px; z-index:2;
+    .methods tbody td {
+      background: #fff;
+      color: #1c1c1c;
+      padding: 10px 12px;
+      border-top: 1px solid var(--color-border);
     }
-    .right-number{ position:absolute; left:1292px; top:963px; width:69px; height:24px; font-size:18px; line-height:24px; text-align:right; color:#000; z-index:3; }
+    .methods th, .methods td { word-wrap: break-word; }
 
-    /* Right column text */
-    .discovery-approach{ position:absolute; left:798px; top:304px; width:563px; height:180px; z-index:4; font-size:16px; line-height:19px; }
-
-    /* Table block (fixed-height like the original mock) */
-    .table-section{
-      position:absolute; left:819px; top:485px; width:528px; height:260px; /* fixed to avoid overflow into Next steps */
-      z-index:3; display:block; overflow:hidden; /* hide any browser-specific extra line height */
+    /* Small “page number” tag */
+    .page-number {
+      font-family: var(--font-display);
+      color: var(--color-primary);
+      opacity: .85;
+      text-align: right;
+      font-size: 1.1rem;
+      margin-top: var(--space-md);
     }
-    .table-custom{
-      width:528px; table-layout:fixed; border-radius:4px; overflow:hidden;
-      border:1px solid #5B5B5B; background:#363636; margin:0; border-spacing:0; font-size:12px;
-    }
-    .table-custom thead tr{ background:#E24E36; color:#fff; height:36px; }
-    .table-custom th{ font-weight:700; padding:10px 12px; border-right:1px solid #5B5B5B; text-align:left; background:rgba(255,255,255,0.05); }
-    .table-custom td{ font-weight:400; padding:10px 12px; border-right:1px solid #5B5B5B; background:#fff; color:#1c1c1c; line-height:16px; }
-    .table-custom th:last-child, .table-custom td:last-child{ border-right:none; }
-
-    /* Push Next steps a bit lower to be safe across platforms */
-    .next-steps{ position:absolute; left:798px; top:860px; width:477px; height:220px; z-index:4; font-size:16px; line-height:19px; }
   </style>
 </head>
 <body>
-  <div class="stage">
-    <div class="canvas">
-      <div class="header-bg"></div>
-      <div class="studio-badge">Studio 1</div>
-      <div class="main-title display-title">Challenge Statement</div>
-      <div class="subtitle">
-        This document provides an overview on my challenge statement identification process and result in the scope of Studio 1. Additionally it gives an overview on the discovery and research process to understand the validity, depth and aspects of the challenge.
-      </div>
-      <div class="author-date">by Armin Gulbert, IAAC MDEF 1-year<br>12 October 2025</div>
 
-      <div class="brief-context">
-        <strong>The Brief &amp; Context</strong><br />
-        At the first session of Studio 1 our group received an assignment to define a topics that we individually research to have better understanding how different factors can impact humans and other species’ life.<br />
-        As I was raised by a teacher mother I was always surrounded by teaching and the difficulties of it. As an adult, I started to have more discussions with her on the rising difficulites of the profession of hers and others (ie. friends of her, teachers in my network...etc.)
-      </div>
-
-      <div class="fact-validity">
-        <strong>Fact / Validity Check</strong><br />
-        The National Education Association ran a research in 2024, discovering the well-being / difficulties teachers face daily.<br />
-        The survey concluded that stress and burnout is the top consering factor, and it is heavily impacted by student/discipline. In 2025, the University of Missouri surveyed teachers if they plan to leave their current job. The research showed due to lack of support, workload and challenging students make them leave their profession. The Education Week magazine introduced the Teacher-Morale-Index to see the state of teaching in the US. Their latest index concluded that on a -100 to +100 scale the current TMI is at -13. The OECD has framework for well-being of teachers.<br />
-        <span>Sources:</span><br />
-        1. CEA, 2024: <a href="https://cea.org/wp-content/uploads/2024/11/2024-CEA-member-survey-results.pdf">https://cea.org/wp-content/uploads/2024/11/2024-CEA-member-survey-results.pdf</a><br />
-        2. EdWeek 2024: <a href="https://www.edweek.org/teaching-learning/introducing-the-teacher-morale-index/2024/03">https://www.edweek.org/teaching-learning/introducing-the-teacher-morale-index/2024/03</a><br />
-        3. OECD 2020: <a href="https://www.oecd.org/content/dam/oecd/en/publications/reports/2020/01/teachers-well-being_bdafdeaf/c36fc9d3-en.pdf">https://www.oecd.org/content/dam/oecd/en/publications/reports/2020/01/teachers-well-being_bdafdeaf/c36fc9d3-en.pdf</a>
-      </div>
-
-      <div class="formulated-statement">
-        <strong>Formulated Statement</strong><br />
-        Based on the desk research, discussions with teachers the following statement gives the scope of my work:
-      </div>
-      <div class="statement-box">
-        <span class="statement-text">The future will require<br />a new prototype of teachers</span>
-      </div>
-
-      <div class="left-img" role="img" aria-label="Teacher struggling with students"></div>
-
-      <div class="discovery-approach">
-        <strong>Discovery &amp; Research Approach</strong><br />
-        Considering the context and background of the problem, scope of the statement, requirements of the course and the timing constraints, the following research approach has been defined.<br /><br />
-        <strong>1. Research Design Principles:</strong><br />
-        &nbsp; a. Using a 1st person perspective to validate and discover the problem<br />
-        &nbsp; b. Combining quantitative and qualitative methods<br /><br />
-        <strong>2. Research methods:</strong>
-      </div>
-
-      <div class="table-section">
-        <table class="table-custom" role="table">
-          <thead>
-            <tr>
-              <th style="width:101px;">Type</th>
-              <th style="width:193px;">Method</th>
-              <th style="width:248px;">Reasoning</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Exploratory<br />Research</td>
-              <td>Review and analyze researches in the subject</td>
-              <td>Collecting patterns and stats<br />Supporting the interview preparation</td>
-            </tr>
-            <tr>
-              <td>Qualitative<br />Research</td>
-              <td>1:1 Interviews<br />Focus group meeting</td>
-              <td>Receiving direct feedback from teachers on their experience to identify patterns for large sample validation</td>
-            </tr>
-            <tr>
-              <td>Quantitative<br />Research</td>
-              <td>Survey for teachers</td>
-              <td>Large pattern / sample validation of insights collected</td>
-            </tr>
-            <tr>
-              <td>Ethnographic<br />Research</td>
-              <td>School- and class visits</td>
-              <td>Collecting first-person-view through observations</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="next-steps">
-        <strong>Next steps</strong><br />
-        Based on the research approach and the course syllabus and timing, the following steps were identified:<br />
-        1. Validate the problem statement and research method<br />
-        2. Adjust statement and / or research method (optional step)<br />
-        3. Organize 1st round interviews and school visits<br />
-        4. Run deeper desk research on problem statement<br />
-        5. Compile interview guide<br />
-        6. Input gathering:<br />
-        &nbsp;&nbsp;&nbsp;a. Interviews and focus group<br />
-        &nbsp;&nbsp;&nbsp;b. School visits<br />
-        7. Compile, share and assess survey<br />
-        8. Synthesizing results<br />
-        9. Formulate research summary report
-      </div>
-
-      <div class="right-img" role="img" aria-label="Teacher illustration"></div>
-      <div class="right-number display-title">2</div>
+  <!-- HERO -->
+  <header class="hero">
+    <div class="content">
+      <div class="badge">Studio 1</div>
+      <h1>Challenge Statement</h1>
+      <p>
+        This document provides an overview on my challenge statement identification process and result in the scope of Studio 1.
+        Additionally it gives an overview on the discovery and research process to understand the validity, depth and aspects of the challenge.
+      </p>
+      <p style="font-size:.75rem; margin-top:.6em; opacity:.9;">
+        by Armin Gulbert, IAAC MDEF 1-year &nbsp;•&nbsp; 12 October 2025
+      </p>
     </div>
-  </div>
+  </header>
+
+  <!-- PAGE BODY -->
+  <main class="page">
+    <div class="content">
+      <div class="layout">
+        <!-- LEFT COLUMN -->
+        <section>
+          <figure class="left-figure">
+            <img class="mirror"
+                 src="/iaac-repo/assets/media/firefly-teacher-struggling-326508.jpg"
+                 alt="Teacher struggling with teaching students" />
+          </figure>
+
+          <h2>The Brief &amp; Context</h2>
+          <p>
+            At the first session of Studio 1 our group received an assignment to define a topics that we individually research
+            to have better understanding how different factors can impact humans and other species’ life.
+            As I was raised by a teacher mother I was always surrounded by teaching and the difficulties of it. As an adult,
+            I started to have more discussions with her on the rising difficulites of the profession of hers and others
+            (ie. friends of her, teachers in my network...etc.)
+          </p>
+
+          <h2>Fact / Validity Check</h2>
+          <p>
+            The National Education Association ran a research in 2024, discovering the well-being / difficulties teachers face daily.
+            The survey concluded that stress and burnout is the top consering factor, and it is heavily impacted by student/discipline.
+            In 2025, the University of Missouri surveyed teachers if they plan to leave their current job. The research showed due to lack of
+            support, workload and challenging students make them leave their profession. The Education Week magazine introduced the
+            Teacher-Morale-Index to see the state of teaching in the US. Their latest index concluded that on a −100 to +100 scale the current
+            TMI is at −13. The OECD has framework for well-being of teachers.
+          </p>
+          <p>
+            <strong>Sources:</strong><br />
+            1. CEA, 2024:
+            <a href="https://cea.org/wp-content/uploads/2024/11/2024-CEA-member-survey-results.pdf">2024 CEA member survey results (PDF)</a><br />
+            2. EdWeek 2024:
+            <a href="https://www.edweek.org/teaching-learning/introducing-the-teacher-morale-index/2024/03">Introducing the Teacher Morale Index</a><br />
+            3. OECD 2020:
+            <a href="https://www.oecd.org/content/dam/oecd/en/publications/reports/2020/01/teachers-well-being_bdafdeaf/c36fc9d3-en.pdf">Teachers’ well-being (PDF)</a>
+          </p>
+
+          <h2>Formulated Statement</h2>
+          <p>Based on the desk research, discussions with teachers the following statement gives the scope of my work:</p>
+          <div class="statement">
+            The future will require<br />a new prototype of teachers
+          </div>
+        </section>
+
+        <!-- RIGHT COLUMN -->
+        <aside>
+          <h2>Discovery &amp; Research Approach</h2>
+          <p>
+            Considering the context and background of the problem, scope of the statement, requirements of the course and the timing
+            constraints, the following research approach has been defined.
+          </p>
+
+          <h3>1. Research Design Principles</h3>
+          <ul>
+            <li>Using a 1st person perspective to validate and discover the problem</li>
+            <li>Combining quantitative and qualitative methods</li>
+          </ul>
+
+          <h3>2. Research methods</h3>
+          <div class="table-wrap">
+            <table class="methods">
+              <thead>
+                <tr>
+                  <th style="width: 26%;">Type</th>
+                  <th style="width: 34%;">Method</th>
+                  <th style="width: 40%;">Reasoning</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Exploratory Research</td>
+                  <td>Review and analyze researches in the subject</td>
+                  <td>Collecting patterns and stats; supporting the interview preparation</td>
+                </tr>
+                <tr>
+                  <td>Qualitative Research</td>
+                  <td>1:1 Interviews; Focus group meeting</td>
+                  <td>Receiving direct feedback from teachers on their experience to identify patterns for large sample validation</td>
+                </tr>
+                <tr>
+                  <td>Quantitative Research</td>
+                  <td>Survey for teachers</td>
+                  <td>Large pattern / sample validation of insights collected</td>
+                </tr>
+                <tr>
+                  <td>Ethnographic Research</td>
+                  <td>School- and class visits</td>
+                  <td>Collecting first-person-view through observations</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2 class="mt-lg">Next steps</h2>
+          <ol>
+            <li>Validate the problem statement and research method</li>
+            <li>Adjust statement and / or research method (optional step)</li>
+            <li>Organize 1st round interviews and school visits</li>
+            <li>Run deeper desk research on problem statement</li>
+            <li>Compile interview guide</li>
+            <li>Input gathering: Interviews and focus group; School visits</li>
+            <li>Compile, share and assess survey</li>
+            <li>Synthesizing results</li>
+            <li>Formulate research summary report</li>
+          </ol>
+
+          <img
+            src="/iaac-repo/assets/media/firefly-teacher-struggling-195437.jpg"
+            alt="Teacher illustration" style="max-width: 240px;" />
+          <div class="page-number">2</div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
 </body>
 </html>
