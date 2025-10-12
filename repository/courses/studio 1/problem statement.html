@@ -11,13 +11,13 @@
   <style>
     /* ---------- Page-specific (minimal) ---------- */
 
-    /* Full-width hero using DS colors & spacing */
+    /* Full-width hero */
     .hero {
-      background: #E24E36; /* project accent for this page */
+      background: #E24E36;
       color: #fff;
       padding: var(--space-lg) var(--space-md) calc(var(--space-lg) * 1.2);
     }
-    .hero .content { max-width: 1200px; } /* a bit wider than default */
+    .hero .content { max-width: 1200px; }
 
     .badge {
       display: inline-block;
@@ -33,20 +33,23 @@
       color: #fff;
       font-size: clamp(2.2rem, 4.5vw, 3.5rem);
       margin-bottom: .2em;
+      font-family: var(--font-display);
+      font-weight: 400;
     }
     .hero p { color: #fff; max-width: 60ch; }
 
-    /* Main layout */
+    /* Main card body */
     .page {
       background: #fff;
       box-shadow: 0 2px 12px var(--color-shadow);
       border: 1px solid var(--color-border);
       border-radius: var(--radius-card);
-      margin-top: calc(var(--space-lg) * -1.2);  /* lift into hero */
+      margin-top: calc(var(--space-lg) * -1.2);
       margin-bottom: var(--space-lg);
     }
     .page .content { max-width: 1200px; }
 
+    /* Two-column layout */
     .layout {
       display: grid;
       grid-template-columns: 1.1fr 1fr;
@@ -56,9 +59,34 @@
       .layout { grid-template-columns: 1fr; }
     }
 
-    /* Left rail image */
-    .left-figure img { border-radius: 0 0 var(--radius-card) var(--radius-card); }
-    .mirror { transform: scaleX(-1); }
+    /* --- LEFT rail with bottom-aligned image --- */
+    .left-rail {
+      display: grid;
+      grid-template-columns: 200px 1fr; /* rail + text */
+      gap: var(--space-lg);
+      align-items: stretch;             /* make both columns equal height */
+      margin-bottom: var(--space-lg);
+      position: relative;
+    }
+    .left-rail .rail {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;        /* bottom align the image */
+      height: 100%;
+      /* pull rail toward page edge while keeping content centered */
+      margin-left: calc((min(1200px, 100vw) - 100vw) / 2);
+    }
+    .left-rail img {
+      margin: 0;                        /* override DS auto-centering */
+    }
+    .left-rail .rail img {
+      width: 190px;
+      height: 530px;
+      object-fit: cover;
+      border-radius: 0 0 var(--radius-card) var(--radius-card);
+      transform: scaleX(-1);
+      box-shadow: 0 2px 12px var(--color-shadow);
+    }
 
     /* Statement highlight */
     .statement {
@@ -76,8 +104,9 @@
     table.methods {
       width: 100%;
       border-collapse: collapse;
-      table-layout: fixed;      /* wrap long text, avoid overflow */
+      table-layout: fixed;              /* wrap long text */
       border: 1px solid var(--color-border);
+      font-size: 0.95rem;
     }
     .methods thead th {
       background: #E24E36;
@@ -91,10 +120,60 @@
       color: #1c1c1c;
       padding: 10px 12px;
       border-top: 1px solid var(--color-border);
+      word-wrap: break-word;
     }
-    .methods th, .methods td { word-wrap: break-word; }
 
-    /* Small “page number” tag */
+    /* Right aside block with thumbnail */
+    .aside-block {
+      display: grid;
+      grid-template-columns: 1fr 160px; /* text + thumb */
+      gap: var(--space-md);
+      align-items: start;
+    }
+    .aside-block .thumb {
+      width: 135px;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 24px !important;   /* beat DS default radius */
+      justify-self: end;
+      box-shadow: 0 2px 12px var(--color-shadow);
+      margin: 0;
+    }
+
+    /* Orange numbered list (Vox-style) */
+    .next-steps-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      counter-reset: step-counter;
+    }
+    .next-steps-list li {
+      counter-increment: step-counter;
+      display: flex;
+      align-items: flex-start;
+      gap: 1em;
+      padding: 1em 0;
+      border-bottom: 1px dotted var(--color-border);
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+    .next-steps-list li::before {
+      content: counter(step-counter);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: #E24E36;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-top: 0.2em;
+    }
+    .next-steps-list li:last-child { border-bottom: none; }
+
+    /* Small page number tag */
     .page-number {
       font-family: var(--font-display);
       color: var(--color-primary);
@@ -104,114 +183,8 @@
       margin-top: var(--space-md);
     }
 
-    <style>
-  /* your existing page styles ... */
-
-
-  /* --- LAYOUT FIX FOR IMAGE ALIGNMENT --- */
-  .left-rail {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: var(--space-lg);
-    align-items: start;
-    margin-bottom: var(--space-lg);
-  }
-  .left-rail .rail img {
-    width: 190px;
-    height: 530px;
-    object-fit: cover;
-    border-radius: 0 0 var(--radius-card) var(--radius-card);
-    transform: scaleX(-1);
-    box-shadow: 0 2px 12px var(--color-shadow);
-  }
-
-  .aside-block {
-    display: grid;
-    grid-template-columns: 1fr 160px;
-    gap: var(--space-md);
-    align-items: start;
-  }
-  .aside-block .thumb {
-    width: 135px;
-    height: 240px;
-    object-fit: cover;
-    border-radius: 24px;
-    justify-self: end;
-    box-shadow: 0 2px 12px var(--color-shadow);
-  }
-  .page-number {
-    text-align: right;
-    margin-top: var(--space-md);
-  }
-
-    /* pull the rail column to the left page edge while keeping text aligned */
-.left-rail {
-  position: relative;
-}
-.left-rail .rail {
-  justify-self: start;
-  /* shift left by the side gutter = (viewport - content width)/2 */
-  margin-left: calc((min(1200px, 100vw) - 100vw) / 2);
-}
-/* Make the rail as tall as the text column and push the image to the bottom */
-.left-rail { align-items: stretch; }
-.left-rail .rail {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;   /* <- bottom align */
-  height: 100%;
-}
-.left-rail .rail img {
-  width: 190px;
-  height: 530px;
-  object-fit: cover;
-  border-radius: 0 0 var(--radius-card) var(--radius-card);
-  transform: scaleX(-1);
-  box-shadow: 0 2px 12px var(--color-shadow);
-  margin: 0;                   /* override DS auto-centering */
-}
-/* --- Stylized Next Steps List --- */
-.next-steps-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  counter-reset: step-counter;
-}
-
-.next-steps-list li {
-  counter-increment: step-counter;
-  display: flex;
-  align-items: flex-start;
-  gap: 1em;
-  padding: 1em 0;
-  border-bottom: 1px dotted var(--color-border);
-  font-size: 1rem;
-  line-height: 1.5;
-}
-
-.next-steps-list li::before {
-  content: counter(step-counter);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: #E24E36;           /* your orange accent */
-  color: #fff;
-  font-weight: 700;
-  font-size: 0.9rem;
-  margin-top: 0.2em;
-}
-
-.next-steps-list li:last-child {
-  border-bottom: none;
-}
-
-    
-</style>
-
+    /* Utility */
+    .mirror { transform: scaleX(-1); }
   </style>
 </head>
 <body>
@@ -231,37 +204,51 @@
     </div>
   </header>
 
-  
-
   <!-- PAGE BODY -->
   <main class="page">
     <div class="content">
       <div class="layout">
+
         <!-- LEFT COLUMN -->
         <section class="left-rail">
-  <div class="rail">
-    <img class="mirror"
-         src="../../../assets/media/Firefly_teacher struggling with teaching students 326508.jpg"
-         alt="Teacher struggling with teaching students" />
-  </div>
+          <div class="rail">
+            <img
+              class="mirror"
+              src="../../../assets/media/Firefly_teacher struggling with teaching students 326508.jpg"
+              alt="Teacher struggling with teaching students" />
+          </div>
 
-  <div>
-    <h2>The Brief &amp; Context</h2>
-    <p>At the first session of Studio 1 our group received an assignment to define a topics that we individually research to have better understanding how different factors can impact humans and other species’ life. As I was raised by a teacher mother I was always surrounded by teaching and the difficulties of it. As an adult, I started to have more discussions with her on the rising difficulites of the profession of hers and others (ie. friends of her, teachers in my network...etc.)</p>
+          <div>
+            <h2>The Brief &amp; Context</h2>
+            <p>
+              At the first session of Studio 1 our group received an assignment to define a topics that we individually research
+              to have better understanding how different factors can impact humans and other species’ life. As I was raised by a
+              teacher mother I was always surrounded by teaching and the difficulties of it. As an adult, I started to have more
+              discussions with her on the rising difficulites of the profession of hers and others (ie. friends of her, teachers
+              in my network...etc.)
+            </p>
 
-    <h2>Fact / Validity Check</h2>
-    <p>The National Education Association ran a research in 2024, discovering the well-being / difficulties teachers face daily. The survey concluded that stress and burnout is the top consering factor, and it is heavily impacted by student/discipline. In 2025, the University of Missouri surveyed teachers if they plan to leave their current job. The research showed due to lack of support, workload and challenging students make them leave their profession. The Education Week magazine introduced the Teacher-Morale-Index to see the state of teaching in the US. Their latest index concluded that on a −100 to +100 scale the current TMI is at −13. The OECD has framework for well-being of teachers.</p>
-    <p><strong>Sources:</strong><br>
-      1. <a href="https://cea.org/wp-content/uploads/2024/11/2024-CEA-member-survey-results.pdf">CEA 2024 (PDF)</a><br>
-      2. <a href="https://www.edweek.org/teaching-learning/introducing-the-teacher-morale-index/2024/03">EdWeek 2024</a><br>
-      3. <a href="https://www.oecd.org/content/dam/oecd/en/publications/reports/2020/01/teachers-well-being_bdafdeaf/c36fc9d3-en.pdf">OECD 2020 (PDF)</a>
-    </p>
+            <h2>Fact / Validity Check</h2>
+            <p>
+              The National Education Association ran a research in 2024, discovering the well-being / difficulties teachers face daily.
+              The survey concluded that stress and burnout is the top consering factor, and it is heavily impacted by student/discipline.
+              In 2025, the University of Missouri surveyed teachers if they plan to leave their current job. The research showed due to lack of
+              support, workload and challenging students make them leave their profession. The Education Week magazine introduced the
+              Teacher-Morale-Index to see the state of teaching in the US. Their latest index concluded that on a −100 to +100 scale the current
+              TMI is at −13. The OECD has framework for well-being of teachers.
+            </p>
+            <p>
+              <strong>Sources:</strong><br />
+              1. <a href="https://cea.org/wp-content/uploads/2024/11/2024-CEA-member-survey-results.pdf">CEA 2024 (PDF)</a><br />
+              2. <a href="https://www.edweek.org/teaching-learning/introducing-the-teacher-morale-index/2024/03">EdWeek 2024</a><br />
+              3. <a href="https://www.oecd.org/content/dam/oecd/en/publications/reports/2020/01/teachers-well-being_bdafdeaf/c36fc9d3-en.pdf">OECD 2020 (PDF)</a>
+            </p>
 
-    <h2>Formulated Statement</h2>
-    <p>Based on the desk research, discussions with teachers the following statement gives the scope of my work:</p>
-    <div class="statement">The future will require<br>a new prototype of teachers</div>
-  </div>
-</section>
+            <h2>Formulated Statement</h2>
+            <p>Based on the desk research, discussions with teachers the following statement gives the scope of my work:</p>
+            <div class="statement">The future will require<br />a new prototype of teachers</div>
+          </div>
+        </section>
 
         <!-- RIGHT COLUMN -->
         <aside>
@@ -312,29 +299,32 @@
             </table>
           </div>
 
-         <section class="aside-block">
-  <div>
-    <h2>Next steps</h2>
-    <ol>
-      <li>Validate the problem statement and research method</li>
-      <li>Adjust statement and / or research method (optional step)</li>
-      <li>Organize 1st round interviews and school visits</li>
-      <li>Run deeper desk research on problem statement</li>
-      <li>Compile interview guide</li>
-      <li>Input gathering: Interviews and focus group; School visits</li>
-      <li>Compile, share and assess survey</li>
-      <li>Synthesizing results</li>
-      <li>Formulate research summary report</li>
-    </ol>
-    <div class="page-number">2</div>
-  </div>
+          <section class="aside-block mt-lg">
+            <div>
+              <h2>Next steps</h2>
+              <ul class="next-steps-list">
+                <li>Validate the problem statement and research method</li>
+                <li>Adjust statement and / or research method (optional step)</li>
+                <li>Organize 1st round interviews and school visits</li>
+                <li>Run deeper desk research on problem statement</li>
+                <li>Compile interview guide</li>
+                <li>Input gathering: Interviews and focus group; School visits</li>
+                <li>Compile, share and assess survey</li>
+                <li>Synthesizing results</li>
+                <li>Formulate research summary report</li>
+              </ul>
+              <div class="page-number">2</div>
+            </div>
 
-  <img class="thumb"
-       src="../../../assets/media/Firefly_teacher struggling with teaching students 195437.jpg"
-       alt="Teacher illustration">
-</section>
+            <img
+              class="thumb"
+              src="../../../assets/media/Firefly_teacher struggling with teaching students 195437.jpg"
+              alt="Teacher illustration" />
+          </section>
+        </aside>
 
-    </div>
+      </div> <!-- /.layout -->
+    </div>   <!-- /.content -->
   </main>
 
 </body>
