@@ -11,6 +11,10 @@
       --nav-bg: #fff;
       --nav-radius: 32px;
       --nav-height: 63px;
+      --gallery-gap: 3em;
+      --gallery-col-width: 420px;
+      --gallery-img-height: 180px;
+      --gallery-title-color: #e24e36;
     }
     body {
       margin: 0;
@@ -20,7 +24,7 @@
     }
     .repo-layout {
       display: grid;
-      grid-template-columns: 692px 1fr;
+      grid-template-columns: 685px 1fr;
       min-height: 100vh;
       width: 100vw;
     }
@@ -31,6 +35,8 @@
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      padding: 0;
+      position: relative;
     }
     .repo-nav {
       background: var(--nav-bg);
@@ -41,6 +47,7 @@
       align-items: center;
       gap: 2em;
       height: var(--nav-height);
+      box-sizing: border-box;
       width: fit-content;
     }
     .repo-nav-title {
@@ -84,70 +91,134 @@
     }
     .repo-gallery {
       padding: 3em 2em;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 3em;
-      align-items: flex-start;
       background: #fff;
       min-height: 100vh;
+      display: grid;
+      grid-template-columns: repeat(2, var(--gallery-col-width));
+      grid-auto-rows: minmax(240px, auto);
+      gap: var(--gallery-gap);
+      justify-content: start;
+      align-content: start;
+    }
+    @media (max-width:1300px) {
+      .repo-gallery {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width:900px){
+      .repo-layout{grid-template-columns:1fr;}
+      .repo-gallery{padding:2em 1em;}
+      .repo-card{width:100%;min-width:220px;}
     }
     .repo-card {
-      width: 335px;
       background: #fff;
+      border: none;
+      box-shadow: none;
       border-bottom: 6px solid #e24e36;
-      min-height: 380px;
+      min-height: 280px;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
+      justify-content: flex-start;
       cursor: pointer;
       transition: box-shadow 0.2s;
+      width: 100%;
+      max-width: var(--gallery-col-width);
     }
     .repo-card:hover {
       box-shadow: 0 8px 32px rgba(226,78,54,0.15);
     }
     .repo-card-img {
       width: 100%;
-      height: 180px;
+      height: var(--gallery-img-height);
       background: #1c1c1c;
       margin-bottom: 0;
     }
     .repo-card-content {
       background: #fff;
-      padding: 1em 2em 1.5em 2em;
-      min-height: 200px;
+      padding: 1.2em 2em 1.2em 2em;
+      min-height: 110px;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
     }
     .repo-card-label {
-      font-size: 12px;
+      font-size: 13px;
       color: #1c1c1c;
-      margin-bottom: 1em;
+      margin-bottom: 0.5em;
       font-family: var(--font-main);
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
     .repo-card-title {
-      font-size: 24px;
-      font-weight: 800;
-      color: #e24e36;
-      margin-bottom: 0.8em;
-      font-family: var(--font-main);
+      font-size: 1.5em;
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--gallery-title-color);
+      margin-bottom: 0.5em;
     }
     .repo-card-desc {
-      font-size: 14px;
+      font-size: 15px;
       color: #1c1c1c;
       margin-bottom: 0.8em;
       font-family: var(--font-main);
     }
-    @media (max-width:900px){
-      .repo-layout{grid-template-columns:1fr;}
-      .repo-gallery{padding:2em 1em;gap:1.5em;}
-      .repo-card{width:100%;min-width:220px;}
+    .repo-card-line {
+      height: 6px;
+      width: 100%;
+      background: #e24e36;
+      margin-top: 1em;
+      border-radius: 2px;
     }
   </style>
   <script>
-    // Example: Dynamically load cards from iaac-repo/repository/courses
-    // This requires server-side scripting or a build step.
-    // For demonstration, we statically list example cards below.
+    // Dynamic gallery: load all html files from iaac-repo/repository/courses/
+    // For static sites, you must provide a JSON manifest (courses.json) or hard-code the list.
+    // For demonstration, here is a static implementation using a JS array.
+    document.addEventListener('DOMContentLoaded', function () {
+      const gallery = document.getElementById('gallery');
+      // Example: Fetch course list dynamically (replace with AJAX/fetch if you have a JSON manifest)
+      // Each course object: { label, title, desc, img, url }
+      const courses = [
+        {
+          label: "COURSE",
+          title: "Digital Fabrication",
+          desc: "Learn advanced digital manufacturing techniques and workflows.",
+          img: "",
+          url: "iaac-repo/repository/courses/digital-fabrication.html"
+        },
+        {
+          label: "COURSE",
+          title: "Computational Design",
+          desc: "Explore generative design, scripting, and parametric modeling.",
+          img: "",
+          url: "iaac-repo/repository/courses/computational-design.html"
+        },
+        {
+          label: "COURSE",
+          title: "Robotics in Architecture",
+          desc: "Investigate robotic construction and automation in architecture.",
+          img: "",
+          url: "iaac-repo/repository/courses/robotics-in-architecture.html"
+        }
+        // Add more, or load from JSON
+      ];
+      gallery.innerHTML = '';
+      courses.forEach(course => {
+        const card = document.createElement('div');
+        card.className = 'repo-card';
+        card.onclick = () => window.location.href = course.url;
+        card.innerHTML = `
+          <div class="repo-card-img" style="${course.img ? `background-image:url('${course.img}');background-size:cover;` : ''}"></div>
+          <div class="repo-card-content">
+            <div class="repo-card-label">${course.label}</div>
+            <div class="repo-card-title">${course.title}</div>
+            <div class="repo-card-desc">${course.desc}</div>
+            <div class="repo-card-line"></div>
+          </div>
+        `;
+        gallery.appendChild(card);
+      });
+    });
   </script>
 </head>
 <body>
@@ -166,40 +237,9 @@
         Lorem ipsum dolor sit amet, consectetur adipisifwcing elit, sed do eiusmod tempor incididunt ut labore et dolore roipi magna aliqua. Ut enim ad minim veeniam, quis nostruklad exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in tufpoy voluptate velit esse
       </div>
     </aside>
-    <!-- Gallery Right -->
+    <!-- Dynamic Card Gallery Right -->
     <section class="repo-gallery" id="gallery">
-      <!-- Example Card: Each links to its course content page in iaac-repo/repository/courses/ -->
-      <div class="repo-card" onclick="location.href='iaac-repo/repository/courses/course-1.html';">
-        <div class="repo-card-img"></div>
-        <div class="repo-card-content">
-          <div class="repo-card-label">COURSE</div>
-          <div class="repo-card-title">Digital Fabrication</div>
-          <div class="repo-card-desc">
-            Learn advanced digital manufacturing techniques and workflows.
-          </div>
-        </div>
-      </div>
-      <div class="repo-card" onclick="location.href='iaac-repo/repository/courses/course-2.html';">
-        <div class="repo-card-img"></div>
-        <div class="repo-card-content">
-          <div class="repo-card-label">COURSE</div>
-          <div class="repo-card-title">Computational Design</div>
-          <div class="repo-card-desc">
-            Explore generative design, scripting, and parametric modeling.
-          </div>
-        </div>
-      </div>
-      <div class="repo-card" onclick="location.href='iaac-repo/repository/courses/course-3.html';">
-        <div class="repo-card-img"></div>
-        <div class="repo-card-content">
-          <div class="repo-card-label">COURSE</div>
-          <div class="repo-card-title">Robotics in Architecture</div>
-          <div class="repo-card-desc">
-            Investigate robotic construction and automation in architecture.
-          </div>
-        </div>
-      </div>
-      <!-- Add more cards as needed; each represents a page in iaac-repo/repository/courses/ -->
+      <!-- Cards will be injected here by JS -->
     </section>
   </div>
 </body>
