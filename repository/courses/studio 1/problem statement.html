@@ -143,6 +143,18 @@
     text-align: right;
     margin-top: var(--space-md);
   }
+
+    /* pull the rail column to the left page edge while keeping text aligned */
+.left-rail {
+  position: relative;
+}
+.left-rail .rail {
+  justify-self: start;
+  /* shift left by the side gutter = (viewport - content width)/2 */
+  margin-left: calc((min(1200px, 100vw) - 100vw) / 2);
+}
+
+    
 </style>
 
   </style>
@@ -174,7 +186,7 @@
         <section class="left-rail">
   <div class="rail">
     <img class="mirror"
-         src="../../../assets/media/firefly-teacher-struggling-326508.jpg"
+         src="../../../assets/media/Firefly_teacher struggling with teaching students 326508.jpg"
          alt="Teacher struggling with teaching students" />
   </div>
 
@@ -263,7 +275,7 @@
   </div>
 
   <img class="thumb"
-       src="../../../assets/media/firefly-teacher-struggling-195437.jpg"
+       src="../../../assets/media/Firefly_teacher struggling with teaching students 195437.jpg"
        alt="Teacher illustration">
 </section>
 
