@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="/iaac-repo/design-system/design-system.css" />
 
   <style>
-    /* ---------- Page-specific (minimal) ---------- */
+    /* ---------- Page-specific styles ---------- */
 
     /* Full-width hero */
     .hero {
@@ -38,7 +38,7 @@
     }
     .hero p { color: #fff; max-width: 60ch; }
 
-    /* Main card body */
+    /* Page card */
     .page {
       background: #fff;
       box-shadow: 0 2px 12px var(--color-shadow);
@@ -49,7 +49,7 @@
     }
     .page .content { max-width: 1200px; }
 
-    /* Two-column layout */
+    /* Layout */
     .layout {
       display: grid;
       grid-template-columns: 1.1fr 1fr;
@@ -59,52 +59,12 @@
       .layout { grid-template-columns: 1fr; }
     }
 
-    /* --- LEFT rail with bottom-aligned image --- */
-    .left-rail {
-      display: grid;
-      grid-template-columns: 200px 1fr; /* rail + text */
-      gap: var(--space-lg);
-      align-items: stretch;             /* make both columns equal height */
-      margin-bottom: var(--space-lg);
-      position: relative;
-    }
-    .left-rail .rail {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;        /* bottom align the image */
-      height: 100%;
-      /* pull rail toward page edge while keeping content centered */
-      margin-left: calc((min(1200px, 100vw) - 100vw) / 2);
-    }
-    .left-rail img {
-      margin: 0;                        /* override DS auto-centering */
-    }
-    .left-rail .rail img {
-      width: 190px;
-      height: 530px;
-      object-fit: cover;
-      border-radius: 0 0 var(--radius-card) var(--radius-card);
-      transform: scaleX(-1);
-      box-shadow: 0 2px 12px var(--color-shadow);
-    }
-
-    /* Statement highlight */
-    .statement {
-      background: #E24E36;
-      color: #fff;
-      border-radius: var(--radius-card);
-      padding: var(--space-md);
-      font-family: var(--font-display);
-      font-size: 1.15rem;
-      line-height: 1.3;
-    }
-
     /* Research table */
     .table-wrap { overflow-x: auto; }
     table.methods {
       width: 100%;
       border-collapse: collapse;
-      table-layout: fixed;              /* wrap long text */
+      table-layout: fixed;
       border: 1px solid var(--color-border);
       font-size: 0.95rem;
     }
@@ -121,23 +81,6 @@
       padding: 10px 12px;
       border-top: 1px solid var(--color-border);
       word-wrap: break-word;
-    }
-
-    /* Right aside block with thumbnail */
-    .aside-block {
-      display: grid;
-      grid-template-columns: 1fr 160px; /* text + thumb */
-      gap: var(--space-md);
-      align-items: start;
-    }
-    .aside-block .thumb {
-      width: 135px;
-      height: 240px;
-      object-fit: cover;
-      border-radius: 24px !important;   /* beat DS default radius */
-      justify-self: end;
-      box-shadow: 0 2px 12px var(--color-shadow);
-      margin: 0;
     }
 
     /* Orange numbered list (Vox-style) */
@@ -173,7 +116,7 @@
     }
     .next-steps-list li:last-child { border-bottom: none; }
 
-    /* Small page number tag */
+    /* Page number */
     .page-number {
       font-family: var(--font-display);
       color: var(--color-primary);
@@ -183,8 +126,61 @@
       margin-top: var(--space-md);
     }
 
-    /* Utility */
-    .mirror { transform: scaleX(-1); }
+    /* ===== Statement visual band ===== */
+    .image-statement-band{
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(220px,27vw) 1fr minmax(260px,27vw);
+      align-items: center;
+      gap: clamp(12px,2vw,32px);
+      background: #000;
+      padding: clamp(10px,1.8vw,24px) 0;
+      margin: var(--space-lg) 0;
+      overflow: hidden;
+      border-radius: var(--radius-card);
+    }
+
+    .image-statement-band .img-wrap{
+      overflow: hidden;
+    }
+    .image-statement-band .img-wrap img{
+      width: 100%;
+      height: clamp(260px, 42vh, 480px);
+      object-fit: cover;
+      display: block;
+      margin: 0;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .image-statement-band .statement-card{
+      background: #E24E36;
+      color: #fff;
+      padding: clamp(16px,2vw,28px) clamp(22px,3vw,40px);
+      border-radius: var(--radius-card);
+      justify-self: center;
+      max-width: 60ch;
+    }
+    .image-statement-band .statement-card h2{
+      margin: 0;
+      font-family: var(--font-display);
+      font-weight: 400;
+      line-height: 1.15;
+      font-size: clamp(1.4rem, 2.6vw, 2.2rem);
+      color: #fff;
+    }
+
+    @media (max-width: 900px){
+      .image-statement-band{
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+        padding: var(--space-md);
+      }
+      .image-statement-band .img-wrap img{
+        height: 42vw;
+        border-radius: var(--radius-card);
+      }
+    }
   </style>
 </head>
 <body>
@@ -210,44 +206,49 @@
       <div class="layout">
 
         <!-- LEFT COLUMN -->
-        <section class="left-rail">
-          <div class="rail">
-            <img
-              class="mirror"
-              src="../../../assets/media/Firefly_teacher struggling with teaching students 326508.jpg"
-              alt="Teacher struggling with teaching students" />
-          </div>
+        <section>
+          <h2>The Brief &amp; Context</h2>
+          <p>
+            At the first session of Studio 1 our group received an assignment to define a topics that we individually research
+            to have better understanding how different factors can impact humans and other species’ life. As I was raised by a
+            teacher mother I was always surrounded by teaching and the difficulties of it. As an adult, I started to have more
+            discussions with her on the rising difficulites of the profession of hers and others (ie. friends of her, teachers
+            in my network...etc.)
+          </p>
 
-          <div>
-            <h2>The Brief &amp; Context</h2>
-            <p>
-              At the first session of Studio 1 our group received an assignment to define a topics that we individually research
-              to have better understanding how different factors can impact humans and other species’ life. As I was raised by a
-              teacher mother I was always surrounded by teaching and the difficulties of it. As an adult, I started to have more
-              discussions with her on the rising difficulites of the profession of hers and others (ie. friends of her, teachers
-              in my network...etc.)
-            </p>
+          <h2>Fact / Validity Check</h2>
+          <p>
+            The National Education Association ran a research in 2024, discovering the well-being / difficulties teachers face daily.
+            The survey concluded that stress and burnout is the top consering factor, and it is heavily impacted by student/discipline.
+            In 2025, the University of Missouri surveyed teachers if they plan to leave their current job. The research showed due to lack of
+            support, workload and challenging students make them leave their profession. The Education Week magazine introduced the
+            Teacher-Morale-Index to see the state of teaching in the US. Their latest index concluded that on a −100 to +100 scale the current
+            TMI is at −13. The OECD has framework for well-being of teachers.
+          </p>
+          <p>
+            <strong>Sources:</strong><br />
+            1. <a href="https://cea.org/wp-content/uploads/2024/11/2024-CEA-member-survey-results.pdf">CEA 2024 (PDF)</a><br />
+            2. <a href="https://www.edweek.org/teaching-learning/introducing-the-teacher-morale-index/2024/03">EdWeek 2024</a><br />
+            3. <a href="https://www.oecd.org/content/dam/oecd/en/publications/reports/2020/01/teachers-well-being_bdafdeaf/c36fc9d3-en.pdf">OECD 2020 (PDF)</a>
+          </p>
 
-            <h2>Fact / Validity Check</h2>
-            <p>
-              The National Education Association ran a research in 2024, discovering the well-being / difficulties teachers face daily.
-              The survey concluded that stress and burnout is the top consering factor, and it is heavily impacted by student/discipline.
-              In 2025, the University of Missouri surveyed teachers if they plan to leave their current job. The research showed due to lack of
-              support, workload and challenging students make them leave their profession. The Education Week magazine introduced the
-              Teacher-Morale-Index to see the state of teaching in the US. Their latest index concluded that on a −100 to +100 scale the current
-              TMI is at −13. The OECD has framework for well-being of teachers.
-            </p>
-            <p>
-              <strong>Sources:</strong><br />
-              1. <a href="https://cea.org/wp-content/uploads/2024/11/2024-CEA-member-survey-results.pdf">CEA 2024 (PDF)</a><br />
-              2. <a href="https://www.edweek.org/teaching-learning/introducing-the-teacher-morale-index/2024/03">EdWeek 2024</a><br />
-              3. <a href="https://www.oecd.org/content/dam/oecd/en/publications/reports/2020/01/teachers-well-being_bdafdeaf/c36fc9d3-en.pdf">OECD 2020 (PDF)</a>
-            </p>
+          <h2>Formulated Statement</h2>
+          <p>Based on the desk research, discussions with teachers the following statement gives the scope of my work:</p>
 
-            <h2>Formulated Statement</h2>
-            <p>Based on the desk research, discussions with teachers the following statement gives the scope of my work:</p>
-            <div class="statement">The future will require<br />a new prototype of teachers</div>
-          </div>
+          <!-- IMAGE BAND -->
+          <section class="image-statement-band" aria-label="Statement visual">
+            <div class="img-wrap">
+              <img src="../../../assets/media/Firefly_teacher%20struggling%20with%20teaching%20students%20326508.jpg"
+                   alt="Teacher in classroom raising hand">
+            </div>
+            <div class="statement-card">
+              <h2>The future will require<br>a new prototype of teachers</h2>
+            </div>
+            <div class="img-wrap">
+              <img src="../../../assets/media/Firefly_teacher%20struggling%20with%20teaching%20students%20195437.jpg"
+                   alt="Teacher standing in classroom">
+            </div>
+          </section>
         </section>
 
         <!-- RIGHT COLUMN -->
@@ -299,32 +300,25 @@
             </table>
           </div>
 
-          <section class="aside-block mt-lg">
-            <div>
-              <h2>Next steps</h2>
-              <ul class="next-steps-list">
-                <li>Validate the problem statement and research method</li>
-                <li>Adjust statement and / or research method (optional step)</li>
-                <li>Organize 1st round interviews and school visits</li>
-                <li>Run deeper desk research on problem statement</li>
-                <li>Compile interview guide</li>
-                <li>Input gathering: Interviews and focus group; School visits</li>
-                <li>Compile, share and assess survey</li>
-                <li>Synthesizing results</li>
-                <li>Formulate research summary report</li>
-              </ul>
-              <div class="page-number">2</div>
-            </div>
-
-            <img
-              class="thumb"
-              src="../../../assets/media/Firefly_teacher struggling with teaching students 195437.jpg"
-              alt="Teacher illustration" />
+          <section class="mt-lg">
+            <h2>Next steps</h2>
+            <ul class="next-steps-list">
+              <li>Validate the problem statement and research method</li>
+              <li>Adjust statement and / or research method (optional step)</li>
+              <li>Organize 1st round interviews and school visits</li>
+              <li>Run deeper desk research on problem statement</li>
+              <li>Compile interview guide</li>
+              <li>Input gathering: Interviews and focus group; School visits</li>
+              <li>Compile, share and assess survey</li>
+              <li>Synthesizing results</li>
+              <li>Formulate research summary report</li>
+            </ul>
+            <div class="page-number">2</div>
           </section>
         </aside>
 
-      </div> <!-- /.layout -->
-    </div>   <!-- /.content -->
+      </div>
+    </div>
   </main>
 
 </body>
