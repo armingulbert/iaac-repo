@@ -49,11 +49,12 @@
     }
     .page .content { max-width: 1200px; }
 
-    /* Layout */
+    /* Layout — “magazine style” balance */
     .layout {
       display: grid;
-      grid-template-columns: 1.1fr 1fr;
+      grid-template-columns: 1.05fr 0.95fr; /* subtle left emphasis */
       gap: var(--space-lg);
+      align-items: start;
     }
     @media (max-width: 980px){
       .layout { grid-template-columns: 1fr; }
