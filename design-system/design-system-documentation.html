@@ -1,1 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>IAAC Portfolio Design System</title>
+  <link rel="stylesheet" href="../assets/css/design-system.css">
+</head>
+<body>
+  <div class="content">
+    <h1>IAAC Portfolio Design System</h1>
+    <p class="card-desc text-center">
+      This page documents the core design system for the IAAC Portfolio site.<br>
+      It includes color palette, typography, components, and usage guidelines.<br>
+      <span class="text-accent">Inspired by Vox.com for clarity and readability.</span>
+    </p>
 
+    <div class="card mt-lg mb-lg">
+      <h2 class="card-title">Colors</h2>
+      <div style="display:flex;gap:2em;justify-content:center;">
+        <div style="background:#f8f9fa;border:1px solid #e5e7eb;padding:1em 2em;border-radius:8px;">
+          <strong style="color:#111827;">Background</strong><br>
+          <code>#f8f9fa</code>
+        </div>
+        <div style="background:#fff;border:1px solid #e5e7eb;padding:1em 2em;border-radius:8px;">
+          <strong style="color:#111827;">Card</strong><br>
+          <code>#fff</code>
+        </div>
+        <div style="background:#e6c700;color:#111827;border:1px solid #e5e7eb;padding:1em 2em;border-radius:8px;">
+          <strong>Accent</strong><br>
+          <code>#e6c700</code>
+        </div>
+        <div style="background:#2962ff;color:#fff;border:1px solid #e5e7eb;padding:1em 2em;border-radius:8px;">
+          <strong>Link</strong><br>
+          <code>#2962ff</code>
+        </div>
+        <div style="background:#111827;color:#fff;border:1px solid #e5e7eb;padding:1em 2em;border-radius:8px;">
+          <strong>Primary</strong><br>
+          <code>#111827</code>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mt-lg mb-lg">
+      <h2 class="card-title">Typography</h2>
+      <ul>
+        <li><strong>Main font:</strong> <span style="font-family:Lato,Oswald,Arial,sans-serif;">Lato, Oswald, Arial, Helvetica, sans-serif</span></li>
+        <li><strong>Base size:</strong> 1rem</li>
+        <li><strong>Heading (h1):</strong> 2.1rem, 800 weight</li>
+        <li><strong>Heading (h2):</strong> 1.3rem, 700 weight</li>
+        <li><strong>Navigation:</strong> 1.1rem, 700 weight</li>
+      </ul>
+      <h1>Heading 1 Example</h1>
+      <h2>Heading 2 Example</h2>
+      <h3>Heading 3 Example</h3>
+      <p>Body text example for IAAC Portfolio design system.</p>
+      <a href="#">Link Example</a>
+    </div>
+
+    <div class="card mt-lg mb-lg">
+      <h2 class="card-title">Buttons</h2>
+      <div style="display:flex;gap:2em;justify-content:center;">
+        <button class="btn">Primary Button</button>
+        <button class="secondary-btn">Secondary Button</button>
+      </div>
+      <pre>
+        <code>
+&lt;button class="btn"&gt;Primary Button&lt;/button&gt;
+&lt;button class="secondary-btn"&gt;Secondary Button&lt;/button&gt;
+        </code>
+      </pre>
+    </div>
+
+    <div class="card mt-lg mb-lg">
+      <h2 class="card-title">Cards</h2>
+      <div class="card" style="max-width:300px;margin:auto;">
+        <h3 class="card-title">Card Title</h3>
+        <p class="card-desc">This is a card example. Use <code>.card</code> for informational or content blocks.</p>
+      </div>
+      <pre>
+        <code>
+&lt;div class="card"&gt;
+  &lt;h3 class="card-title"&gt;Card Title&lt;/h3&gt;
+  &lt;p class="card-desc"&gt;This is a card example.&lt;/p&gt;
+&lt;/div&gt;
+        </code>
+      </pre>
+    </div>
+
+    <div class="card mt-lg mb-lg">
+      <h2 class="card-title">Grid & Layout Utilities</h2>
+      <div class="grid grid-2" style="margin-bottom:1em;">
+        <div style="background:#faf6e3;padding:1em;border-radius:8px;">Grid Item 1</div>
+        <div style="background:#faf6e3;padding:1em;border-radius:8px;">Grid Item 2</div>
+      </div>
+      <pre>
+        <code>
+&lt;div class="grid grid-2"&gt;
+  &lt;div&gt;Grid Item 1&lt;/div&gt;
+  &lt;div&gt;Grid Item 2&lt;/div&gt;
+&lt;/div&gt;
+        </code>
+      </pre>
+      <ul>
+        <li><code>.grid</code> creates a CSS grid with gap</li>
+        <li><code>.grid-2</code>, <code>.grid-3</code> for columns</li>
+        <li>Margin/padding utilities: <code>.mt-lg</code>, <code>.mb-lg</code>, <code>.mt-md</code>, <code>.mb-md</code></li>
+      </ul>
+    </div>
+
+    <div class="card mt-lg mb-lg">
+      <h2 class="card-title">Images</h2>
+      <img src="https://placehold.co/500x300/e6c700/111827?text=Image+Example" alt="Image Example">
+      <pre>
+        <code>
+&lt;img src="..." alt="..."&gt;
+        </code>
+      </pre>
+      <ul>
+        <li>Images have border-radius and shadow by default</li>
+        <li>Always use descriptive <code>alt</code> attributes</li>
+      </ul>
+    </div>
+
+    <div class="card mt-lg mb-lg">
+      <h2 class="card-title">Accessibility</h2>
+      <ul>
+        <li>Focused elements have a clear outline using <code>:focus</code></li>
+        <li>Buttons and links have visible hover/focus states</li>
+        <li>Use semantic HTML for headings, nav, lists, etc.</li>
+      </ul>
+      <pre>
+        <code>
+:focus {
+  outline: 2px solid var(--color-link);
+  outline-offset: 2px;
+}
+        </code>
+      </pre>
+    </div>
+
+    <div class="card mt-lg mb-lg">
+      <h2 class="card-title">How to Use</h2>
+      <ul>
+        <li>Reference <code>assets/css/design-system.css</code> in your HTML files:</li>
+        <li>
+          <code>&lt;link rel="stylesheet" href="assets/css/design-system.css"&gt;</code>
+        </li>
+        <li>Apply classes as documented above for components and utilities</li>
+        <li>Extend with new variables or components as your site grows!</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
