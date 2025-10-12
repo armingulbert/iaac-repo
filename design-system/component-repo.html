@@ -13,6 +13,63 @@
       margin: 0;
       padding: 0;
     }
+    .nav-fixed-container {
+      width: 100vw;
+      background: #e24e36;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(226,78,54,0.10);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 0.5em;
+      padding-bottom: 0.5em;
+    }
+    .nav-label {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: #1c1c1c;
+      font-weight: 700;
+      width: 100%;
+      text-align: left;
+      margin-left: 0.5em;
+      margin-bottom: 0.4em;
+      margin-top: 0.5em;
+    }
+    .nav-bar {
+      background: #fff;
+      border-radius: 32px;
+      padding: 0.7em 2em;
+      display: flex;
+      align-items: center;
+      gap: 2em;
+      width: fit-content;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+    }
+    .nav-title {
+      font-family: var(--font-display);
+      font-size: 2em;
+      color: #1c1c1c;
+      font-weight: 400;
+      margin-right: 1em;
+    }
+    .nav-link {
+      font-family: var(--font-main);
+      font-size: 1.1em;
+      color: #1c1c1c;
+      font-style: italic;
+      text-decoration: underline;
+      margin-right: 1em;
+      transition: color 0.2s;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    .nav-link:last-child { margin-right: 0; }
+    .nav-link.active { color: #e24e36; }
     .container {
       max-width: 1400px;
       margin: 0 auto;
@@ -20,6 +77,7 @@
       display: flex;
       flex-direction: column;
       gap: 2em;
+      margin-top: 160px; /* Space for fixed nav */
     }
     h1 {
       font-family: var(--font-display);
@@ -35,6 +93,7 @@
     .section {
       margin-bottom: 2em;
     }
+    /* ...keep rest of your button, card, table styles from previous version... */
     .component-row {
       display: flex;
       flex-wrap: wrap;
@@ -42,7 +101,6 @@
       align-items: flex-start;
       margin-bottom: 2em;
     }
-    /* Button Styles */
     .btn-demo-row {
       display: flex;
       gap: 1em;
@@ -69,7 +127,6 @@
     .btn-outline { background: #fff; color: #1c1c1c; border: 2px solid #1c1c1c; }
     .btn-light-outline { background: rgba(226,78,54,0.07); color: #1c1c1c; border: 2px solid #e24e36; }
     .btn-dark-outline { background: #1c1c1c; color: #fff; border: none; }
-    /* Quiet Buttons Row */
     .quiet-row {
       display: flex;
       gap: 1em;
@@ -98,154 +155,32 @@
       gap: 1em;
       margin-bottom: 1em;
     }
-    /* Navigation Styles */
-    .nav-demo {
-      background: #e24e36;
-      border-radius: 32px;
-      padding: 0.7em 2em;
-      display: flex;
-      align-items: center;
-      gap: 2em;
-      width: fit-content;
-    }
-    .nav-title {
-      font-family: var(--font-display);
-      font-size: 2em;
-      color: #1c1c1c;
-      margin-right: 1em;
-      font-weight: 400;
-    }
-    .nav-link {
-      font-family: var(--font-main);
-      font-size: 1em;
-      color: #1c1c1c;
-      font-style: italic;
-      text-decoration: underline;
-      margin-right: 1em;
-      transition: color 0.2s;
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 0;
-    }
-    .nav-link:last-child { margin-right: 0; }
-    /* Card Styles */
-    .card-demo-row {
-      display: flex;
-      gap: 2em;
-      margin-bottom: 2em;
-    }
-    .card-demo {
-      width: 335px;
-      background: #fff;
-      border: none;
-      box-shadow: none;
-      position: relative;
-      border-bottom: 4px solid #e24e36;
-      min-height: 380px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-    }
-    .card-demo-img {
-      width: 100%;
-      height: 180px;
-      background: #1c1c1c;
-    }
-    .card-demo-content {
-      background: #fff;
-      padding: 1em 2em 1.5em 2em;
-      min-height: 200px;
-      display: flex;
-      flex-direction: column;
-    }
-    .card-demo-content .card-demo-label {
-      font-size: 12px;
-      color: #1c1c1c;
-      margin-bottom: 1em;
-      font-family: var(--font-main);
-    }
-    .card-demo-content .card-demo-title {
-      font-size: 24px;
-      font-weight: 800;
-      color: #e24e36;
-      margin-bottom: 0.8em;
-      font-family: var(--font-main);
-    }
-    .card-demo-content .card-demo-desc {
-      font-size: 14px;
-      color: #1c1c1c;
-      margin-bottom: 0.8em;
-      font-family: var(--font-main);
-    }
-    .card-demo-alt {
-      width: 335px;
-      min-height: 380px;
-      background: #fff;
-      border-bottom: 4px solid #e24e36;
-      padding: 2em;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-    }
-    .card-demo-alt .card-demo-label {
-      font-size: 12px;
-      color: #1c1c1c;
-      margin-bottom: 1em;
-      font-family: var(--font-main);
-    }
-    .card-demo-alt .card-demo-title {
-      font-size: 24px;
-      font-weight: 700;
-      color: #e24e36;
-      margin-bottom: 0.8em;
-      font-family: var(--font-main);
-    }
-    .card-demo-alt .card-demo-desc {
-      font-size: 14px;
-      color: #1c1c1c;
-      margin-bottom: 0.8em;
-      font-family: var(--font-main);
-    }
-    /* Table Styles */
-    .table-demo {
-      width: 80%;
-      border-collapse: collapse;
-      margin-top: 1.5em;
-    }
-    .table-demo th {
-      font-family: var(--font-main);
-      font-weight: 800;
-      font-size: 1.2em;
-      color: #1c1c1c;
-      border-bottom: 4px solid #e24e36;
-      padding: 0.6em 1.2em;
-      background: #fff;
-      text-align: left;
-    }
-    .table-demo td {
-      font-family: var(--font-main);
-      font-size: 1em;
-      color: #1c1c1c;
-      padding: 0.6em 1.2em;
-      background: #fff;
-      border-bottom: 1px solid #b9b6b5;
-    }
-    .table-demo tr:last-child td {
-      border-bottom: none;
-    }
+    .nav-link.folder-link { font-style: normal; font-weight: 700; }
     @media (max-width:900px){
       .container{padding:1em;}
-      .component-row, .card-demo-row{flex-direction:column;gap:1em;}
-      .card-demo, .card-demo-alt{width:100%;min-width:220px;}
-      .table-demo{width:100%;}
+      .component-row{flex-direction:column;gap:1em;}
+      .btn-demo-row{flex-direction:column;}
+      .card-demo-row{flex-direction:column;}
     }
   </style>
 </head>
 <body>
+  <!-- Fixed Navigation -->
+  <div class="nav-fixed-container">
+    <span class="nav-label">Navigation</span>
+    <nav class="nav-bar">
+      <span class="nav-title">The Log</span>
+      <a href="context/index.html" class="nav-link folder-link">Context</a>
+      <a href="the-project/index.html" class="nav-link folder-link">Blueprint</a>
+      <a href="repository.html" class="nav-link folder-link active">Repository</a>
+      <a href="glossary/index.html" class="nav-link folder-link">Glossary</a>
+      <a href="about/index.html" class="nav-link folder-link">About</a>
+      <!-- Add/remove main folders as needed -->
+    </nav>
+  </div>
+
   <div class="container">
     <h1>Component Repository</h1>
-
     <!-- Buttons Section -->
     <div class="section">
       <h2>Buttons</h2>
@@ -274,19 +209,21 @@
     <!-- Navigation Section -->
     <div class="section">
       <h2>Navigation</h2>
-      <nav class="nav-demo">
+      <nav class="nav-bar">
         <span class="nav-title">The Log</span>
-        <a href="#" class="nav-link">Context</a>
-        <a href="#" class="nav-link">Blueprint</a>
-        <a href="#" class="nav-link">Repository</a>
+        <a href="context/index.html" class="nav-link folder-link">Context</a>
+        <a href="the-project/index.html" class="nav-link folder-link">Blueprint</a>
+        <a href="repository.html" class="nav-link folder-link active">Repository</a>
+        <a href="glossary/index.html" class="nav-link folder-link">Glossary</a>
+        <a href="about/index.html" class="nav-link folder-link">About</a>
       </nav>
     </div>
 
     <!-- Cards Section -->
     <div class="section">
       <h2>Cards</h2>
-      <div class="card-demo-row">
-        <div class="card-demo">
+      <div class="component-row">
+        <div class="card-demo" style="width:335px;min-height:380px;">
           <div class="card-demo-img"></div>
           <div class="card-demo-content">
             <div class="card-demo-label">LOREM IPSUM</div>
@@ -296,7 +233,7 @@
             </div>
           </div>
         </div>
-        <div class="card-demo-alt">
+        <div class="card-demo-alt" style="width:335px;min-height:380px;">
           <div class="card-demo-label">LOREM IPSUM</div>
           <div class="card-demo-title" style="color:#e24e36;">
             Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim.
