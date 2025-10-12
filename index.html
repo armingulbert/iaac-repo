@@ -2,28 +2,162 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>IAAC Portfolio Home</title>
+  <title>The Log – IAAC Portfolio</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="design-system/design-system.css">
+  <!-- Abril Fatface and Lato fonts are imported in design-system.css -->
+  <style>
+    body {
+      background: #1c1c1c;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: 5rem;
+      color: #fff;
+      margin: 0;
+      letter-spacing: -2px;
+      text-align: center;
+      margin-top: 2.5em;
+    }
+    .hero-subtitle {
+      font-family: var(--font-main);
+      font-size: 2rem;
+      color: #e24e36;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 2.5em;
+      margin-top: 0.5em;
+    }
+    .cards-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 3em;
+      margin-bottom: 4em;
+    }
+    .card-home {
+      background: #e24e36;
+      border-radius: var(--radius-card);
+      box-shadow: 0 2px 16px var(--color-shadow);
+      width: 320px;
+      height: 340px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-end;
+      position: relative;
+      padding: 2.5em 2em 2em 2em;
+      margin-top: 2em;
+      margin-bottom: 2em;
+      color: #fff;
+      overflow: hidden;
+    }
+    .card-home h2 {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      color: #fff;
+      margin: 0 0 0.4em 0;
+      font-weight: 400;
+      letter-spacing: -1px;
+    }
+    .card-home .card-subtitle {
+      font-family: var(--font-main);
+      font-style: italic;
+      font-size: 1.25rem;
+      color: #fff;
+      margin-bottom: 1.6em;
+      margin-top: 0;
+    }
+    .card-home .card-btn {
+      font-family: var(--font-main);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 1.1rem;
+      color: #fff;
+      background: none;
+      border: none;
+      text-decoration: underline;
+      cursor: pointer;
+      padding: 0.5em 1.2em;
+      margin-left: -0.5em;
+      margin-bottom: 0;
+      transition: color 0.2s;
+    }
+    .card-home .card-btn:hover {
+      color: #2699fb;
+    }
+    .footer {
+      background: #fff;
+      color: #1c1c1c;
+      height: 80px;
+      width: 100vw;
+      display: flex;
+      align-items: center;
+      padding-left: 140px;
+      font-family: var(--font-main);
+      font-style: italic;
+      font-size: 1.1rem;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      z-index: 10;
+      box-shadow: 0 -2px 16px var(--color-shadow);
+    }
+    @media (max-width:900px){
+      .cards-row{
+        flex-direction:column;
+        align-items:center;
+      }
+      .card-home{
+        width:90vw;
+        min-width:220px;
+      }
+      .hero-title{font-size:3rem;}
+      .hero-subtitle{font-size:1.15rem;}
+    }
+    @media (max-width:500px){
+      .footer{padding-left:1em;}
+    }
+  </style>
 </head>
 <body>
-  <div class="content text-center">
-    <h1>IAAC Portfolio</h1>
-    <h2>Key Artifacts & Deliverables</h2>
-
-    <nav>
-      <a href="context/index.html">Context</a>
-      <a href="the-project/index.html">Blueprint of "Voice-Only"</a>
-      <a href="coursework/index.html">Coursework Repository</a>
-      <a href="under-the-hood/index.html">Under-the-hood</a>
-    </nav>
-
-    <div class="card mt-lg mb-lg">
-      <p class="card-desc">
-        Welcome to my IAAC studies portfolio.<br>
-        Explore context, project milestones, coursework, and documentation.<br>
-        <span class="text-accent">Design system inspired by Vox.com.</span>
-      </p>
+  <main>
+    <h1 class="hero-title">The Log</h1>
+    <div class="hero-subtitle">
+      A Journal and Portfolio Site<br>
+      capturing my studies at IAAC
     </div>
-  </div>
+    <div class="cards-row">
+      <!-- Card 1 -->
+      <div class="card-home">
+        <h2>Context</h2>
+        <div class="card-subtitle">Subheader</div>
+        <a href="context/index.html" class="card-btn">UNDERSTAND</a>
+      </div>
+      <!-- Card 2 -->
+      <div class="card-home">
+        <h2>My Project</h2>
+        <div class="card-subtitle">Subheader</div>
+        <a href="the-project/index.html" class="card-btn">DISCOVER</a>
+      </div>
+      <!-- Card 3 -->
+      <div class="card-home">
+        <h2>Repository</h2>
+        <div class="card-subtitle">Subheader</div>
+        <a href="repository/index.html" class="card-btn">FIND DOCS</a>
+      </div>
+      <!-- Card 4 -->
+      <div class="card-home">
+        <h2>Glossary</h2>
+        <div class="card-subtitle">Subheader</div>
+        <a href="under-the-hood/index.html" class="card-btn">LEARN MORE</a>
+      </div>
+    </div>
+  </main>
+  <footer class="footer">
+    Smallprint
+  </footer>
 </body>
 </html>
