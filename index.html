@@ -17,23 +17,21 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      min-height: 100vh;
-      width: 100vw;
     }
     body {
+      min-height: 100vh;
+      width: 100vw;
       display: flex;
       flex-direction: column;
       font-family: var(--font-main);
       background: var(--hero-bg);
-      min-height: 100vh;
-      width: 100vw;
     }
     .main-split {
-      flex: 1 1 auto;
+      flex: 1 0 auto;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      height: calc(100vh - 80px);
-      min-height: 520px;
+      min-height: 0; /* Important for flex/grid overflow */
+      height: 100%;
     }
     .hero-panel {
       background: var(--hero-bg);
@@ -55,7 +53,7 @@
     }
     .hero-desc {
       font-family: var(--font-main);
-      font-size: 1.7vw;
+      font-size: 2vw;
       color: var(--card-bg);
       font-weight: 700;
       margin-top: 1vw;
@@ -68,11 +66,13 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr 1fr;
-      height: 100%;
       gap: 0;
       padding: 5vw 3vw 3vw 3vw;
       align-items: stretch;
       justify-items: start;
+      height: 100%;
+      box-sizing: border-box;
+      position: relative;
     }
     .card-menu {
       display: flex;
@@ -134,11 +134,9 @@
       font-family: var(--font-main);
       font-style: italic;
       font-size: 1.1rem;
-      position: relative;
-      bottom: 0;
-      left: 0;
-      z-index: 10;
       box-shadow: 0 -2px 16px var(--color-shadow);
+      flex-shrink: 0;
+      margin-top: auto;
     }
     @media (max-width: 900px) {
       .main-split {
