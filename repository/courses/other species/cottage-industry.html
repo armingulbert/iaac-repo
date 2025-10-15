@@ -50,7 +50,7 @@
 
     /* Left column: callout + note */
     .callout-row{
-      display:grid; grid-template-columns: minmax(300px,330px) 1fr;
+      display:grid; grid-template-columns: 330px 1fr; /* fixed left, flexible right */
       gap: var(--space-lg); align-items:start; margin: var(--space-md) 0 var(--space-lg);
     }
     .callout{
@@ -64,27 +64,28 @@
     /* Principles */
     .principles{ margin-top: var(--space-lg); }
     .pillars{
-      display:grid; grid-template-columns: repeat(4,1fr);
+      display:grid; grid-template-columns: repeat(4, minmax(230px, 1fr));
       gap: var(--space-lg); margin-top: var(--space-md);
     }
     .pillar h3{ margin:0 0 .4em 0; font-size:1rem; font-weight:700; }
     .pillar p{ margin:0; font-size:.95rem; line-height:1.45; }
-    @media (max-width:980px){ .pillars{ grid-template-columns:1fr; } }
+    @media (max-width:1200px){ .pillars{ grid-template-columns: repeat(2, minmax(260px,1fr)); } }
+    @media (max-width:720px){ .pillars{ grid-template-columns: 1fr; } }
 
-    /* --- Right column: full-bleed orange framed sketch --- */
-    .sketch-frame-wrap{
-      position: relative;
-      left: 50%;
-      width: 100vw;               /* extend to both edges of viewport */
-      transform: translateX(-50%);/* center the strip in viewport */
+    /* --- Right column: safe full-bleed orange framed sketch (right edge) --- */
+    /* We extend only to the RIGHT edge using a negative margin equal to the gutter. */
+    .sketch-bleed {
+      /* amount of gutter from content edge to viewport edge */
+      --gutter: calc((100vw - min(1200px, 100vw)) / 2);
       background: #E24E36;
       padding: 10px 0;
       margin: var(--space-lg) 0 var(--space-md);
-      border-radius: 0;
+      margin-right: calc(var(--gutter) * -1); /* extend to right edge */
+      border-radius: 0; /* match design */
     }
     .sketch-frame{
       max-width: 560px;
-      margin-left: auto;          /* align the image block to the right */
+      margin-left: auto;          /* right-align image box inside the bleed */
       margin-right: 0;
       background:#fff;
       border-radius: var(--radius-card);
@@ -210,8 +211,8 @@
 
         <!-- RIGHT COLUMN -->
         <aside>
-          <!-- Full-bleed orange frame with right-aligned sketch -->
-          <div class="sketch-frame-wrap">
+          <!-- Orange strip that bleeds to the right viewport edge -->
+          <div class="sketch-bleed">
             <div class="sketch-frame">
               <img
                 src="../../../assets/media/cottage-sketch.png"
