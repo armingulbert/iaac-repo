@@ -11,136 +11,94 @@
   <style>
     /* ---------- Page-specific styles ---------- */
 
-    /* Hero (same pattern as previous page) */
+    /* Hero */
     .hero {
       background: #E24E36;
       color: #fff;
       padding: var(--space-lg) var(--space-md) calc(var(--space-lg) * 1.2);
     }
     .hero .content { max-width: 1200px; }
-
     .badge {
-      display: inline-block;
-      background: #fff;
-      color: #000;
-      border-radius: 999px;
-      padding: 0.4em 0.9em;
-      font-weight: 700;
-      font-size: .9rem;
+      display: inline-block; background:#fff; color:#000;
+      border-radius: 999px; padding:.4em .9em; font-weight:700; font-size:.9rem;
       margin-bottom: var(--space-sm);
     }
     .hero h1 {
-      color: #fff;
-      font-size: clamp(2.2rem, 4.5vw, 3.5rem);
-      margin-bottom: .2em;
-      font-family: var(--font-display);
-      font-weight: 400;
+      color:#fff; font-size: clamp(2.2rem,4.5vw,3.5rem);
+      margin-bottom:.2em; font-family: var(--font-display); font-weight:400;
     }
-    .hero p { color: #fff; max-width: 62ch; }
-
-    /* Author/date */
+    .hero p { color:#fff; max-width:62ch; }
     .byline { font-size:.75rem; opacity:.9; }
 
     /* Page card */
     .page {
-      background: #fff;
-      box-shadow: 0 2px 12px var(--color-shadow);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-card);
-      margin-top: calc(var(--space-lg) * -1.2);
-      margin-bottom: var(--space-lg);
+      background:#fff; box-shadow:0 2px 12px var(--color-shadow);
+      border:1px solid var(--color-border); border-radius: var(--radius-card);
+      margin-top: calc(var(--space-lg) * -1.2); margin-bottom: var(--space-lg);
     }
     .page .content { max-width: 1200px; }
 
-    /* Two-column layout — magazine balance */
+    /* Layout — magazine balance */
     .layout {
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: var(--space-lg);
-      align-items: start;
+      display:grid; grid-template-columns: 1.05fr 0.95fr;
+      gap: var(--space-lg); align-items:start;
     }
-    @media (max-width: 980px){
-      .layout { grid-template-columns: 1fr; }
-    }
+    @media (max-width:980px){ .layout{ grid-template-columns:1fr; } }
 
-    /* Small helper */
     .muted { opacity:.9; }
+    .brief-list { margin:.6rem 0 0 0; }
 
-    /* --- Left column specifics --- */
-    .callout-row {
-      display: grid;
-      grid-template-columns: minmax(300px, 330px) 1fr;
-      gap: var(--space-lg);
-      align-items: start;
-      margin: var(--space-md) 0 var(--space-lg);
+    /* Left column: callout + note */
+    .callout-row{
+      display:grid; grid-template-columns: minmax(300px,330px) 1fr;
+      gap: var(--space-lg); align-items:start; margin: var(--space-md) 0 var(--space-lg);
     }
-    .callout {
-      background:#E24E36;
-      color:#fff;
-      border-radius: var(--radius-card);
-      padding: 18px 20px;
-      font-family: var(--font-display);
-      font-size: 1.12rem;
-      line-height: 1.35;
+    .callout{
+      background:#E24E36; color:#fff; border-radius: var(--radius-card);
+      padding:18px 20px; font-family: var(--font-display);
+      font-size:1.12rem; line-height:1.35;
     }
-    .callout-note h3 {
-      margin: 0 0 .4em 0;
-      font-size: 1.05rem;
-      font-weight: 700;
-    }
-    .callout-note p { margin: 0; }
+    .callout-note h3{ margin:0 0 .4em 0; font-size:1.05rem; font-weight:700; }
+    .callout-note p{ margin:0; }
 
-    /* --- Right column: orange framed sketch --- */
-    .sketch-frame {
+    /* Principles */
+    .principles{ margin-top: var(--space-lg); }
+    .pillars{
+      display:grid; grid-template-columns: repeat(4,1fr);
+      gap: var(--space-lg); margin-top: var(--space-md);
+    }
+    .pillar h3{ margin:0 0 .4em 0; font-size:1rem; font-weight:700; }
+    .pillar p{ margin:0; font-size:.95rem; line-height:1.45; }
+    @media (max-width:980px){ .pillars{ grid-template-columns:1fr; } }
+
+    /* --- Right column: full-bleed orange framed sketch --- */
+    .sketch-frame-wrap{
+      position: relative;
+      left: 50%;
+      width: 100vw;               /* extend to both edges of viewport */
+      transform: translateX(-50%);/* center the strip in viewport */
       background: #E24E36;
+      padding: 10px 0;
+      margin: var(--space-lg) 0 var(--space-md);
+      border-radius: 0;
+    }
+    .sketch-frame{
+      max-width: 560px;
+      margin-left: auto;          /* align the image block to the right */
+      margin-right: 0;
+      background:#fff;
       border-radius: var(--radius-card);
-      padding: 10px;
-      display: inline-block;
       box-shadow: 0 2px 12px var(--color-shadow);
     }
-    .sketch-frame img {
-      display: block;
-      width: min(560px, 38vw);
-      max-width: 100%;
-      height: auto;
-      border-radius: calc(var(--radius-card) - 2px);
-      background: #fff;
-      border: 1px solid rgba(0,0,0,.1);
-      margin: 0;
-      box-shadow: none;
+    .sketch-frame img{
+      display:block; width:100%; height:auto; margin:0;
+      border-radius: var(--radius-card);
+      border:1px solid rgba(0,0,0,.1);
+      box-shadow:none;
     }
-    .sketch-caption {
-      font-weight:700;
-      font-size: .9rem;
-      margin-top: .4rem;
+    .sketch-caption{
+      text-align:right; font-weight:700; font-size:.9rem; margin-top:.4rem;
     }
-
-    /* Principles grid (4 columns) */
-    .principles {
-      margin-top: var(--space-lg);
-    }
-    .pillars {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: var(--space-lg);
-      margin-top: var(--space-md);
-    }
-    .pillar h3 {
-      margin: 0 0 .4em 0;
-      font-size: 1rem;
-      font-weight: 700;
-    }
-    .pillar p {
-      margin: 0;
-      font-size: .95rem;
-      line-height: 1.45;
-    }
-    @media (max-width: 980px){
-      .pillars { grid-template-columns: 1fr; }
-    }
-
-    /* Lists inside brief to match design */
-    .brief-list { margin: .6rem 0 0 0; }
   </style>
 </head>
 <body>
@@ -252,11 +210,13 @@
 
         <!-- RIGHT COLUMN -->
         <aside>
-          <!-- Orange framed sketch -->
-          <div class="sketch-frame">
-            <img
-              src="../../../assets/media/cottage-sketch.png"
-              alt="Initial concept sketch for cottage industry" />
+          <!-- Full-bleed orange frame with right-aligned sketch -->
+          <div class="sketch-frame-wrap">
+            <div class="sketch-frame">
+              <img
+                src="../../../assets/media/cottage-sketch.png"
+                alt="Initial concept sketch for cottage industry" />
+            </div>
           </div>
           <div class="sketch-caption">Chart 1: Initial concept sketch</div>
         </aside>
