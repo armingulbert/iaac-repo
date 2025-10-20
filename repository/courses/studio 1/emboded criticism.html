@@ -16,17 +16,10 @@
       background: #E24E36;
       font-family: 'Lato', sans-serif;
       color: #fff;
-    }
-
-    .container {
-      max-width: 1440px;
-      margin: 0 auto;
-      position: relative;
-      min-height: 100vh;
-      background: #E24E36;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      min-height: 100vh;
       padding: 30px 16px 60px;
     }
 
@@ -51,7 +44,6 @@
     }
 
     .subtitle {
-      font-family: 'Lato', sans-serif;
       font-weight: 900;
       font-size: 16px;
       line-height: 1.4;
@@ -60,58 +52,52 @@
       margin-bottom: 40px;
     }
 
-    .video-wrapper {
-      background: #fff;
-      border-radius: 20px;
+    .video-container {
+      position: relative;
       width: 1041px;
       max-width: 90%;
-      height: 534px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto;
+      aspect-ratio: 16 / 9;
+      border-radius: 20px;
+      overflow: hidden; /* ensures video corners are rounded */
+      background: #fff;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      margin: 0 auto;
     }
 
-    .video-wrapper iframe {
-      border: none;
-      border-radius: 20px;
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
+      border: none;
     }
 
     @media (max-width: 1100px) {
-      .video-wrapper {
+      .video-container {
         width: 90%;
-        height: auto;
-        aspect-ratio: 16/9;
       }
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <div class="badge">Sprint 1</div>
+  <div class="badge">Sprint 1</div>
 
-    <h1>Embodied Criticism</h1>
-    <p class="subtitle">
-      What makes me crazy? How does that context of interest impact me?<br>
-      The following video presents the end result of an individual task,
-      through which I examined a topic from a 1st-person-perspective resulting a manifest.
-    </p>
+  <h1>Embodied Criticism</h1>
+  <p class="subtitle">
+    What makes me crazy? How does that context of interest impact me?<br>
+    The following video presents the end result of an individual task,
+    through which I examined a topic from a 1st-person-perspective resulting a manifest.
+  </p>
 
-    <div class="video-wrapper">
-      <iframe 
-        src="https://player.vimeo.com/video/1128691410?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
-        width="1280" 
-        height="720" 
-        frameborder="0" 
-        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
-        referrerpolicy="strict-origin-when-cross-origin" 
-        title="AGEmbodiedCriticismV2">
-      </iframe>
-    </div>
+  <div class="video-container">
+    <iframe
+      src="https://player.vimeo.com/video/1128691410?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      title="AGEmbodiedCriticismV2">
+    </iframe>
   </div>
 
 </body>
