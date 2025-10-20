@@ -16,10 +16,9 @@
       background: #E24E36;
       font-family: 'Lato', sans-serif;
       color: #fff;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      min-height: 100vh;
       padding: 30px 16px 60px;
     }
 
@@ -52,30 +51,39 @@
       margin-bottom: 40px;
     }
 
-    .video-container {
-      position: relative;
-      width: 1041px;
+    /* White rounded card container */
+    .video-card {
+      --card-w: 1041px;
+      --card-ar: calc(1041 / 534);         /* ≈ 1.949 (your Figma rectangle) */
+      --video-ar: calc(16 / 9);             /* 1.777... Vimeo ratio */
+      --cover-scale: calc(var(--card-ar) / var(--video-ar)); /* ≈ 1.0966 */
+
+      width: var(--card-w);
       max-width: 90%;
-      aspect-ratio: 16 / 9;
+      aspect-ratio: var(--card-ar);
       border-radius: 20px;
-      overflow: hidden; /* ensures video corners are rounded */
+      overflow: hidden;
       background: #fff;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
       margin: 0 auto;
+      position: relative;
     }
 
-    .video-container iframe {
+    /* Make iframe fill and “cover” */
+    .video-card iframe {
       position: absolute;
       top: 0;
-      left: 0;
-      width: 100%;
+      left: 50%;
       height: 100%;
-      border: none;
+      width: calc(100% * var(--cover-scale));  /* ~110% to fill horizontally */
+      transform: translateX(-50%);
+      border: 0;
     }
 
     @media (max-width: 1100px) {
-      .video-container {
+      .video-card {
         width: 90%;
+        aspect-ratio: 1041 / 534;
       }
     }
   </style>
@@ -91,7 +99,7 @@
     through which I examined a topic from a 1st-person-perspective resulting a manifest.
   </p>
 
-  <div class="video-container">
+  <div class="video-card">
     <iframe
       src="https://player.vimeo.com/video/1128691410?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
       allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
