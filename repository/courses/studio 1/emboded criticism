@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Embodied Criticism – Sprint 1</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- IAAC Design System -->
+  <link rel="stylesheet" href="/iaac-repo/design-system/design-system.css" />
+
+  <style>
+    /* ---------- PAGE-SPECIFIC STYLES ---------- */
+
+    body {
+      margin: 0;
+      background: #E24E36;
+      font-family: 'Lato', sans-serif;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+      position: relative;
+      min-height: 100vh;
+      background: #E24E36;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 30px 16px 60px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #fff;
+      color: #000;
+      border-radius: 36px;
+      padding: 6px 16px;
+      font-weight: 900;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-family: 'Abril Fatface', serif;
+      font-size: 48px;
+      line-height: 65px;
+      font-weight: 400;
+      color: #fff;
+      margin: 0 0 10px 0;
+    }
+
+    .subtitle {
+      font-family: 'Lato', sans-serif;
+      font-weight: 900;
+      font-size: 16px;
+      line-height: 1.4;
+      color: #fff;
+      max-width: 680px;
+      margin-bottom: 40px;
+    }
+
+    .video-wrapper {
+      background: #fff;
+      border-radius: 20px;
+      width: 1041px;
+      max-width: 90%;
+      height: 534px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .video-wrapper iframe {
+      border: none;
+      border-radius: 20px;
+      width: 100%;
+      height: 100%;
+    }
+
+    @media (max-width: 1100px) {
+      .video-wrapper {
+        width: 90%;
+        height: auto;
+        aspect-ratio: 16/9;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="badge">Sprint 1</div>
+
+    <h1>Embodied Criticism</h1>
+    <p class="subtitle">
+      What makes me crazy? How does that context of interest impact me?<br>
+      The following video presents the end result of an individual task,
+      through which I examined a topic from a 1st-person-perspective resulting a manifest.
+    </p>
+
+    <div class="video-wrapper">
+      <iframe 
+        src="https://player.vimeo.com/video/1128691410?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
+        width="1280" 
+        height="720" 
+        frameborder="0" 
+        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+        referrerpolicy="strict-origin-when-cross-origin" 
+        title="AGEmbodiedCriticismV2">
+      </iframe>
+    </div>
+  </div>
+
+</body>
+</html>
