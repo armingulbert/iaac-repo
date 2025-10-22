@@ -1,269 +1,221 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Repository of Course Artefacts</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="design-system/design-system.css">
+  <meta charset="utf-8" />
+  <title>Repository – The Project</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- IAAC Design System -->
+  <link rel="stylesheet" href="/iaac-repo/design-system/design-system.css" />
+
   <style>
-    :root {
-      --main-orange: #E24E36;
-      --nav-bg: #fff;
-      --nav-radius: 60px;
-      --card-radius: 24px;
-      --nav-height: 80px;
-      --nav-width: 613px;
-      --nav-left: 64px;
-      --nav-top: 64px;
-      --title-left: 75px;
-      --title-top: 208px;
-      --subtitle-left: 75px;
-      --subtitle-top: 353px;
-      --card-width: 320px;
-      --card-height: 320px;
-      --card-gap: 24px;
-      --card-top: 526px;
-      --card-left-base: 75px;
-      --tag-color: #4658F4;
+    /* ---------- page tweaks ---------- */
+    body { margin:0; background:#fff; }
+    header.hero {
+      background:#E24E36; color:#fff;
+      padding: var(--space-lg) var(--space-md);
     }
-    body {
-      margin: 0;
-      padding: 0;
-      background: var(--main-orange);
-      font-family: var(--font-main);
-      position: relative;
-      width: 100vw;
-      min-height: 100vh;
+    header.hero .content { max-width:1200px; }
+    header h1 {
+      font-family: var(--font-display, 'Abril Fatface', serif);
+      font-weight:400; color:#fff;
+      font-size: clamp(2.1rem, 4vw, 3rem);
+      margin:.2rem 0 .4rem;
     }
-    /* Navigation */
-    .nav-main-container {
-      position: absolute;
-      left: var(--nav-left);
-      top: var(--nav-top);
-      width: var(--nav-width);
-      height: var(--nav-height);
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: start;
-    }
-    .nav-bar {
-      background: var(--nav-bg);
-      border-radius: var(--nav-radius);
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      gap: 2em;
-      box-shadow: 0 2px 8px rgba(226,78,54,0.10);
-      padding-left: 2em;
-      padding-right: 2em;
-    }
-    .nav-logo {
-      font-family: 'Abril Fatface', serif;
-      font-size: 32px;
-      color: #000;
-      font-weight: 400;
-      margin-right: 2em;
-    }
-    .nav-link {
-      font-family: 'Lato', Arial, sans-serif;
-      font-size: 20px;
-      font-weight: 700;
-      color: #000;
-      text-decoration: underline;
-      background: none;
-      border: none;
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      margin-right: 2em;
-      transition: color 0.2s;
-    }
-    .nav-link:last-child { margin-right: 0; }
-    .nav-link.active { color: var(--main-orange); }
-    /* Page Title and Subtitle */
-    .repo-title {
-      position: absolute;
-      left: var(--title-left);
-      top: var(--title-top);
-      width: 587px;
-      height: 130px;
-      font-family: 'Abril Fatface', serif;
-      font-size: 48px;
-      color: #fff;
-      font-weight: 400;
-      line-height: 65px;
-      display: flex;
-      align-items: center;
-    }
-    .repo-subtitle {
-      position: absolute;
-      left: var(--subtitle-left);
-      top: var(--subtitle-top);
-      width: 561px;
-      height: 50px;
-      font-family: 'Lato', Arial, sans-serif;
-      font-weight: 900;
-      font-size: 18px;
-      color: #fff;
-      line-height: 22px;
-      display: flex;
-      align-items: center;
-    }
-    /* Card Gallery */
-    .course-gallery {
-      position: absolute;
-      left: var(--card-left-base);
-      top: var(--card-top);
-      right: var(--card-left-base);
-      display: flex;
-      flex-direction: row;
-      gap: var(--card-gap);
-      z-index: 10;
-      flex-wrap: wrap;
-    }
-    /* Card Component */
-    .course-card {
-      background: #fff;
-      border-radius: var(--card-radius);
-      width: var(--card-width);
-      height: var(--card-height);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      overflow: hidden;
-      box-shadow: 0 2px 12px rgba(30,30,30,0.04);
-      cursor: pointer;
-      transition: box-shadow 0.2s;
-    }
-    .course-card:hover {
-      box-shadow: 0 8px 32px rgba(226,78,54,0.14);
-    }
-    .card-img {
-      width: var(--card-width);
-      height: 164px;
-      border-radius: 24px 24px 0 0;
-      object-fit: cover;
-      background: url('placeholder-gradient.png'), linear-gradient(to left, #E24E36, #222253);
-      /* Replace with actual image per course */
-    }
-    .card-content {
-      width: 269px;
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-      align-items: flex-start;
-      margin-top: 14px;
-    }
-    .card-tag {
-      font-family: 'Lato', Arial, sans-serif;
-      font-weight: 900;
-      font-size: 14px;
-      color: var(--tag-color);
-      height: 16px;
-      line-height: 17px;
-      margin-bottom: 2px;
-    }
-    .card-title {
-      font-family: 'Lato', Arial, sans-serif;
-      font-weight: 900;
-      font-size: 18px;
-      color: #1C1C1C;
-      line-height: 22px;
-      height: 44px;
-    }
-    .card-subtitle {
-      font-family: 'Lato', Arial, sans-serif;
-      font-weight: 400;
-      font-size: 14px;
-      color: #1C1C1C;
-      line-height: 17px;
-      height: 39px;
-    }
-    @media (max-width: 1300px) {
-      .course-gallery { flex-wrap: wrap; gap: 16px; }
-      .repo-title, .repo-subtitle, .course-gallery, .nav-main-container { left: 32px !important; }
+    header p { max-width:64ch; color:#fff; opacity:.95; }
+
+    main .content { max-width:1200px; }
+
+    .controls {
+      display:grid;
+      grid-template-columns: 260px 1fr 140px;
+      gap: var(--space-md);
+      align-items:center;
+      margin: var(--space-md) 0 var(--space-lg);
     }
     @media (max-width:900px){
-      .nav-main-container { left: 0 !important; width: 100vw !important;}
-      .repo-title, .repo-subtitle { left: 32px !important; width: 90vw !important;}
-      .course-gallery { left: 32px !important; right: 32px !important; flex-wrap: wrap; }
-      .course-card { min-width: 220px; width: 90vw; }
+      .controls{ grid-template-columns: 1fr; }
     }
+
+    select, input[type="search"]{
+      padding: .7rem .8rem;
+      border-radius: 8px;
+      border:1px solid var(--color-border);
+      font: inherit;
+      background:#fff;
+    }
+    .count { text-align:right; opacity:.7; }
+    @media (max-width:900px){ .count{ text-align:left; } }
+
+    .grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg); }
+    @media (max-width:1024px){ .grid{ grid-template-columns: repeat(2, 1fr);} }
+    @media (max-width:640px){ .grid{ grid-template-columns: 1fr; } }
+
+    .card {
+      background: #fff;
+      border-radius: var(--radius-card);
+      border:1px solid var(--color-border);
+      box-shadow: 0 2px 12px var(--color-shadow);
+      overflow: hidden;
+      display:flex; flex-direction:column;
+    }
+    .thumb { aspect-ratio: 16/9; background:#f2f2f2 center/cover no-repeat; }
+    .card-body { padding: var(--space-md); display:flex; flex-direction:column; gap:.5rem; }
+    .badge {
+      display:inline-block; padding:.25rem .6rem; border-radius:999px;
+      font-size:.8rem; font-weight:700; background:#faf6e3; color:#7a5d00;
+      border:1px solid #f1e6b1;
+    }
+    .title { font-weight:700; font-size:1.05rem; margin:0; }
+    .meta { font-size:.9rem; opacity:.75; }
+    .card-actions { margin-top:auto; }
+    .primary-btn { width:100%; text-align:center; }
+    .empty { opacity:.7; padding:2rem 0; }
   </style>
-  <script>
-    // For demonstration: dynamically build gallery from course folders
-    document.addEventListener('DOMContentLoaded', function () {
-      const gallery = document.getElementById('course-gallery');
-      // Example course data - in production, fetch from server or JSON manifest
-      const courses = [
-        {
-          folder: "digital-fabrication",
-          tag: "Core",
-          title: "Digital Fabrication",
-          subtitle: "Techniques and workflows for advanced manufacturing.",
-          img: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80"
-        },
-        {
-          folder: "computational-design",
-          tag: "Elective",
-          title: "Computational Design",
-          subtitle: "Generative, scripting, and parametric modeling.",
-          img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"
-        },
-        {
-          folder: "robotics-architecture",
-          tag: "Core",
-          title: "Robotics in Architecture",
-          subtitle: "Robotic construction and automation in architecture.",
-          img: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80"
-        },
-        {
-          folder: "material-systems",
-          tag: "Lab",
-          title: "Material Systems",
-          subtitle: "Exploring novel material assemblies and systems.",
-          img: "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80"
-        }
-        // add more course folders here
-      ];
-      gallery.innerHTML = '';
-      courses.forEach(course => {
-        const card = document.createElement('div');
-        card.className = 'course-card';
-        card.onclick = () => window.location.href = `courses/${course.folder}/index.html`;
-        card.innerHTML = `
-          <img class="card-img" src="${course.img}" alt="${course.title}"/>
-          <div class="card-content">
-            <div class="card-tag">${course.tag}</div>
-            <div class="card-title">${course.title}</div>
-            <div class="card-subtitle">${course.subtitle}</div>
-          </div>
-        `;
-        gallery.appendChild(card);
-      });
-    });
-  </script>
 </head>
 <body>
-  <!-- Navigation Bar -->
-  <div class="nav-main-container">
-    <div class="nav-bar">
-      <span class="nav-logo">The Log</span>
-      <a href="../context/index.html" class="nav-link">Context</a>
-      <a href="../the-project/index.html" class="nav-link">Blueprint</a>
-      <a href="../repository.html" class="nav-link active">Repository</a>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="content">
+      <h1>Repository</h1>
+      <p>
+        Browse all deliverables I’ve created across courses. Use the filter to switch
+        between courses; each card links to the corresponding page inside
+        <code>/repository/courses/&lt;course&gt;/</code>.
+      </p>
     </div>
-  </div>
-  <!-- Main Title and Subtile -->
-  <div class="repo-title">Repository<br>of Course Artefacts</div>
-  <div class="repo-subtitle">
-    This section provide a comprehensive list of artefacts, deliverables compiled for the program courses.
-  </div>
-  <!-- Card Gallery -->
-  <div class="course-gallery" id="course-gallery">
-    <!-- Cards will be injected by JS -->
-  </div>
+  </header>
+
+  <!-- GALLERY -->
+  <main>
+    <div class="content">
+
+      <div class="controls">
+        <select id="courseFilter" aria-label="Filter by course">
+          <!-- options injected by JS -->
+        </select>
+
+        <input id="searchBox" type="search" placeholder="Search titles or tags…" aria-label="Search">
+
+        <div class="count" id="resultCount">0 items</div>
+      </div>
+
+      <div id="gallery" class="grid" aria-live="polite"></div>
+      <div id="emptyState" class="empty" hidden>No items match your filter.</div>
+
+    </div>
+  </main>
+
+  <script>
+    /* ========== DATA: add your deliverables here ========== */
+    const deliverables = [
+      /* Studio 1 */
+      {
+        title: "Problem Statement",
+        course: "studio 1",
+        href: "/iaac-repo/repository/courses/studio%201/problem%20statement.html",
+        thumb: "/iaac-repo/assets/media/thumb-problem-statement.jpg",
+        date: "2025-10-12",
+        tags: ["challenge", "research", "studio1"]
+      },
+      {
+        title: "Embodied Criticism",
+        course: "studio 1",
+        href: "/iaac-repo/repository/courses/studio%201/emboded%20criticism.html",
+        thumb: "/iaac-repo/assets/media/thumb-embodied.jpg",
+        date: "2025-10-19",
+        tags: ["sprint 1", "video", "manifest", "studio1"]
+      },
+
+      /* Other Species */
+      {
+        title: "Cottage Industry",
+        course: "other species",
+        href: "/iaac-repo/repository/courses/other%20species/cottage-industry.html",
+        thumb: "/iaac-repo/assets/media/thumb-cottage.jpg",
+        date: "2025-10-14",
+        tags: ["micro-industry", "poster", "other species"]
+      },
+
+      /* Studio 0 – add yours as you publish */
+      // {
+      //   title: "…",
+      //   course: "studio 0",
+      //   href: "/iaac-repo/repository/courses/studio%200/your-file.html",
+      //   thumb: "/iaac-repo/assets/media/thumb-yourfile.jpg",
+      //   date: "2025-09-29",
+      //   tags: ["tag1","tag2"]
+      // },
+    ];
+
+    /* ========== UI wiring ========== */
+    const galleryEl = document.getElementById('gallery');
+    const courseFilterEl = document.getElementById('courseFilter');
+    const searchBoxEl = document.getElementById('searchBox');
+    const resultCountEl = document.getElementById('resultCount');
+    const emptyEl = document.getElementById('emptyState');
+
+    // Build distinct course list + query param support (?course=studio%201)
+    const urlParams = new URLSearchParams(location.search);
+    const qpCourse = (urlParams.get('course') || '').toLowerCase();
+
+    const courses = Array.from(new Set(deliverables.map(d => d.course.toLowerCase()))).sort();
+    courseFilterEl.innerHTML = [
+      `<option value="all">All courses</option>`,
+      ...courses.map(c => `<option value="${c}">${titleCase(c)}</option>`)
+    ].join('');
+    if (qpCourse && courses.includes(qpCourse)) courseFilterEl.value = qpCourse;
+
+    // Render
+    function render() {
+      const q = searchBoxEl.value.trim().toLowerCase();
+      const selected = courseFilterEl.value;
+
+      const filtered = deliverables.filter(d => {
+        const matchesCourse = selected === 'all' || d.course.toLowerCase() === selected;
+        const hay = [d.title, ...(d.tags||[])].join(' ').toLowerCase();
+        const matchesSearch = !q || hay.includes(q);
+        return matchesCourse && matchesSearch;
+      });
+
+      galleryEl.innerHTML = filtered.map(cardHTML).join('');
+      resultCountEl.textContent = `${filtered.length} item${filtered.length!==1?'s':''}`;
+      emptyEl.hidden = filtered.length !== 0;
+    }
+
+    function cardHTML(d){
+      const date = d.date ? new Date(d.date).toLocaleDateString(undefined, {year:'numeric', month:'short', day:'2-digit'}) : '';
+      const bg = d.thumb ? `style="background-image:url('${d.thumb}')"`: '';
+      return `
+        <article class="card">
+          <a class="thumb" ${bg} href="${d.href}" aria-label="${escapeHTML(d.title)}"></a>
+          <div class="card-body">
+            <span class="badge">${titleCase(d.course)}</span>
+            <h3 class="title">${escapeHTML(d.title)}</h3>
+            <div class="meta">${date}</div>
+            <div class="card-actions">
+              <a class="primary-btn" href="${d.href}">Open</a>
+            </div>
+          </div>
+        </article>`;
+    }
+
+    function escapeHTML(s){return s.replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+    function titleCase(s){ return s.replace(/\b\w/g, c => c.toUpperCase()); }
+
+    // Events
+    courseFilterEl.addEventListener('change', () => {
+      const v = courseFilterEl.value;
+      const p = new URLSearchParams(location.search);
+      if (v==='all') { p.delete('course'); } else { p.set('course', v); }
+      history.replaceState({}, '', `${location.pathname}?${p.toString()}`);
+      render();
+    });
+    searchBoxEl.addEventListener('input', render);
+
+    // Initial render
+    render();
+  </script>
 </body>
 </html>
