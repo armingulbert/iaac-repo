@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Log Page</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Inter:wght@400;600;700&family=Lato:ital,wght@0,400;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+.container {
+  position: relative;
+  width: 100%;
+  height: 2100px;
+  background: #FFFFFF;
+}
+.header-bar {
+  position: absolute;
+  width: 100%;
+  height: 240px;
+  left: 0px;
+  top: 0px;
+  background: #E24E36;
+}
+.title {
+  position: absolute;
+  width: 563px;
+  height: 69px;
+  left: 307px;
+  top: 71px;
+  font-family: 'Abril Fatface';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 65px;
+  color: #FFFFFF;
+}
+.subtitle {
+  position: absolute;
+  width: 563px;
+  height: 80px;
+  left: 307px;
+  top: 144px;
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 900;
+  font-size: 16px;
+  line-height: 19px;
+  color: #FFFFFF;
+}
+.blueprint-button {
+  position: absolute;
+  width: 94px;
+  height: 32px;
+  left: 307px;
+  top: 30px;
+  background: #FFFFFF;
+  border-radius: 36px;
+}
+.blueprint {
+  position: absolute;
+  width: 67px;
+  height: 14px;
+  left: 320px;
+  top: 39px;
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 900;
+  font-size: 14px;
+  line-height: 17px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #000000;
+}
+.week2-text {
+  position: absolute;
+  width: 819px;
+  height: 95px;
+  left: 314px;
+  top: 260px;
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 900;
+  font-size: 16px;
+  line-height: 19px;
+  color: #000000;
+}
+.table-container {
+  position: absolute;
+  width: 819px;
+  height: 36px;
+  left: 307px;
+  top: 364px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+}
+.table {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  width: 819px;
+  height: 36px;
+  background: #363636;
+  border: 1px solid #5B5B5B;
+  border-radius: 4px;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
+  width: 819px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.0001);
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+.cell {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  width: 273px;
+  height: 36px;
+  background: #E24E36;
+  border-width: 1px 0px 0px 1px;
+  border-style: solid;
+  border-color: #5B5B5B;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 1;
+}
+.content {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 10px 12px;
+  width: 273px;
+  height: 36px;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+.text {
+  width: 249px;
+  height: 16px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 130%;
+  color: #FFFFFF;
+  flex: none;
+  order: 0;
+  flex-grow: 1;
+}
+.interaction-text {
+  position: absolute;
+  width: 247px;
+  height: 184px;
+  left: 326px;
+  top: 634px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 130%;
+  color: #000000;
+}
+.based-results-text {
+  position: absolute;
+  width: 247px;
+  height: 411px;
+  left: 597px;
+  top: 430px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 130%;
+  color: #000000;
+}
+.based-feedback-text {
+  position: absolute;
+  width: 247px;
+  height: 224px;
+  left: 863px;
+  top: 431px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 130%;
+  color: #000000;
+}
+.individual-review-text {
+  position: absolute;
+  width: 247px;
+  height: 116px;
+  left: 326px;
+  top: 970px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 130%;
+  color: #000000;
+}
+.during-review-text {
+  position: absolute;
+  width: 247px;
+  height: 176px;
+  left: 596px;
+  top: 880px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 130%;
+  color: #000000;
+}
+.firefly-image {
+  position: absolute;
+  width: 238px;
+  height: 83px;
+  left: 317px;
+  top: 880px;
+  background: url('Firefly_grayscale illustration of an acient greek interview 583487.jpg');
+}
+.my-overall-text {
+  position: absolute;
+  width: 247px;
+  height: 48px;
+  left: 863px;
+  top: 880px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 130%;
+  color: #000000;
+}
+.line1 {
+  position: absolute;
+  width: 817px;
+  height: 0px;
+  left: 307px;
+  top: 860px;
+  border: 1px solid #5B5B5B;
+}
+.week1-text {
+  position: absolute;
+  width: 819px;
+  height: 80px;
+  left: 314px;
+  top: 1154px;
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 900;
+  font-size: 16px;
+  line-height: 19px;
+  color: #000000;
+}
+.table2-container {
+  position: absolute;
+  width: 819px;
+  height: 36px;
+  left: 307px;
+  top: 1258px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+}
+.table2 {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  width: 819px;
+  height: 36px;
+  background: #363636;
+  border: 1px solid #5B5B5B;
+  border-radius: 4px;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+.row2 {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
+  width: 819px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.0001);
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+.cell2 {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  width: 273px;
+  height: 36px;
+  background: #E24E36;
+  border-width: 1px 0px 0px 1px;
+  border-style: solid;
+  border-color: #5B5B5B;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 1;
+}
+.content2 {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 10px 12px;
+  width: 273px;
+  height: 36px;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+.text2 {
+  width: 249px;
+  height: 16px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 130%;
+  color: #FFFFFF;
+  flex: none;
+  order: 0;
+  flex-grow: 1;
+}
+.image5 {
+  position: absolute;
+  width: 209px;
+  height: 163px;
+  left: 326px;
+  top: 1324px;
+  background: url('image.png');
+}
+.daily-session-text {
+  position: absolute;
+  width: 247px;
+  height: 184px;
+  left: 326px;
+  top: 1528px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 130%;
+  color: #000000;
+}
+.tested-platforms-text {
+  position: absolute;
+  width: 247px;
+  height: 320px;
+  left: 597px;
+  top: 1324px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 130%;
+  color: #000000;
+}
+.no-showstopper-text {
+  position: absolute;
+  width: 247px;
+  height: 224px;
+  left: 863px;
+  top: 1325px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 130%;
+  color: #000000;
+}
+.using-notifications-text {
+  position: absolute;
+  width: 247px;
+  height: 184px;
+  left: 326px;
+  top: 1904px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 130%;
+  color: #000000;
+}
+.brief-messages-text {
+  position: absolute;
+  width: 247px;
+  height: 184px;
+  left: 597px;
+  top: 1720px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 130%;
+  color: #000000;
+}
+.useless-notifications-text {
+  position: absolute;
+  width: 247px;
+  height: 224px;
+  left: 863px;
+  top: 1721px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 130%;
+  color: #000000;
+}
+.line2 {
+  position: absolute;
+  width: 817px;
+  height: 0px;
+  left: 307px;
+  top: 1690px;
+  border: 1px solid #5B5B5B;
+}
+.image6 {
+  position: absolute;
+  width: 223px;
+  height: 174px;
+  left: 331px;
+  top: 1720px;
+  background: url('image.png');
+}
+.rectangle5 {
+  position: absolute;
+  width: 238px;
+  height: 164px;
+  left: 317px;
+  top: 438px;
+  background: #363636;
+  border-radius: 20px;
+}
+.image7 {
+  position: absolute;
+  width: 207px;
+  height: 117px;
+  left: 332px;
+  top: 461px;
+  background: url('image.png');
+  border-radius: 20px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header-bar"></div>
+<div class="title">Design Bet / Log</div>
+<div class="subtitle">This is a living document that constatnly evolves as it covers the discovery and experimental activities of my project. It captures the different research activities and their results in chronological order.</div>
+<div class="blueprint-button"></div>
+<div class="blueprint">Blueprint</div>
+<div class="week2-text">Week 2 / 20-26th October 2025 Individual Review and continued experiments In the first week, first I wanted to test if the idea is even worth further testing in the current form or the bet requires modificaiton. For that I have started small-scale validation methods:</div>
+<div class="table-container">
+<div class="table">
+<div class="row">
+<div class="cell"><div class="content"><div class="text">Method</div></div></div>
+<div class="cell"><div class="content"><div class="text">Description</div></div></div>
+<div class="cell"><div class="content"><div class="text">Outcome</div></div></div>
+</div>
+</div>
+</div>
+<div class="interaction-text">Interaction with an avatar-based LLM model I have proceeded with the experimentationusing an "AI avatar" platform. I brought a prototype to our Extended Intelligences course for a peer-review.</div>
+<div class="based-results-text">Based on the results of my first experiment week, I wanted to proceed with the discovery process with a step where other people can also interact and give feedback on the voice-based AI solution. We could compile AI solutions for our Extended Intelligence classes, I used this opportunity to observe others' reactions and collect feedback. I compiled an avatar agent on a platform called D-ID. The agent can answer MDEF program related questions based on simple built knowledge. I presented the prototype for the MDEF and Elisava classmates in 15 minutes. My key take-aways were: Laughing on the look of the avatar as it seemed realistic first, they seemed surprised in the meantime They showed curiosity over limitations Capabilities of the agent were considered valuable but could not imagine they would talk to her.</div>
+<div class="based-feedback-text">Based on the feedback received from my peers and research on topic-related studies (ie. Turet test...etc.) understanding better what drives trust is a direction where my project should go.</div>
+<div class="individual-review-text">Individual review I had a review with Saul where I shared my progress and received questions, feedbackon my Design Bet.</div>
+<div class="during-review-text">During the review we discussed where I am with the 1st-person-perspective type of experiments, what the key learnings are so far. Received feedback: good progress with the experiments I should find my role and purpose within the topic. For example: I want to figure this dilema and teach others or something different.</div>
+<div class="firefly-image"></div>
+<div class="my-overall-text">My overall mindset / idea what and why I do care about this dilemma must be defined before any further experiment.</div>
+<div class="line1"></div>
+<div class="week1-text">Week 1 / 13-19th October 2025 Validating through 1st-person-perspective In the first week, first I wanted to test if the idea is even worth further testing in the current form or the bet requires modificaiton. For that I have started small-scale validation methods:</div>
+<div class="table2-container">
+<div class="table2">
+<div class="row2">
+<div class="cell2"><div class="content2"><div class="text2">Method</div></div></div>
+<div class="cell2"><div class="content2"><div class="text2">Description</div></div></div>
+<div class="cell2"><div class="content2"><div class="text2">Outcome</div></div></div>
+</div>
+</div>
+</div>
+<div class="image5"></div>
+<div class="daily-session-text">Daily 1-hour working session with genAI in a "voice-only format" Using dedicated time to solve daily tasks with the use of generative AI with the limitation of not using visual support, voice-only interaction.</div>
+<div class="tested-platforms-text">Tested two platform so far: Perplexity and ChatGPT Both struggle with brief pause within a sentence, Perplexity constantly interrupted be causing stress. Background noise can decrease the accuracy, I had to repeat myself many times.I learned to use complete sentences to avoid misunderstandings. Summaries was easy to understand, but lenghty topics required repetitions, multi iteration on take-aways I asked confirmation on origin of statements</div>
+<div class="no-showstopper-text">No showstopper yet, for inputting voice format kind okay, but to understand and digest complex outputs are challening Currently ChatGPT has the capabilities to carry on any further discovery Start testing complex situations, including numbers and decision-making</div>
+<div class="using-notifications-text">Using read-out-loud notifications Turned on the functionality of my phone and headphone to read the notifications I receive on my phone</div>
+<div class="brief-messages-text">Brief messages or notifications work well. Mostly chat and Microsoft Teams messages Not switching the language, so non-english text is hard to understand Wonder the use of this functionality</div>
+<div class="useless-notifications-text">Useless with Hungarian notifications, questionable purpose Helpful with brief notifications, but no moment of silence</div>
+<div class="line2"></div>
+<div class="image6"></div>
+<div class="rectangle5"></div>
+<div class="image7"></div>
+</div>
+</body>
+</html>
