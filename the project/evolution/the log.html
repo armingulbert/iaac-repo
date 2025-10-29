@@ -3,17 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Log Page</title>
+<title>Design Bet / Log</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Inter:wght@400;600;700&family=Lato:ital,wght@0,400;0,900;1,400&display=swap" rel="stylesheet">
 <style>
+/* --- Container --- */
 .container {
   position: relative;
   width: 100%;
   height: 2100px;
   background: #FFFFFF;
+  font-family: 'Inter', sans-serif;
 }
+
+/* --- Header --- */
 .header-bar {
   position: absolute;
   width: 100%;
@@ -28,8 +32,7 @@
   height: 69px;
   left: 307px;
   top: 71px;
-  font-family: 'Abril Fatface';
-  font-weight: 400;
+  font-family: 'Abril Fatface', serif;
   font-size: 48px;
   line-height: 65px;
   color: #FFFFFF;
@@ -40,7 +43,7 @@
   height: 80px;
   left: 307px;
   top: 144px;
-  font-family: 'Lato';
+  font-family: 'Lato', sans-serif;
   font-weight: 900;
   font-size: 16px;
   line-height: 19px;
@@ -57,352 +60,168 @@
 }
 .blueprint {
   position: absolute;
-  width: 67px;
-  height: 14px;
   left: 320px;
   top: 39px;
   font-family: 'Lato';
   font-weight: 900;
   font-size: 14px;
-  line-height: 17px;
-  display: flex;
-  align-items: center;
-  text-align: center;
   color: #000000;
 }
+
+/* --- Section: Week 2 --- */
 .week2-text {
   position: absolute;
   width: 819px;
-  height: 95px;
   left: 314px;
   top: 260px;
   font-family: 'Lato';
   font-weight: 900;
   font-size: 16px;
-  line-height: 19px;
   color: #000000;
 }
-.table-container {
+
+/* Table Style */
+.table-container, .table2-container {
   position: absolute;
   width: 819px;
-  height: 36px;
-  left: 307px;
-  top: 364px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0;
 }
-.table {
+.table, .table2 {
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0;
   width: 819px;
   height: 36px;
   background: #363636;
   border: 1px solid #5B5B5B;
   border-radius: 4px;
 }
-.row {
+.row, .row2 {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
-  padding: 0;
   width: 819px;
   height: 36px;
-  background: rgba(255,255,255,0.0001);
 }
-.cell {
-  box-sizing: border-box;
+.cell, .cell2 {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0;
   width: 273px;
   height: 36px;
   background: #E24E36;
-  border-width: 1px 0 0 1px;
-  border-style: solid;
-  border-color: #5B5B5B;
-  flex: 1;
+  border-left: 1px solid #5B5B5B;
 }
-.content {
+.content, .content2 {
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   padding: 10px 12px;
   width: 273px;
-  height: 36px;
 }
-.text {
-  width: 249px;
-  height: 16px;
+.text, .text2 {
   font-family: 'Inter';
   font-weight: 600;
   font-size: 12px;
-  line-height: 130%;
   color: #FFFFFF;
-  flex: 1;
 }
+
+/* --- Text Sections --- */
 .interaction-text {
   position: absolute;
   width: 247px;
-  height: 184px;
   left: 326px;
   top: 634px;
-  font-family: 'Inter';
   font-weight: 700;
   font-size: 12px;
-  line-height: 130%;
   color: #000000;
 }
 .based-results-text {
   position: absolute;
   width: 247px;
-  height: 411px;
   left: 597px;
   top: 430px;
-  font-family: 'Inter';
   font-weight: 400;
   font-size: 12px;
-  line-height: 130%;
   color: #000000;
 }
 .based-feedback-text {
   position: absolute;
   width: 247px;
-  height: 224px;
   left: 863px;
   top: 431px;
-  font-family: 'Inter';
   font-weight: 700;
   font-size: 12px;
-  line-height: 130%;
   color: #000000;
 }
 .individual-review-text {
   position: absolute;
   width: 247px;
-  height: 116px;
   left: 326px;
   top: 970px;
-  font-family: 'Inter';
   font-weight: 700;
   font-size: 12px;
-  line-height: 130%;
   color: #000000;
 }
 .during-review-text {
   position: absolute;
   width: 247px;
-  height: 176px;
   left: 596px;
   top: 880px;
-  font-family: 'Inter';
   font-weight: 400;
   font-size: 12px;
-  line-height: 130%;
   color: #000000;
 }
-
-/* FIXED: reference to assets/media + cleaned block */
 .firefly-image {
   position: absolute;
   width: 238px;
   height: 83px;
   left: 317px;
   top: 880px;
-  background: url('/iaac-repo/assets/media/Firefly_grayscale%20illustration%20of%20an%20acient%20greek%20interview%20583487%201.png') center/cover no-repeat;
+  background: url('/iaac-repo/assets/media/Firefly_grayscale illustration of an acient greek interview 583487 1.png') center/cover no-repeat;
 }
-
+.my-overall-text {
+  position: absolute;
+  width: 247px;
+  left: 863px;
+  top: 880px;
+  font-weight: 700;
+  font-size: 12px;
+  color: #000000;
+}
 .line1 {
   position: absolute;
   width: 817px;
-  height: 0;
   left: 307px;
   top: 860px;
   border: 1px solid #5B5B5B;
 }
+
+/* --- Week 1 Section --- */
 .week1-text {
   position: absolute;
   width: 819px;
-  height: 80px;
   left: 314px;
   top: 1154px;
   font-family: 'Lato';
   font-weight: 900;
   font-size: 16px;
-  line-height: 19px;
   color: #000000;
 }
-.table2-container {
-  position: absolute;
-  width: 819px;
-  height: 36px;
-  left: 307px;
-  top: 1258px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0;
-}
-.table2 {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0;
-  width: 819px;
-  height: 36px;
-  background: #363636;
-  border: 1px solid #5B5B5B;
-  border-radius: 4px;
-}
-.row2 {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  padding: 0;
-  width: 819px;
-  height: 36px;
-  background: rgba(255,255,255,0.0001);
-}
-.cell2 {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0;
-  width: 273px;
-  height: 36px;
-  background: #E24E36;
-  border-width: 1px 0 0 1px;
-  border-style: solid;
-  border-color: #5B5B5B;
-  flex: 1;
-}
-.content2 {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  padding: 10px 12px;
-  width: 273px;
-  height: 36px;
-}
-.text2 {
-  width: 249px;
-  height: 16px;
-  font-family: 'Inter';
-  font-weight: 600;
-  font-size: 12px;
-  line-height: 130%;
-  color: #FFFFFF;
-  flex: 1;
-}
 
-/* FIXED: image paths */
+/* --- Images --- */
 .image5 {
   position: absolute;
   width: 209px;
   height: 163px;
   left: 326px;
   top: 1324px;
-  background: url('/iaac-repo/assets/media/image%205.png') center/cover no-repeat;
+  background: url('/iaac-repo/assets/media/image 5.png') center/cover no-repeat;
 }
-
-.daily-session-text {
-  position: absolute;
-  width: 247px;
-  height: 184px;
-  left: 326px;
-  top: 1528px;
-  font-family: 'Inter';
-  font-weight: 700;
-  font-size: 12px;
-  line-height: 130%;
-  color: #000000;
-}
-.tested-platforms-text {
-  position: absolute;
-  width: 247px;
-  height: 320px;
-  left: 597px;
-  top: 1324px;
-  font-family: 'Inter';
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 130%;
-  color: #000000;
-}
-.no-showstopper-text {
-  position: absolute;
-  width: 247px;
-  height: 224px;
-  left: 863px;
-  top: 1325px;
-  font-family: 'Inter';
-  font-weight: 700;
-  font-size: 12px;
-  line-height: 130%;
-  color: #000000;
-}
-.using-notifications-text {
-  position: absolute;
-  width: 247px;
-  height: 184px;
-  left: 326px;
-  top: 1904px;
-  font-family: 'Inter';
-  font-weight: 700;
-  font-size: 12px;
-  line-height: 130%;
-  color: #000000;
-}
-.brief-messages-text {
-  position: absolute;
-  width: 247px;
-  height: 184px;
-  left: 597px;
-  top: 1720px;
-  font-family: 'Inter';
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 130%;
-  color: #000000;
-}
-.useless-notifications-text {
-  position: absolute;
-  width: 247px;
-  height: 224px;
-  left: 863px;
-  top: 1721px;
-  font-family: 'Inter';
-  font-weight: 700;
-  font-size: 12px;
-  line-height: 130%;
-  color: #000000;
-}
-.line2 {
-  position: absolute;
-  width: 817px;
-  height: 0;
-  left: 307px;
-  top: 1690px;
-  border: 1px solid #5B5B5B;
-}
-
-/* FIXED: image path */
 .image6 {
   position: absolute;
   width: 223px;
   height: 174px;
   left: 331px;
   top: 1720px;
-  background: url('/iaac-repo/assets/media/image%206.png') center/cover no-repeat;
+  background: url('/iaac-repo/assets/media/image 6.png') center/cover no-repeat;
 }
-
 .rectangle5 {
   position: absolute;
   width: 238px;
@@ -412,43 +231,92 @@
   background: #363636;
   border-radius: 20px;
 }
-
-/* FIXED: image path */
 .image7 {
   position: absolute;
   width: 207px;
   height: 117px;
   left: 332px;
   top: 461px;
-  background: url('/iaac-repo/assets/media/image%207.png') center/cover no-repeat;
+  background: url('/iaac-repo/assets/media/image 7.png') center/cover no-repeat;
   border-radius: 20px;
 }
 
-/* Optional: style for the text used but not defined */
-.my-overall-text {
+/* --- Week 1 Details --- */
+.daily-session-text {
+  position: absolute;
+  width: 247px;
+  left: 326px;
+  top: 1528px;
+  font-weight: 700;
+  font-size: 12px;
+  color: #000000;
+}
+.tested-platforms-text {
+  position: absolute;
+  width: 247px;
+  left: 597px;
+  top: 1324px;
+  font-weight: 400;
+  font-size: 12px;
+  color: #000000;
+}
+.no-showstopper-text {
   position: absolute;
   width: 247px;
   left: 863px;
-  top: 880px;
-  font-family: 'Inter';
+  top: 1325px;
   font-weight: 700;
   font-size: 12px;
-  line-height: 130%;
   color: #000000;
+}
+.using-notifications-text {
+  position: absolute;
+  width: 247px;
+  left: 326px;
+  top: 1904px;
+  font-weight: 700;
+  font-size: 12px;
+  color: #000000;
+}
+.brief-messages-text {
+  position: absolute;
+  width: 247px;
+  left: 597px;
+  top: 1720px;
+  font-weight: 400;
+  font-size: 12px;
+  color: #000000;
+}
+.useless-notifications-text {
+  position: absolute;
+  width: 247px;
+  left: 863px;
+  top: 1721px;
+  font-weight: 700;
+  font-size: 12px;
+  color: #000000;
+}
+.line2 {
+  position: absolute;
+  width: 817px;
+  left: 307px;
+  top: 1690px;
+  border: 1px solid #5B5B5B;
 }
 </style>
 </head>
+
 <body>
 <div class="container">
   <div class="header-bar"></div>
   <div class="title">Design Bet / Log</div>
-  <div class="subtitle">This is a living document that constatnly evolves as it covers the discovery and experimental activities of my project. It captures the different research activities and their results in chronological order.</div>
+  <div class="subtitle">This is a living document that constantly evolves as it covers the discovery and experimental activities of my project. It captures the different research activities and their results in chronological order.</div>
   <div class="blueprint-button"></div>
   <div class="blueprint">Blueprint</div>
 
-  <div class="week2-text">Week 2 / 20-26th October 2025 Individual Review and continued experiments In the first week, first I wanted to test if the idea is even worth further testing in the current form or the bet requires modificaiton. For that I have started small-scale validation methods:</div>
-
-  <div class="table-container">
+  <!-- Week 2 Section -->
+  <div class="week2-text">Week 2 / 20-26th October 2025 — Individual Review and continued experiments. In the first week, I wanted to test if the idea is even worth further testing or needs modification.</div>
+  <div class="table-container" style="top:364px;">
     <div class="table">
       <div class="row">
         <div class="cell"><div class="content"><div class="text">Method</div></div></div>
@@ -458,20 +326,21 @@
     </div>
   </div>
 
-  <div class="interaction-text">Interaction with an avatar-based LLM model I have proceeded with the experimentationusing an "AI avatar" platform. I brought a prototype to our Extended Intelligences course for a peer-review.</div>
-  <div class="based-results-text">Based on the results of my first experiment week, I wanted to proceed with the discovery process with a step where other people can also interact and give feedback on the voice-based AI solution. We could compile AI solutions for our Extended Intelligence classes, I used this opportunity to observe others' reactions and collect feedback. I compiled an avatar agent on a platform called D-ID. The agent can answer MDEF program related questions based on simple built knowledge. I presented the prototype for the MDEF and Elisava classmates in 15 minutes. My key take-aways were: Laughing on the look of the avatar as it seemed realistic first, they seemed surprised in the meantime They showed curiosity over limitations Capabilities of the agent were considered valuable but could not imagine they would talk to her.</div>
-  <div class="based-feedback-text">Based on the feedback received from my peers and research on topic-related studies (ie. Turet test...etc.) understanding better what drives trust is a direction where my project should go.</div>
-  <div class="individual-review-text">Individual review I had a review with Saul where I shared my progress and received questions, feedbackon my Design Bet.</div>
-  <div class="during-review-text">During the review we discussed where I am with the 1st-person-perspective type of experiments, what the key learnings are so far. Received feedback: good progress with the experiments I should find my role and purpose within the topic. For example: I want to figure this dilema and teach others or something different.</div>
+  <div class="rectangle5"></div>
+  <div class="image7"></div>
 
+  <div class="interaction-text">Interaction with an avatar-based LLM model. I have proceeded with experimentation using an "AI avatar" platform and brought a prototype to our Extended Intelligences course for peer review.</div>
+  <div class="based-results-text">Based on results of my first week, I wanted to continue discovery allowing others to interact and provide feedback on the voice-based AI solution. I used D-ID platform to compile an avatar agent answering MDEF program questions.</div>
+  <div class="based-feedback-text">Feedback revealed laughter and curiosity. Understanding what drives trust became the next research direction.</div>
+  <div class="individual-review-text">Individual review with Saul — shared progress and received feedback on my Design Bet.</div>
+  <div class="during-review-text">During review: good progress acknowledged; suggestion to define my role within topic—educator or researcher.</div>
   <div class="firefly-image"></div>
-  <div class="my-overall-text">My overall mindset / idea what and why I do care about this dilemma must be defined before any further experiment.</div>
-
+  <div class="my-overall-text">My overall mindset: define why I care about this dilemma before further experiments.</div>
   <div class="line1"></div>
 
-  <div class="week1-text">Week 1 / 13-19th October 2025 Validating through 1st-person-perspective In the first week, first I wanted to test if the idea is even worth further testing in the current form or the bet requires modificaiton. For that I have started small-scale validation methods:</div>
-
-  <div class="table2-container">
+  <!-- Week 1 Section -->
+  <div class="week1-text">Week 1 / 13-19th October 2025 — Validating through 1st-person perspective. Started small-scale validation methods to decide if the idea needs modification.</div>
+  <div class="table2-container" style="top:1258px;">
     <div class="table2">
       <div class="row2">
         <div class="cell2"><div class="content2"><div class="text2">Method</div></div></div>
@@ -482,6 +351,14 @@
   </div>
 
   <div class="image5"></div>
-  <div class="daily-session-text">Daily 1-hour working session with genAI in a "voice-only format" Using dedicated time to solve daily tasks with the use of generative AI with the limitation of not using visual support, voice-only interaction.</div>
-  <div class="tested-platforms-text">Tested two platform so far: Perplexity and ChatGPT Both struggle with brief pause within a sentence, Perplexity constantly interrupted be causing stress. Background noise can decrease the accuracy, I had to repeat myself many times.I learned to use complete sentences to avoid misunderstandings. Summaries was easy to understand, but lenghty topics required repetitions, multi iteration on take-aways I asked confirmation on origin of statements</div>
-  <div class="no-showstopper-text">No showstopper yet, for inputting voice format kind okay, but to understand and digest complex outputs are challening Currently ChatGPT has the capabilities to carry on any further discovery Start testing complex situations, including numbers and decision-making</div>
+  <div class="daily-session-text">Daily 1-hour working session with GenAI (voice-only). Testing productivity and clarity without visual cues.</div>
+  <div class="tested-platforms-text">Tested: Perplexity, ChatGPT. Found interruptions due to pauses and background noise. Learned to use full sentences; repeated topics for clarity.</div>
+  <div class="no-showstopper-text">No showstoppers yet — input voice works fine. Understanding complex outputs remains challenging.</div>
+  <div class="line2"></div>
+  <div class="image6"></div>
+  <div class="using-notifications-text">Using read-out-loud notifications. Enabled voice readout for all incoming messages.</div>
+  <div class="brief-messages-text">Brief messages (e.g., Teams, chat) worked well. Language switching remains an issue.</div>
+  <div class="useless-notifications-text">Non-English notifications unhelpful. Useful for short texts, but no moment of silence.</div>
+</div>
+</body>
+</html>
