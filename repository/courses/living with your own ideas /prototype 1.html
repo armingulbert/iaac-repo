@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>3rd-Eye-Perspective — Proto #1</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ---- STAGE (fixed-size artboard) ---- */
+    .stage{
+      position:relative;
+      width:1440px;
+      height:2130px;
+      margin:0 auto;          /* centers the artboard */
+      background:#FFFFFF;
+      overflow:hidden;
+      font-family:'Lato', Arial, sans-serif;
+    }
+
+    /* ---- TOP STRIP ---- */
+    .top-strip{
+      position:absolute;left:0;top:0;width:1440px;height:240px;background:#E24E36;
+    }
+    .badge-bg{
+      position:absolute;left:307px;top:30px;width:94px;height:32px;background:#FFFFFF;border-radius:36px;
+    }
+    .badge-txt{
+      position:absolute;left:320px;top:39px;width:67px;height:14px;
+      display:flex;align-items:center;justify-content:center;
+      font-weight:900;font-size:14px;line-height:17px;color:#000;
+    }
+    .title{
+      position:absolute;left:307px;top:71px;width:563px;height:69px;
+      font-family:'Abril Fatface', serif;font-weight:400;font-size:48px;line-height:65px;color:#FFF;
+    }
+    .subtitle{
+      position:absolute;left:307px;top:144px;width:563px;height:80px;
+      font-weight:900;font-size:16px;line-height:19px;color:#FFF;
+    }
+
+    /* ---- BODY TEXT BLOCKS ---- */
+    .txt-idea{
+      position:absolute;left:307px;top:268px;width:826px;height:208px;
+      font-weight:900;font-size:16px;line-height:19px;color:#000;
+    }
+    .txt-proto{
+      position:absolute;left:307px;top:891px;width:826px;height:93px;
+      font-weight:900;font-size:16px;line-height:19px;color:#000;
+    }
+    .txt-hud{
+      position:absolute;left:307px;top:1007px;width:826px;height:91px;
+      font-weight:900;font-size:16px;line-height:19px;color:#000;
+    }
+    .txt-exp{
+      position:absolute;left:307px;top:1500px;width:826px;height:91px;
+      font-weight:900;font-size:16px;line-height:19px;color:#000;
+    }
+
+    /* ---- 3 PHOTOS ROW ---- */
+    .img-3293{
+      position:absolute;left:307px;top:504px;width:258px;height:345px;
+      background:url('IMG_3293.png') center/cover no-repeat;border-radius:4px;
+    }
+    .img-3295{
+      position:absolute;left:590px;top:504px;width:260px;height:345px;
+      background:url('IMG_3295.png') center/cover no-repeat;border-radius:4px;
+    }
+    .img-3294{
+      position:absolute;left:875px;top:504px;width:258px;height:344px;
+      background:url('IMG_3294.png') center/cover no-repeat;border-radius:4px;
+    }
+
+    /* ---- HUD GROUP (radial bg + main screen + PIPs) ---- */
+    .hud-bg{
+      position:absolute;left:449px;top:1109px;width:543px;height:327px;
+      background:radial-gradient(50% 50% at 50% 50%, #D9D9D9 36.06%, #612A00 100%);
+      border-radius:8px;
+    }
+    .hud-main{
+      box-sizing:border-box;
+      position:absolute;left:470px;top:1149px;width:500px;height:247px;
+      background:url('image.png') center/cover no-repeat;border:4px solid #8026C3;border-radius:20px;
+    }
+    .hud-pip1{
+      position:absolute;left:866px;top:1162px;width:92px;height:56px;
+      background:url('image.png') center/cover no-repeat;border:3px solid #00FF88;border-radius:12px;box-sizing:border-box;
+    }
+    .hud-pip2{
+      position:absolute;left:863px;top:1229px;width:99px;height:56px;
+      background:url('image.png') center/cover no-repeat;border:4px solid #00FF88;border-radius:12px;box-sizing:border-box;
+    }
+    .hud-pill{
+      position:absolute;left:500px;top:1290px;width:88px;height:138px;
+      background:url('image.png') center/cover no-repeat;border:6px solid #00FF1E;border-radius:16px;box-sizing:border-box;
+    }
+
+    /* ---- VIDEO CARD ---- */
+    .video-shell{
+      position:absolute;left:307px;top:1591px;width:826px;height:462px;
+      background:#000;border-radius:30px;overflow:hidden;
+    }
+    .video-shell iframe{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:30px}
+  </style>
+</head>
+<body>
+
+  <div class="stage">
+    <!-- Top strip -->
+    <div class="top-strip"></div>
+    <div class="badge-bg"></div>
+    <div class="badge-txt">Proto #1</div>
+    <div class="title">3rd-Eye-Perspective</div>
+    <div class="subtitle">
+      The following page covers a prototype creation of a prosthetics eyewear created for an
+      ideation brief received during our “Living with your ideas” course. The purpose of this
+      prototype is to showcase how we can extend the limitations of the human body.
+    </div>
+
+    <!-- Idea text -->
+    <div class="txt-idea">
+      <strong>Idea</strong><br>
+      Since my childhood I have been heavily influenced by sci-fi movies and games. One of the
+      biggest impacts was Cyberpunk, a Playstation game placed in a utopic universe, where you can
+      create and play with your own character. During the game you can add elements to your body
+      and skeleton that expand your capabilities and over-bridge your human limitations. The
+      product helps to extend the vision of the user with a third-eye-view through prosthetic
+      vision.<br><br>
+      The received brief highlighted that MDEF students must deliver a prosthetic solution that
+      would help the potential user to be the best of themself. The prototype helps the user to see
+      themself from an external perspective with received feedback from social media channels.
+      The user can get constant feedback on their look, also being able to follow themself from a
+      “birds-eye-view”. The AR glasses help the user keep in contact with the real world, while
+      enabling alternative perspectives using social feeds, Google Maps, NASA live satellite view,
+      and more.
+    </div>
+
+    <!-- Photo row -->
+    <div class="img-3293" aria-label="prototype photo 1"></div>
+    <div class="img-3295" aria-label="prototype photo 2"></div>
+    <div class="img-3294" aria-label="prototype photo 3"></div>
+
+    <!-- Prototype text -->
+    <div class="txt-proto">
+      <strong>Prototype</strong><br>
+      The current prototype is a cardboard-based augmented-reality glasses concept that enables the
+      user to stay in contact with the real world, but receive an outer-perspective based on needs
+      and preferences. It encapsulates an early vision of the hardware and application UI, helping
+      audiences try and test the solution and trigger critical discussion.
+    </div>
+
+    <!-- HUD text -->
+    <div class="txt-hud">
+      <strong>HUD Interface</strong><br>
+      The heads-up display envisions an interface that helps users live daily life, navigate, and
+      solve tasks while providing a third-eye view on demand. Users can zoom into different
+      perspectives based on needs and preferences. The view can include a close outer-POV with
+      integration to social platforms so users can constantly see and feel how they perform
+      compared to their “best version”.
+    </div>
+
+    <!-- HUD mock group -->
+    <div class="hud-bg"></div>
+    <div class="hud-main" aria-label="HUD main screen"></div>
+    <div class="hud-pip1" aria-label="PIP stream 1"></div>
+    <div class="hud-pip2" aria-label="PIP stream 2"></div>
+    <div class="hud-pill" aria-label="HUD vertical feed"></div>
+
+    <!-- Experience text -->
+    <div class="txt-exp">
+      <strong>Experience</strong><br>
+      The video below captures a potential experience of the product. It shows how the user can
+      navigate within daily situations, while receiving constant feedback compared to their best
+      version. (Highly speculative visual; not real scenarios.)
+    </div>
+
+    <!-- Video rectangle with Vimeo -->
+    <div class="video-shell">
+      <iframe
+        src="https://player.vimeo.com/video/1131542584?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        title="AGLivingWithOwnIdeaProto1"></iframe>
+    </div>
+  </div>
+
+  <script src="https://player.vimeo.com/api/player.js"></script>
+</body>
+</html>
