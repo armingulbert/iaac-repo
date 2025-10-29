@@ -10,159 +10,172 @@
 <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
 
 <style>
-/* Canvas */
-.page { position:relative; width:1440px; height:1973px; margin:0 auto; background:#fff; font-family:'Lato', Arial, sans-serif; color:#000; }
-
-/* Hero */
-.hero { position:absolute; left:0; top:0; width:1440px; height:240px; background:#E24E36; }
-.badge { position:absolute; left:307px; top:30px; width:94px; height:32px; background:#fff; border-radius:36px; }
-.badge span { position:absolute; left:13px; top:9px; font-weight:900; font-size:14px; line-height:17px; color:#000; }
-.h1 { position:absolute; left:307px; top:71px; width:563px; height:69px; font-family:'Abril Fatface', serif; font-weight:400; font-size:48px; line-height:65px; color:#fff; }
-.hsub { position:absolute; left:307px; top:144px; width:821px; height:80px; font-weight:900; font-size:16px; line-height:19px; color:#fff; }
-
-/* Copy blocks */
-.copy-idea { position:absolute; left:307px; top:268px; width:379px; height:397px; font-weight:900; font-size:16px; line-height:19px; }
-.copy-idea p { margin:0 0 10px 0; }
-.copy-proto { position:absolute; left:307px; top:691px; width:826px; height:93px; font-weight:900; font-size:16px; line-height:19px; }
-
-/* Media blocks */
-.media { object-fit:cover; display:block; width:100%; height:100%; border:0; }
-
-/* Image frames (positions from your spec) */
-.frame-3304 { position:absolute; left:304px; top:824px; width:413px; height:374px; border-radius:12px; overflow:hidden; }
-.frame-3306 { position:absolute; left:749px; top:824px; width:384px; height:185px; border-radius:0 12px 0 0; overflow:hidden; }
-.frame-3307 { position:absolute; left:749px; top:1030px; width:384px; height:168px; border-radius:0 0 12px 0; overflow:hidden; }
-.frame-3311 { position:absolute; left:889px; top:1219px; width:238px; height:634px; border-radius:0 12px 12px 0; overflow:hidden; }
-
-/* Accent bars */
-.accent-right-vert { position:absolute; left:1097px; top:1210px; width:15px; height:458px; background:#00FF88; }
-.accent-right-horz { position:absolute; left:941px; top:1247px; width:207px; height:9px; background:#8026C3; }
-.accent-left-vert  { position:absolute; left:361px; top:1411px; width:15px; height:458px; background:#00FF88; transform:rotate(-180deg); }
-.accent-left-horz  { position:absolute; left:325px; top:1823px; width:207px; height:9px; background:#8026C3; transform:rotate(-180deg); }
-
-/* Rectangle 7 – video well, with true “cover” */
-.video-well { position:absolute; left:307px; top:1217px; width:567px; height:636px; background:#000; border-radius:30px; overflow:hidden; }
-.video-well .fit { position:absolute; inset:0; }
-.video-well iframe {
-  position:absolute; top:0; left:50%;
-  height:100%; width:177.78%;          /* 16/9 cover by height */
-  transform:translateX(-50%);           /* center-crop horizontally */
-  border:0;
+/* ===== Day2Proto (container) ===== */
+.page {
+  display:flex; flex-direction:column; align-items:flex-start;
+  padding:10px; gap:10px;
+  position:relative; width:1920px; height:2108px;
+  left:91px; top:115px; background:#fff;
+  font-family:'Lato', Arial, sans-serif; color:#000;
 }
 
-/* Schematic panel (kept minimal for your layout) */
-.panel { position:absolute; left:750px; top:277px; width:383px; height:388px; background:linear-gradient(180deg,#EAE8E8 0%, rgba(132,131,131,0.37) 100%); border-radius:19px; }
-.mbar { position:absolute; top:505px; width:9px; height:93px; background:#413C3C; border:1px solid rgba(0,0,0,.46); border-radius:9px; }
-.mbar.b1{ left:907px;width:8px } .mbar.b2{ left:917px } .mbar.b3{ left:928px;width:8px } .mbar.b4{ left:938px } .mbar.b5{ left:949px;width:8px }
-.cap { position:absolute; top:594px; width:4px; height:14px; background:rgba(228,156,21,.96); border:.4px solid rgba(0,0,0,.46); border-radius:9px; }
-.cap.c1{ left:909px } .cap.c2{ left:919px } .cap.c3{ left:930px } .cap.c4{ left:940px } .cap.c5{ left:951px }
-.stack-line { position:absolute; left:893px; width:1px; background:#F4F4F4; border:1px solid rgba(0,0,0,.12); border-radius:9px; }
-.stack-line.l1{ top:449px; height:54px } .stack-line.l2{ left:969px; top:468px; height:35px }
-.stack-box { position:absolute; left:889px; top:423px; width:86px; height:90px; background:#F4F4F4; border:1px solid rgba(0,0,0,.27); border-radius:9px }
-.stack-pill { position:absolute; top:476px; width:9px; height:28px; background:#E4E1E1; border:1px solid rgba(0,0,0,.27); border-radius:9px }
-.stack-pill.p1{ left:897px } .stack-pill.p2{ left:909px } .stack-pill.p3{ left:921px } .stack-pill.p4{ left:933px } .stack-pill.p5{ left:945px } .stack-pill.p6{ left:957px }
-.circ1{ position:absolute; left:878px; top:353px; width:111px; height:111px; background:#F4E8E8; border:1px solid rgba(0,0,0,.16); border-radius:50% }
-.circ2{ position:absolute; left:890px; top:365px; width:87px; height:87px; background:#F4E8E8; border:1px solid rgba(0,0,0,.16); border-radius:50%; box-shadow:0 4px 4px rgba(0,0,0,.25), inset 0 4px 4px rgba(0,0,0,.12)}
-.dot1{ position:absolute; left:930px; top:357px; width:6px; height:6px; background:#444; border-radius:12px }
-.dot2{ position:absolute; left:930px; top:455px; width:4px; height:4px; background:#444; border-radius:12px }
-.dot3{ position:absolute; left:980px; top:406px; width:5px; height:5px; background:#444; border-radius:12px }
-.lineA{ position:absolute; left:941px; top:317px; width:43.84px; height:0; border:1px solid rgba(0,0,0,.37); transform:rotate(-45deg) }
-.lineB{ position:absolute; left:942px; top:459px; width:51.79px; height:0; border:1px solid rgba(0,0,0,.37); transform:rotate(10.01deg) }
-.lbl-bird{ position:absolute; left:973px; top:295px; font-weight:900; font-size:16px; }
-.lbl-bear{ position:absolute; left:1001px; top:461px; font-weight:900; font-size:16px; }
+/* ===== Frame 1 (hero) ===== */
+.frame-1 { position:relative; display:flex; flex-direction:column; align-items:flex-start;
+  padding:32px 119px; width:1900px; height:245px; background:#E24E36; }
+.badge { position:absolute; left:119px; top:32px; width:94px; height:32px; background:#fff; border-radius:36px; }
+.badge span { position:absolute; left:14px; top:9px; font-weight:900; font-size:14px; line-height:17px; color:#000; }
+.h1 { width:563px; height:69px; font-family:'Abril Fatface', serif; font-weight:400; font-size:48px; line-height:65px; color:#fff; margin-top:40px; }
+.hsub { width:821px; height:80px; font-weight:900; font-size:16px; line-height:19px; color:#fff; margin-top:12px; }
+
+/* ===== Frame 2 (idea + schematic) ===== */
+.frame-2 { position:relative; width:1900px; height:591px; }
+.idea { position:absolute; left:676px; top:32px; width:379px; height:376px; font-weight:900; font-size:16px; line-height:19px; }
+.idea p { margin:0 0 10px 0; }
+
+/* Schematic panel (sizes from spec) */
+.panel { position:absolute; left:128px; top:32px; width:569px; height:576.43px; }
+.panel-core { position:absolute; left:0; top:0; width:485.24px; height:491.57px;
+  background:linear-gradient(180deg,#EAE8E8 0%, rgba(132,131,131,0.37) 100%); border-radius:19px; }
+/* bars */
+.mbar { position:absolute; top:288.86px; background:#413C3C; border:1px solid rgba(0,0,0,.46); border-radius:9px; }
+.mbar.b1{ left:198.91px; width:10.14px; height:117.83px;}
+.mbar.b2{ left:211.58px; width:11.40px; height:117.83px;}
+.mbar.b3{ left:225.51px; width:10.14px; height:117.83px;}
+.mbar.b4{ left:238.18px; width:11.40px; height:117.83px;}
+.mbar.b5{ left:252.12px; width:10.14px; height:117.83px;}
+.cap { position:absolute; top:401.62px; width:5.07px; height:17.74px; background:rgba(228,156,21,.96); border:.4px solid rgba(0,0,0,.46); border-radius:9px; }
+.cap.c1{ left:201.44px } .cap.c2{ left:214.11px } .cap.c3{ left:228.05px } .cap.c4{ left:240.72px } .cap.c5{ left:254.65px }
+.stack-line { position:absolute; width:1.27px; background:#F4F4F4; border:1px solid rgba(0,0,0,.12); border-radius:9px; }
+.stack-line.l1{ left:181.17px; top:217.91px; height:68.41px }
+.stack-line.l2{ left:277.46px; top:241.99px; height:44.34px }
+.stack-box { position:absolute; left:176.1px; top:184.97px; width:108.96px; height:114.02px; background:#F4F4F4; border:1px solid rgba(0,0,0,.27); border-radius:9px }
+.stack-pill { position:absolute; top:252.12px; width:11.4px; height:35.47px; background:#E4E1E1; border:1px solid rgba(0,0,0,.27); border-radius:9px }
+.p1{ left:186.24px } .p2{ left:201.44px } .p3{ left:216.65px } .p4{ left:231.85px } .p5{ left:247.05px } .p6{ left:262.26px }
+/* circles */
+.circ1{ position:absolute; left:162.17px; top:96.29px; width:140.63px; height:140.63px; background:#F4E8E8; border:1px solid rgba(0,0,0,.16); border-radius:50% }
+.circ2{ position:absolute; left:177.37px; top:111.49px; width:110.22px; height:110.22px; background:#F4E8E8; border:1px solid rgba(0,0,0,.16); border-radius:50%; box-shadow:0 4px 4px rgba(0,0,0,.25), inset 0 4px 4px rgba(0,0,0,.12) }
+.dot1{ position:absolute; left:228.05px; top:101.35px; width:7.6px; height:7.6px; background:#444; border-radius:12px }
+.dot2{ position:absolute; left:228.05px; top:225.51px; width:5.07px; height:5.07px; background:#444; border-radius:12px }
+.dot3{ position:absolute; left:291.4px; top:163.43px; width:6.33px; height:6.33px; background:#444; border-radius:12px }
+.lineA{ position:absolute; left:241.99px; top:50.68px; width:55.54px; height:0; border:1px solid rgba(0,0,0,.37); transform:rotate(-45deg) }
+.lineB{ position:absolute; left:243.25px; top:230.58px; width:65.61px; height:0; border:1px solid rgba(0,0,0,.37); transform:rotate(10.01deg) }
+.lbl-bird{ position:absolute; left:282.53px; top:22.8px; font-weight:900; font-size:16px; }
+.lbl-bear{ position:absolute; left:318px; top:233.12px; font-weight:900; font-size:16px; }
+
+/* ===== Frame 4 (prototype + images) ===== */
+.frame-4 { position:relative; display:flex; flex-direction:column; align-items:flex-start; padding:10px 120px; gap:10px; width:1900px; height:541px; }
+.frame-5 { position:relative; width:1660px; height:508px; }
+.proto-copy { position:absolute; left:0; top:0; width:367px; height:135px; font-weight:900; font-size:16px; line-height:19px; }
+.media { display:block; width:100%; height:100%; object-fit:cover; border-radius:12px; }
+.img3304 { position:absolute; left:556.67px; top:0; width:546.67px; height:495.04px; }
+.img3306 { position:absolute; left:1113.33px; top:0; width:546.67px; height:263.37px; border-radius:0 12px 0 0; overflow:hidden; }
+
+/* ===== Frame 6 (video + tall image) ===== */
+.frame-6 { position:relative; width:1900px; height:636px; }
+.vid-well { position:absolute; left:950px; top:0; width:830px; height:636px; background:#000; border-radius:30px; overflow:hidden; }
+.vid-well iframe {
+  position:absolute; top:0; left:50%; height:100%; width:177.78%; transform:translateX(-50%); border:0;
+}
+.img3311 { position:absolute; left:120px; top:0; width:800px; height:636px; overflow:hidden; border-radius:12px; }
+.img3311 > picture, .img3311 img { width:100%; height:100%; display:block; object-fit:cover; border-radius:12px; }
+
+/* ===== Spacer (Frame 7) ===== */
+.frame-7 { width:1900px; height:100px; }
 </style>
 </head>
 <body>
 <div class="page">
 
-  <!-- Hero -->
-  <div class="hero"></div>
-  <div class="badge"><span>Proto #2</span></div>
-  <div class="h1">Sleep-O-Meter</div>
-  <div class="hsub">
-    The following page covers a prototype creation of a prosthetics heartbeat and biorhythm meter created for an ideation
-    brief received during our “Living with your ideas” course. The purpose of this prototype is to showcase how we can
-    extend the limitations of the human body.
-  </div>
+  <!-- Frame 1 : Hero -->
+  <section class="frame-1">
+    <div class="badge"><span>Proto #2</span></div>
+    <div class="h1">Sleep-O-Meter</div>
+    <div class="hsub">
+      The following page covers a prototype creation of a prosthetics heartbeat and biorhythm meter created for an ideation
+      brief received during our “Living with your ideas” course. The purpose of this prototype is to showcase how we can
+      extend the limitations of the human body.
+    </div>
+  </section>
 
-  <!-- Idea -->
-  <div class="copy-idea">
-    <p><strong>Idea</strong></p>
-    <p>The receive brief highlighted that MDEF students must deliver a prosthetic solution that would help the potential user become something else.</p>
-    <p>There are two major trigger / driver behind the idea of creating a Sleep-O-Meter that helps the user to adjust his/her/their biorhythm and heartbeat to influence the sleep demand and efficiency. Based on the lecture of the course I learnt that we can adjust ourselves and bodies becoming an animal. Animals can show different sleep demand and efficiency – like birds require the least amount of sleep, in the meantime certain species take long, even quarter-year-long winter sleep.</p>
-    <p>The second driver of the idea is a common situation happens us, humans, that our sleep demand can change eventually for short and long-term. This phase can be a couple of days, but even years length.</p>
-    <p>The combination of the two drivers resulted the idea that us, humans, we can enable ourselves to modify our body and its needs with a prosthetics. The benefit of the artefact would be better life condition, less stress and potentially longer lifespan.</p>
-  </div>
+  <!-- Frame 2 : Idea + Schematic -->
+  <section class="frame-2">
+    <div class="idea">
+      <p><strong>Idea</strong></p>
+      <p>The receive brief highlighted that MDEF students must deliver a prosthetic solution that would help the potential user become something else.</p>
+      <p>There are two major trigger / driver behind the idea of creating a Sleep-O-Meter that helps the user to adjust his/her/their biorhythm and heartbeat to influence the sleep demand and efficiency. Based on the lecture of the course I learnt that we can adjust ourselves and bodies becoming an animal. Animals can show different sleep demand and efficiency – like birds require the least amount of sleep, in the meantime certain species take long, even quarter-year-long winter sleep.</p>
+      <p>The second driver of the idea is a common situation happens us, humans, that our sleep demand can change eventually for short and long-term. This phase can be a couple of days, but even years length.</p>
+      <p>The combination of the two drivers resulted the idea that us, humans, we can enable ourselves to modify our body and its needs with a prosthetics. The benefit of the artefact would be better life condition, less stress and potentially longer lifespan.</p>
+    </div>
 
-  <!-- Schematic panel & labels -->
-  <div class="panel"></div>
-  <div class="mbar b1"></div><div class="mbar b2"></div><div class="mbar b3"></div><div class="mbar b4"></div><div class="mbar b5"></div>
-  <div class="cap c1"></div><div class="cap c2"></div><div class="cap c3"></div><div class="cap c4"></div><div class="cap c5"></div>
-  <div class="stack-line l1"></div><div class="stack-box"></div><div class="stack-line l2"></div>
-  <div class="stack-pill p1"></div><div class="stack-pill p2"></div><div class="stack-pill p3"></div><div class="stack-pill p4"></div><div class="stack-pill p5"></div><div class="stack-pill p6"></div>
-  <div class="circ1"></div><div class="circ2"></div><div class="dot1"></div><div class="dot2"></div><div class="dot3"></div>
-  <div class="lineA"></div><div class="lineB"></div>
-  <div class="lbl-bird">Sleep like a bird<br><small>12 sec micro-nap</small></div>
-  <div class="lbl-bear">Sleep like a bear<br><small>Month-long deep sleep</small></div>
+    <!-- Schematic -->
+    <div class="panel">
+      <div class="panel-core"></div>
+      <div class="mbar b1"></div><div class="mbar b2"></div><div class="mbar b3"></div><div class="mbar b4"></div><div class="mbar b5"></div>
+      <div class="cap c1"></div><div class="cap c2"></div><div class="cap c3"></div><div class="cap c4"></div><div class="cap c5"></div>
+      <div class="stack-line l1"></div><div class="stack-line l2"></div>
+      <div class="stack-box"></div>
+      <div class="stack-pill p1"></div><div class="stack-pill p2"></div><div class="stack-pill p3"></div>
+      <div class="stack-pill p4"></div><div class="stack-pill p5"></div><div class="stack-pill p6"></div>
+      <div class="circ1"></div><div class="circ2"></div>
+      <div class="dot1"></div><div class="dot2"></div><div class="dot3"></div>
+      <div class="lineA"></div><div class="lineB"></div>
+      <div class="lbl-bird">Sleep like a bird<br><small>12 sec micro-nap</small></div>
+      <div class="lbl-bear">Sleep like a bear<br><small>Month-long deep sleep</small></div>
+    </div>
+  </section>
 
-  <!-- Prototype copy -->
-  <div class="copy-proto">
-    <strong>Prototype</strong><br><br>
-    The current prototype is a low-fidelity one, and its purpose to visualise the Sleep-O-Meter physical appearance,
-    initiate discussions on potential use and the related experience of users. In terms of functionality the current
-    prototype covers a simple “potmeter-type” of experience; testers can rotate the top white wheel replicating the
-    experience of an actual meter adjustment. Rest of the elements are not functioning, they serve visualisation
-    purposes only.
-  </div>
+  <!-- Frame 4 : Prototype + stills -->
+  <section class="frame-4">
+    <div class="frame-5">
+      <div class="proto-copy">
+        <strong>Prototype</strong><br><br>
+        The current prototype is a low-fidelity one, and its purpose to visualise the Sleep-O-Meter physical appearance,
+        initiate discussions on potential use and the related experience of users. In terms of functionality the current prototype
+        covers a simple “potmeter-type” of experience; testers can rotate the top-white-wheel replicating the experience of an actual
+        meter-adjustment. Rest of the elements are not functioning, they serve visualisation purposes only.
+      </div>
 
-  <!-- Images (HEIC + JPG fallback) -->
-  <figure class="frame-3304">
-    <picture>
-      <source srcset="/iaac-repo/assets/media/IMG_3304.HEIC" type="image/heic">
-      <img class="media" src="/iaac-repo/assets/media/IMG_3304.jpg" alt="Prototype workbench overview">
-    </picture>
-  </figure>
+      <!-- IMG_3304 -->
+      <figure class="img3304">
+        <picture>
+          <source srcset="/iaac-repo/assets/media/IMG_3304.HEIC" type="image/heic">
+          <img class="media" src="/iaac-repo/assets/media/IMG_3304.jpg" alt="Workbench overview">
+        </picture>
+      </figure>
 
-  <figure class="frame-3306">
-    <picture>
-      <source srcset="/iaac-repo/assets/media/IMG_3306.HEIC" type="image/heic">
-      <img class="media" src="/iaac-repo/assets/media/IMG_3306.jpg" alt="Detail shot 1">
-    </picture>
-  </figure>
+      <!-- IMG_3306 -->
+      <figure class="img3306">
+        <picture>
+          <source srcset="/iaac-repo/assets/media/IMG_3306.HEIC" type="image/heic">
+          <img class="media" src="/iaac-repo/assets/media/IMG_3306.jpg" alt="Prototype detail">
+        </picture>
+      </figure>
+    </div>
+  </section>
 
-  <figure class="frame-3307">
-    <picture>
-      <source srcset="/iaac-repo/assets/media/IMG_3307.HEIC" type="image/heic">
-      <img class="media" src="/iaac-repo/assets/media/IMG_3307.jpg" alt="Detail shot 2">
-    </picture>
-  </figure>
+  <!-- Frame 6 : Big still + Video -->
+  <section class="frame-6">
+    <!-- Left tall image -->
+    <div class="img3311">
+      <picture>
+        <source srcset="/iaac-repo/assets/media/IMG_3311.HEIC" type="image/heic">
+        <img src="/iaac-repo/assets/media/IMG_3311.jpg" alt="Wear test on mannequin">
+      </picture>
+    </div>
 
-  <!-- Video well (Rectangle 7) with cover-fit Vimeo -->
-  <div class="video-well">
-    <div class="fit">
+    <!-- Video (fills rectangle, cover-fit) -->
+    <div class="vid-well">
       <iframe
         src="https://player.vimeo.com/video/1131811743?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
         allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
         referrerpolicy="strict-origin-when-cross-origin"
-        title="AGLivingWithOwnIdeaProto2">
-      </iframe>
+        title="AGLivingWithOwnIdeaProto2"></iframe>
     </div>
-  </div>
+  </section>
 
-  <!-- Tall right image + accents -->
-  <figure class="frame-3311">
-    <picture>
-      <source srcset="/iaac-repo/assets/media/IMG_3311.HEIC" type="image/heic">
-      <img class="media" src="/iaac-repo/assets/media/IMG_3311.jpg" alt="Wear test on mannequin">
-    </picture>
-  </figure>
-
-  <div class="accent-right-vert"></div>
-  <div class="accent-right-horz"></div>
-  <div class="accent-left-vert"></div>
-  <div class="accent-left-horz"></div>
-
+  <div class="frame-7"></div>
 </div>
+
 <script src="https://player.vimeo.com/api/player.js"></script>
 </body>
 </html>
