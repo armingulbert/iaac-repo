@@ -5,99 +5,134 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sleep-O-Meter — Proto #2</title>
 
-  <!-- Correct relative path to design-system.css -->
+  <!-- Design System (same repo) -->
   <link rel="stylesheet" href="../../../design-system/design-system.css">
 
-  <!-- Page-specific schematic + video styling -->
+  <!-- Page-specific styles (scoped so they don't fight the design system) -->
   <style>
-    /* Schematic “panel” */
-    .panel {
-      position: relative;
-      aspect-ratio: 485/492;
-      width: 100%;
-      background: linear-gradient(180deg, #EAE8E8 0%, rgba(132,131,131,0.37) 100%);
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid #e5e7eb;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    /* ===== Page shell (scoped) ===== */
+    .proto-page { --hero: #E24E36; --ink:#1c1c1c; }
+    .proto-page .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+    /* HERO */
+    .proto-page .hero {
+      background: var(--hero);
+      color: #fff;
+      padding: 32px 0 28px;
+      margin: 0 0 24px 0;
     }
-    .panel-inner { position: absolute; inset: 0; }
-    .panel .bar { position: absolute; background: #413C3C; border: 1px solid rgba(0,0,0,.46); border-radius: 9px; }
-    .panel .cap { position: absolute; background: rgba(228,156,21,.96); border: .4px solid rgba(0,0,0,.46); border-radius: 9px; }
-    .panel .stack-line { position: absolute; background: #F4F4F4; border: 1px solid rgba(0,0,0,.12); border-radius: 9px; }
-    .panel .stack-box { position: absolute; background: #F4F4F4; border: 1px solid rgba(0,0,0,.27); border-radius: 9px; }
-    .panel .pill { position: absolute; background: #E4E1E1; border: 1px solid rgba(0,0,0,.27); border-radius: 9px; }
-    .panel .c1, .panel .c2 { position: absolute; border: 1px solid rgba(0,0,0,.16); border-radius: 50%; background: #F4E8E8; }
-    .panel .c2 { box-shadow: 0 4px 4px rgba(0,0,0,.25), inset 0 4px 4px rgba(0,0,0,.12); }
-    .panel .dot { position: absolute; background: #444; border-radius: 12px; }
-    .panel .line { position: absolute; border: 1px solid rgba(0,0,0,.37); }
-    .panel .lbl { position: absolute; font-weight: 700; font-size: 0.9rem; color: #111; }
+    .proto-page .hero .badge {
+      display:inline-block; background:#fff; color:#000; border-radius:36px;
+      padding:8px 14px; font-weight:900; font-size:14px;
+    }
+    .proto-page .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 5vw, 48px);
+      line-height: 1.2;
+      margin: 16px 0 8px;
+      color:#fff;
+    }
+    .proto-page .hero p { max-width: 800px; font-weight: 900; color:#fff; }
+
+    /* GRID SECTIONS (keep DS grid but add responsive tweak) */
+    @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    /* CARDS: match your design’s softer look */
+    .proto-page .card { border-radius: 12px; }
+    .proto-page figure.card { padding: 0; } /* image cards: no extra padding */
+
+    /* MEDIA CARDS */
+    .proto-page .media-card { border-radius: 12px; overflow: hidden; }
+    .proto-page .media-card img {
+      display:block; width:100%; height:auto; object-fit:cover;
+      margin:0; /* neutralize DS default image margin */
+      border-radius:0; /* keep the card’s roundness, not the img’s */
+      box-shadow:none; /* avoid double shadows inside card */
+    }
+
+    /* Optional: fixed crops like in your design */
+    .proto-page .media-card--crop { aspect-ratio: 4 / 3; }
+    .proto-page .media-card--crop img { height:100%; object-fit:cover; }
+
+    /* TALL IMAGE */
+    .proto-page .tall-card { overflow:hidden; border-radius:12px; }
+    .proto-page .tall-card--crop { aspect-ratio: 3 / 2; } /* adjust to taste */
+
+    /* VIDEO WELL with 16:9 ratio */
+    .proto-page .video-well { position:relative; background:#000; border-radius:12px; overflow:hidden; }
+    .proto-page .video-well::before { content:""; display:block; padding-top:56.25%; }
+    .proto-page .video-well iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+
+    /* SCHEMATIC PANEL (kept as earlier, scoped) */
+    .proto-page .panel {
+      position:relative; aspect-ratio:485/492; width:100%;
+      background:linear-gradient(180deg,#EAE8E8 0%, rgba(132,131,131,0.37) 100%);
+      border-radius:12px; overflow:hidden; border:1px solid #e5e7eb; box-shadow:0 2px 12px rgba(0,0,0,0.1);
+    }
+    .proto-page .panel-inner{position:absolute; inset:0}
+    .proto-page .panel .bar{position:absolute;background:#413C3C;border:1px solid rgba(0,0,0,.46);border-radius:9px}
+    .proto-page .panel .cap{position:absolute;background:rgba(228,156,21,.96);border:.4px solid rgba(0,0,0,.46);border-radius:9px}
+    .proto-page .panel .stack-line{position:absolute;background:#F4F4F4;border:1px solid rgba(0,0,0,.12);border-radius:9px}
+    .proto-page .panel .stack-box{position:absolute;background:#F4F4F4;border:1px solid rgba(0,0,0,.27);border-radius:9px}
+    .proto-page .panel .pill{position:absolute;background:#E4E1E1;border:1px solid rgba(0,0,0,.27);border-radius:9px}
+    .proto-page .panel .c1,.proto-page .panel .c2{position:absolute;border:1px solid rgba(0,0,0,.16);border-radius:50%;background:#F4E8E8}
+    .proto-page .panel .c2{box-shadow:0 4px 4px rgba(0,0,0,.25), inset 0 4px 4px rgba(0,0,0,.12)}
+    .proto-page .panel .dot{position:absolute;background:#444;border-radius:12px}
+    .proto-page .panel .line{position:absolute;border:1px solid rgba(0,0,0,.37)}
+    .proto-page .panel .lbl{position:absolute;font-weight:900}
 
     /* placements */
-    .panel .bar.b1{left:41%;top:59%;width:2.1%;height:24%}
-    .panel .bar.b2{left:43.5%;top:59%;width:2.4%;height:24%}
-    .panel .bar.b3{left:46.5%;top:59%;width:2.1%;height:24%}
-    .panel .bar.b4{left:49%;top:59%;width:2.4%;height:24%}
-    .panel .bar.b5{left:52%;top:59%;width:2.1%;height:24%}
-    .panel .cap.c1{left:41.5%;top:81%;width:1.05%;height:3.6%}
-    .panel .cap.c2{left:44%;top:81%;width:1.05%;height:3.6%}
-    .panel .cap.c3{left:47%;top:81%;width:1.05%;height:3.6%}
-    .panel .cap.c4{left:49.5%;top:81%;width:1.05%;height:3.6%}
-    .panel .cap.c5{left:52.5%;top:81%;width:1.05%;height:3.6%}
-    .panel .stack-line.l1{left:37%;top:44%;width:.25%;height:14%}
-    .panel .stack-line.l2{left:56.9%;top:49%;width:.25%;height:9%}
-    .panel .stack-box{left:36.3%;top:38%;width:22.5%;height:23%}
-    .panel .pill.p1{left:38.4%;top:51%;width:2.4%;height:7.2%}
-    .panel .pill.p2{left:41.2%;top:51%;width:2.4%;height:7.2%}
-    .panel .pill.p3{left:44.1%;top:51%;width:2.4%;height:7.2%}
-    .panel .pill.p4{left:46.9%;top:51%;width:2.4%;height:7.2%}
-    .panel .pill.p5{left:49.7%;top:51%;width:2.4%;height:7.2%}
-    .panel .pill.p6{left:52.6%;top:51%;width:2.4%;height:7.2%}
-    .panel .c1{left:33.4%;top:20%;width:29%;height:29%}
-    .panel .c2{left:36.8%;top:23.2%;width:23%;height:23%}
-    .panel .dot.d1{left:47.1%;top:19%;width:1.6%;height:1.6%}
-    .panel .dot.d2{left:47.1%;top:45%;width:1.1%;height:1.1%}
-    .panel .dot.d3{left:59.9%;top:33.3%;width:1.3%;height:1.3%}
-    .panel .line.la{left:52.2%;top:10.4%;width:11.5%;height:0;transform:rotate(-45deg)}
-    .panel .line.lb{left:52.5%;top:47.1%;width:13.5%;height:0;transform:rotate(10deg)}
-    .panel .lbl.bird{left:61.9%;top:5%;font-size:16px}
-    .panel .lbl.bear{left:69.5%;top:47.8%;font-size:16px}
-
-    /* Video well */
-    .video-well {
-      position: relative;
-      border-radius: 8px;
-      overflow: hidden;
-      background: #000;
-    }
-    .video-well::before {
-      content: "";
-      display: block;
-      padding-top: 56.25%; /* 16:9 ratio */
-    }
-    .video-well iframe {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
+    .proto-page .panel .bar.b1{left:41%;top:59%;width:2.1%;height:24%}
+    .proto-page .panel .bar.b2{left:43.5%;top:59%;width:2.4%;height:24%}
+    .proto-page .panel .bar.b3{left:46.5%;top:59%;width:2.1%;height:24%}
+    .proto-page .panel .bar.b4{left:49%;top:59%;width:2.4%;height:24%}
+    .proto-page .panel .bar.b5{left:52%;top:59%;width:2.1%;height:24%}
+    .proto-page .panel .cap.c1{left:41.5%;top:81%;width:1.05%;height:3.6%}
+    .proto-page .panel .cap.c2{left:44%;top:81%;width:1.05%;height:3.6%}
+    .proto-page .panel .cap.c3{left:47%;top:81%;width:1.05%;height:3.6%}
+    .proto-page .panel .cap.c4{left:49.5%;top:81%;width:1.05%;height:3.6%}
+    .proto-page .panel .cap.c5{left:52.5%;top:81%;width:1.05%;height:3.6%}
+    .proto-page .panel .stack-line.l1{left:37%;top:44%;width:.25%;height:14%}
+    .proto-page .panel .stack-line.l2{left:56.9%;top:49%;width:.25%;height:9%}
+    .proto-page .panel .stack-box{left:36.3%;top:38%;width:22.5%;height:23%}
+    .proto-page .panel .pill.p1{left:38.4%;top:51%;width:2.4%;height:7.2%}
+    .proto-page .panel .pill.p2{left:41.2%;top:51%;width:2.4%;height:7.2%}
+    .proto-page .panel .pill.p3{left:44.1%;top:51%;width:2.4%;height:7.2%}
+    .proto-page .panel .pill.p4{left:46.9%;top:51%;width:2.4%;height:7.2%}
+    .proto-page .panel .pill.p5{left:49.7%;top:51%;width:2.4%;height:7.2%}
+    .proto-page .panel .pill.p6{left:52.6%;top:51%;width:2.4%;height:7.2%}
+    .proto-page .panel .c1{left:33.4%;top:20%;width:29%;height:29%}
+    .proto-page .panel .c2{left:36.8%;top:23.2%;width:23%;height:23%}
+    .proto-page .panel .dot.d1{left:47.1%;top:19%;width:1.6%;height:1.6%}
+    .proto-page .panel .dot.d2{left:47.1%;top:45%;width:1.1%;height:1.1%}
+    .proto-page .panel .dot.d3{left:59.9%;top:33.3%;width:1.3%;height:1.3%}
+    .proto-page .panel .line.la{left:52.2%;top:10.4%;width:11.5%;height:0;transform:rotate(-45deg)}
+    .proto-page .panel .line.lb{left:52.5%;top:47.1%;width:13.5%;height:0;transform:rotate(10deg)}
+    .proto-page .panel .lbl.bird{left:61.9%;top:5%;font-size:16px}
+    .proto-page .panel .lbl.bear{left:69.5%;top:47.8%;font-size:16px}
   </style>
 </head>
-<body>
+<body class="proto-page">
 
+  <!-- NAV from Design System -->
   <div class="content">
     <nav>
       <a href="../../../index.html">Home</a>
       <a href="../../../projects.html">Projects</a>
       <a href="../../../about.html">About</a>
     </nav>
+  </div>
 
-    <header class="mb-md">
-      <h1>Sleep-O-Meter <span class="text-accent">— Prototype #2</span></h1>
-      <p><strong>Goal:</strong> explore a prosthetic concept that lets a user modulate biorhythm and heartbeat to influence sleep demand and efficiency.</p>
-    </header>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <span class="badge">Proto #2</span>
+      <h1>Sleep-O-Meter</h1>
+      <p>The following page covers a prototype creation of a prosthetics heartbeat and biorhythm meter created for an ideation brief received during our “Living with your ideas” course. The purpose of this prototype is to showcase how we can extend the limitations of the human body.</p>
+    </div>
+  </section>
 
+  <div class="content">
     <!-- IDEA + SCHEMATIC -->
     <section class="grid grid-2">
       <div class="card">
@@ -132,22 +167,19 @@
         <p>The current prototype is low-fidelity and demonstrates the physical appearance and interaction. Testers can rotate the top wheel (a simple “potmeter-type” control) to simulate adjustment. Other elements are visual only.</p>
       </article>
 
-      <figure class="card">
+      <figure class="card media-card media-card--crop">
         <img src="../../../assets/media/IMG_3304.png" alt="Workbench overview" loading="lazy">
-        <figcaption class="card-desc">Workbench overview</figcaption>
       </figure>
 
-      <figure class="card">
+      <figure class="card media-card media-card--crop">
         <img src="../../../assets/media/IMG_3306.png" alt="Prototype detail" loading="lazy">
-        <figcaption class="card-desc">Prototype detail</figcaption>
       </figure>
     </section>
 
     <!-- TALL IMAGE + VIDEO -->
     <section class="grid grid-2">
-      <figure class="card">
+      <figure class="card tall-card tall-card--crop">
         <img src="../../../assets/media/IMG_3311.png" alt="Wear test on mannequin" loading="lazy">
-        <figcaption class="card-desc">Wear test on mannequin</figcaption>
       </figure>
 
       <div class="card">
@@ -158,7 +190,6 @@
             referrerpolicy="strict-origin-when-cross-origin"
             title="AGLivingWithOwnIdeaProto2"></iframe>
         </div>
-        <p class="card-desc">Demo video</p>
       </div>
     </section>
 
