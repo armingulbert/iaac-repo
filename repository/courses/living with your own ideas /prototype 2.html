@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
 
 <style>
-/* Canvas from your spec */
+/* Canvas */
 .page { position:relative; width:1440px; height:1973px; margin:0 auto; background:#fff; font-family:'Lato', Arial, sans-serif; color:#000; }
 
 /* Hero */
@@ -21,15 +21,18 @@
 .hsub { position:absolute; left:307px; top:144px; width:821px; height:80px; font-weight:900; font-size:16px; line-height:19px; color:#fff; }
 
 /* Copy blocks */
-.copy-idea { position:absolute; left:307px; top:268px; width:379px; height:700px; font-weight:900; font-size:16px; line-height:19px; }
+.copy-idea { position:absolute; left:307px; top:268px; width:379px; height:397px; font-weight:900; font-size:16px; line-height:19px; }
 .copy-idea p { margin:0 0 10px 0; }
 .copy-proto { position:absolute; left:307px; top:691px; width:826px; height:93px; font-weight:900; font-size:16px; line-height:19px; }
 
-/* Images (use <img> for reliability + alt) */
-.img-3304 { position:absolute; left:304px; top:824px; width:413px; height:374px; border-radius:12px; object-fit:cover; }
-.img-3306 { position:absolute; left:749px; top:824px; width:384px; height:185px; border-radius:0 12px 0 0; object-fit:cover; }
-.img-3307 { position:absolute; left:749px; top:1030px; width:384px; height:168px; border-radius:0 0 12px 0; object-fit:cover; }
-.img-3311 { position:absolute; left:889px; top:1219px; width:238px; height:634px; border-radius:0 12px 12px 0; object-fit:cover; }
+/* Media blocks */
+.media { object-fit:cover; display:block; width:100%; height:100%; border:0; }
+
+/* Image frames (positions from your spec) */
+.frame-3304 { position:absolute; left:304px; top:824px; width:413px; height:374px; border-radius:12px; overflow:hidden; }
+.frame-3306 { position:absolute; left:749px; top:824px; width:384px; height:185px; border-radius:0 12px 0 0; overflow:hidden; }
+.frame-3307 { position:absolute; left:749px; top:1030px; width:384px; height:168px; border-radius:0 0 12px 0; overflow:hidden; }
+.frame-3311 { position:absolute; left:889px; top:1219px; width:238px; height:634px; border-radius:0 12px 12px 0; overflow:hidden; }
 
 /* Accent bars */
 .accent-right-vert { position:absolute; left:1097px; top:1210px; width:15px; height:458px; background:#00FF88; }
@@ -37,17 +40,17 @@
 .accent-left-vert  { position:absolute; left:361px; top:1411px; width:15px; height:458px; background:#00FF88; transform:rotate(-180deg); }
 .accent-left-horz  { position:absolute; left:325px; top:1823px; width:207px; height:9px; background:#8026C3; transform:rotate(-180deg); }
 
-/* Rectangle 7 – video well, with true "cover" */
+/* Rectangle 7 – video well, with true “cover” */
 .video-well { position:absolute; left:307px; top:1217px; width:567px; height:636px; background:#000; border-radius:30px; overflow:hidden; }
 .video-well .fit { position:absolute; inset:0; }
 .video-well iframe {
   position:absolute; top:0; left:50%;
-  height:100%; width:177.78%;          /* 16/9 = 1.7778 → cover by height */
+  height:100%; width:177.78%;          /* 16/9 cover by height */
   transform:translateX(-50%);           /* center-crop horizontally */
   border:0;
 }
 
-/* Schematic panel (kept minimal — same visual layout) */
+/* Schematic panel (kept minimal for your layout) */
 .panel { position:absolute; left:750px; top:277px; width:383px; height:388px; background:linear-gradient(180deg,#EAE8E8 0%, rgba(132,131,131,0.37) 100%); border-radius:19px; }
 .mbar { position:absolute; top:505px; width:9px; height:93px; background:#413C3C; border:1px solid rgba(0,0,0,.46); border-radius:9px; }
 .mbar.b1{ left:907px;width:8px } .mbar.b2{ left:917px } .mbar.b3{ left:928px;width:8px } .mbar.b4{ left:938px } .mbar.b5{ left:949px;width:8px }
@@ -78,11 +81,11 @@
   <div class="h1">Sleep-O-Meter</div>
   <div class="hsub">
     The following page covers a prototype creation of a prosthetics heartbeat and biorhythm meter created for an ideation
-    brief received during our "Living with your ideas" course. The purpose of this prototype is to showcase how we can
+    brief received during our “Living with your ideas” course. The purpose of this prototype is to showcase how we can
     extend the limitations of the human body.
   </div>
 
-  <!-- Idea (your exact text) -->
+  <!-- Idea -->
   <div class="copy-idea">
     <p><strong>Idea</strong></p>
     <p>The receive brief highlighted that MDEF students must deliver a prosthetic solution that would help the potential user become something else.</p>
@@ -107,21 +110,38 @@
     <strong>Prototype</strong><br><br>
     The current prototype is a low-fidelity one, and its purpose to visualise the Sleep-O-Meter physical appearance,
     initiate discussions on potential use and the related experience of users. In terms of functionality the current
-    prototype covers a simple "potmeter-type" of experience; testers can rotate the top white wheel replicating the
+    prototype covers a simple “potmeter-type” of experience; testers can rotate the top white wheel replicating the
     experience of an actual meter adjustment. Rest of the elements are not functioning, they serve visualisation
     purposes only.
   </div>
 
-  <!-- Images (from /iaac-repo/assets/media) -->
-  <img class="img-3304" src="/iaac-repo/assets/media/IMG_3304.HEIC" alt="Prototype workbench overview">
-  <img class="img-3306" src="/iaac-repo/assets/media/IMG_3306.HEIC" alt="Detail shot 1">
-  <img class="img-3307" src="/iaac-repo/assets/media/IMG_3307.HEIC" alt="Detail shot 2">
+  <!-- Images (HEIC + JPG fallback) -->
+  <figure class="frame-3304">
+    <picture>
+      <source srcset="/iaac-repo/assets/media/IMG_3304.HEIC" type="image/heic">
+      <img class="media" src="/iaac-repo/assets/media/IMG_3304.jpg" alt="Prototype workbench overview">
+    </picture>
+  </figure>
+
+  <figure class="frame-3306">
+    <picture>
+      <source srcset="/iaac-repo/assets/media/IMG_3306.HEIC" type="image/heic">
+      <img class="media" src="/iaac-repo/assets/media/IMG_3306.jpg" alt="Detail shot 1">
+    </picture>
+  </figure>
+
+  <figure class="frame-3307">
+    <picture>
+      <source srcset="/iaac-repo/assets/media/IMG_3307.HEIC" type="image/heic">
+      <img class="media" src="/iaac-repo/assets/media/IMG_3307.jpg" alt="Detail shot 2">
+    </picture>
+  </figure>
 
   <!-- Video well (Rectangle 7) with cover-fit Vimeo -->
   <div class="video-well">
     <div class="fit">
       <iframe
-        src="https://player.vimeo.com/video/1131811743?badge=0&autopause=0&player_id=0&app_id=58479"
+        src="https://player.vimeo.com/video/1131811743?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
         allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
         referrerpolicy="strict-origin-when-cross-origin"
         title="AGLivingWithOwnIdeaProto2">
@@ -130,7 +150,13 @@
   </div>
 
   <!-- Tall right image + accents -->
-  <img class="img-3311" src="/iaac-repo/assets/media/IMG_3311.HEIC" alt="Wear test on mannequin">
+  <figure class="frame-3311">
+    <picture>
+      <source srcset="/iaac-repo/assets/media/IMG_3311.HEIC" type="image/heic">
+      <img class="media" src="/iaac-repo/assets/media/IMG_3311.jpg" alt="Wear test on mannequin">
+    </picture>
+  </figure>
+
   <div class="accent-right-vert"></div>
   <div class="accent-right-horz"></div>
   <div class="accent-left-vert"></div>
