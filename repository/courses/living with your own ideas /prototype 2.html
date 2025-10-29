@@ -5,30 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sleep-O-Meter — Proto #2</title>
 
-  <!-- IMPORTANT: base matches your repo name so assets work on GitHub Pages -->
-  <base href="/iaac-repo/">
+  <!-- Correct relative path to design-system.css -->
+  <link rel="stylesheet" href="../../../design-system/design-system.css">
 
-  <!-- Your design system (separate repo) -->
-  <link rel="stylesheet" href="/design-system/design-system.css">
-
-  <!-- Page-specific CSS (kept minimal) -->
+  <!-- Page-specific schematic + video styling -->
   <style>
     /* Schematic “panel” */
-    .panel { position:relative; aspect-ratio:485/492; width:100%;
-      background:linear-gradient(180deg,#EAE8E8 0%, rgba(132,131,131,0.37) 100%);
-      border-radius:12px; overflow:hidden; border:1px solid #e5e7eb;
+    .panel {
+      position: relative;
+      aspect-ratio: 485/492;
+      width: 100%;
+      background: linear-gradient(180deg, #EAE8E8 0%, rgba(132,131,131,0.37) 100%);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
     }
-    .panel-inner{position:absolute; inset:0}
-    .panel .bar{position:absolute;background:#413C3C;border:1px solid rgba(0,0,0,.46);border-radius:9px}
-    .panel .cap{position:absolute;background:rgba(228,156,21,.96);border:.4px solid rgba(0,0,0,.46);border-radius:9px}
-    .panel .stack-line{position:absolute;background:#F4F4F4;border:1px solid rgba(0,0,0,.12);border-radius:9px}
-    .panel .stack-box{position:absolute;background:#F4F4F4;border:1px solid rgba(0,0,0,.27);border-radius:9px}
-    .panel .pill{position:absolute;background:#E4E1E1;border:1px solid rgba(0,0,0,.27);border-radius:9px}
-    .panel .c1,.panel .c2{position:absolute;border:1px solid rgba(0,0,0,.16);border-radius:50%;background:#F4E8E8}
-    .panel .c2{box-shadow:0 4px 4px rgba(0,0,0,.25), inset 0 4px 4px rgba(0,0,0,.12)}
-    .panel .dot{position:absolute;background:#444;border-radius:12px}
-    .panel .line{position:absolute;border:1px solid rgba(0,0,0,.37)}
-    .panel .lbl{position:absolute;font-weight:700}
+    .panel-inner { position: absolute; inset: 0; }
+    .panel .bar { position: absolute; background: #413C3C; border: 1px solid rgba(0,0,0,.46); border-radius: 9px; }
+    .panel .cap { position: absolute; background: rgba(228,156,21,.96); border: .4px solid rgba(0,0,0,.46); border-radius: 9px; }
+    .panel .stack-line { position: absolute; background: #F4F4F4; border: 1px solid rgba(0,0,0,.12); border-radius: 9px; }
+    .panel .stack-box { position: absolute; background: #F4F4F4; border: 1px solid rgba(0,0,0,.27); border-radius: 9px; }
+    .panel .pill { position: absolute; background: #E4E1E1; border: 1px solid rgba(0,0,0,.27); border-radius: 9px; }
+    .panel .c1, .panel .c2 { position: absolute; border: 1px solid rgba(0,0,0,.16); border-radius: 50%; background: #F4E8E8; }
+    .panel .c2 { box-shadow: 0 4px 4px rgba(0,0,0,.25), inset 0 4px 4px rgba(0,0,0,.12); }
+    .panel .dot { position: absolute; background: #444; border-radius: 12px; }
+    .panel .line { position: absolute; border: 1px solid rgba(0,0,0,.37); }
+    .panel .lbl { position: absolute; font-weight: 700; font-size: 0.9rem; color: #111; }
 
     /* placements */
     .panel .bar.b1{left:41%;top:59%;width:2.1%;height:24%}
@@ -60,30 +63,43 @@
     .panel .lbl.bird{left:61.9%;top:5%;font-size:16px}
     .panel .lbl.bear{left:69.5%;top:47.8%;font-size:16px}
 
-    /* Video well (16:9 without layout shifts) */
-    .video-well { position:relative; border-radius:8px; overflow:hidden; background:#000; }
-    .video-well::before { content:""; display:block; padding-top:56.25%; } /* 16:9 */
-    .video-well iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+    /* Video well */
+    .video-well {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #000;
+    }
+    .video-well::before {
+      content: "";
+      display: block;
+      padding-top: 56.25%; /* 16:9 ratio */
+    }
+    .video-well iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
   </style>
 </head>
 <body>
 
   <div class="content">
     <nav>
-      <a href="./">Home</a>
-      <a href="./projects.html">Projects</a>
-      <a href="./about.html">About</a>
+      <a href="../../../index.html">Home</a>
+      <a href="../../../projects.html">Projects</a>
+      <a href="../../../about.html">About</a>
     </nav>
 
     <header class="mb-md">
       <h1>Sleep-O-Meter <span class="text-accent">— Prototype #2</span></h1>
-      <p><strong>Goal:</strong>The following page covers a prototype creation of a prostethics heartbeat and biorythm meter 
-        created for an ideation brief recieved during our “Living with your ideas” course. The purpose of this prototype to showcase how we can extend the limitations of the humand body.</p>
+      <p><strong>Goal:</strong> explore a prosthetic concept that lets a user modulate biorhythm and heartbeat to influence sleep demand and efficiency.</p>
     </header>
 
     <!-- IDEA + SCHEMATIC -->
     <section class="grid grid-2">
-      <!-- Schematic -->
       <div class="card">
         <div class="panel">
           <div class="panel-inner">
@@ -102,15 +118,10 @@
         </div>
       </div>
 
-      <!-- Idea -->
       <article class="card">
         <h2>Idea</h2>
-        <p>The receive brief highlighted that MDEF students must deliver a prosthetic solution that would help the potential user become something else. 
-
-There are two major trigger / driver behind the idea of creating a Sleep-O-Meter that helps the user to adjust his/her/their biorythm and heartbeat to influence the sleep demand and efficiency. Based on the lecture of the course I learnt that we can adjust ourselves and bodies becoming an animal. Animals can show different sleep demand and efficiency - like birds require the least amount of sleep, in the meantime certain spieces take long, even quarter-year-long winter sleep. 
-The second driver of the idea is a common situation happens us, humans, that our sleep demand can change eventually for short and long-term. This phase can be a couple of days, but even years length.
-
-The combination of the two drivers resulted the idea that us, humans, we can enable ourselves to modify our body and its needs with a prosthetics. The benefit of the artefact would be better life condition, less stress and potentially longer lifespan.</p>
+        <p>The brief asked for a prosthetic solution that helps the potential user “become something else.” Animals display very different sleep patterns—birds require little sleep while some species hibernate for months. The concept explores dialing between those modes by adjusting biorhythm and heartbeat.</p>
+        <p>People’s sleep demand also fluctuates in short and long phases. The Sleep-O-Meter imagines a prosthetic that helps modulate those phases for well-being, lower stress, and potentially longer lifespan.</p>
       </article>
     </section>
 
@@ -118,39 +129,36 @@ The combination of the two drivers resulted the idea that us, humans, we can ena
     <section class="grid grid-2">
       <article class="card">
         <h2>Prototype</h2>
-        <p>The current prototype is a low-fidelity one, and its purpose to visualise the Sleep-O-Meter physical appearance, initiate discussions on potential use and the related experience of users. In terms of functionality the current prototype cover a simple “potmeter-type” of experience,
-          testers can rotate the top-white-wheel replicating the experience of an actual meter-adjustment. Rest of the elemts are not functioning, they serve visualisation purposes only.</p>
+        <p>The current prototype is low-fidelity and demonstrates the physical appearance and interaction. Testers can rotate the top wheel (a simple “potmeter-type” control) to simulate adjustment. Other elements are visual only.</p>
       </article>
 
       <figure class="card">
-        <img src="assets/media/IMG_3304.png" alt="Workbench overview" loading="lazy">
+        <img src="../../../assets/media/IMG_3304.png" alt="Workbench overview" loading="lazy">
         <figcaption class="card-desc">Workbench overview</figcaption>
       </figure>
 
       <figure class="card">
-        <img src="assets/media/IMG_3306.png" alt="Prototype detail" loading="lazy">
+        <img src="../../../assets/media/IMG_3306.png" alt="Prototype detail" loading="lazy">
         <figcaption class="card-desc">Prototype detail</figcaption>
       </figure>
     </section>
 
     <!-- TALL IMAGE + VIDEO -->
-    <section class="grid">
-      <div class="grid grid-2">
-        <figure class="card">
-          <img src="assets/media/IMG_3311.png" alt="Wear test on mannequin" loading="lazy">
-          <figcaption class="card-desc">Wear test on mannequin</figcaption>
-        </figure>
+    <section class="grid grid-2">
+      <figure class="card">
+        <img src="../../../assets/media/IMG_3311.png" alt="Wear test on mannequin" loading="lazy">
+        <figcaption class="card-desc">Wear test on mannequin</figcaption>
+      </figure>
 
-        <div class="card">
-          <div class="video-well" aria-label="Prototype video">
-            <iframe
-              src="https://player.vimeo.com/video/1131811743?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-              title="AGLivingWithOwnIdeaProto2"
-              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-              referrerpolicy="strict-origin-when-cross-origin"></iframe>
-          </div>
-          <p class="card-desc">Demo video</p>
+      <div class="card">
+        <div class="video-well" aria-label="Prototype video">
+          <iframe
+            src="https://player.vimeo.com/video/1131811743?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            title="AGLivingWithOwnIdeaProto2"></iframe>
         </div>
+        <p class="card-desc">Demo video</p>
       </div>
     </section>
 
