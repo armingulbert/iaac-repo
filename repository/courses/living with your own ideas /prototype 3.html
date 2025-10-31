@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>“I Am…” Insert — Proto #3</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lato:wght@400;700;900&family=Kode+Mono:wght@400&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --brand:#E24E36;
+  --ink:#1C1C1C;
+  --page-pad: clamp(12px, 3vw, 24px);
+  --content-w: min(1200px, 100%);
+  --radius: 20px;
+}
+
+/* Page */
+body{margin:0;background:#fff;color:var(--ink);font-family:'Lato',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;}
+.page{display:flex;flex-direction:column;align-items:center;padding:var(--page-pad);gap:24px}
+
+/* Hero */
+.hero{width:var(--content-w);background:var(--brand);color:#fff;border-radius:16px;padding:32px clamp(16px,4vw,48px);position:relative}
+.hero .badge{position:absolute;left: clamp(16px,4vw,48px);top:16px;background:#fff;color:#000;border-radius:999px;padding:6px 14px;font-weight:900;font-size:14px}
+.hero h1{font-family:'Abril Fatface',serif;font-size:clamp(32px,4.2vw,48px);line-height:1;margin:36px 0 8px}
+.hero p{max-width:900px;font-weight:900;margin:0}
+
+/* FRAME 2: top schematic + idea text */
+.top-block{
+  width:var(--content-w);
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:24px;
+}
+@media (max-width:900px){ .top-block{grid-template-columns:1fr; }}
+
+/* schematic card */
+.schematic{
+  position:relative;
+  background:linear-gradient(180deg,#EAE8E8 0%, rgba(132,131,131,0.37) 100%);
+  border-radius:19px;
+  aspect-ratio: 1 / 1.05;
+  overflow:hidden;
+  min-height:360px;
+}
+.schematic .screen-outer{
+  position:absolute; left:8%; top:28%; width:64%; height:76px;
+  background: radial-gradient(50% 50% at 50% 50%, #FFFFFF 59.13%, #F1EEDF 100%);
+  border-radius:40px;
+}
+.schematic .screen-inner{
+  position:absolute; left:calc(8% + 18px); top:calc(28% + 11px); width:calc(64% - 36px); height:54px;
+  background:#000; border-radius:40px;
+  display:flex; align-items:center; padding:0 16px;
+  font-family:'Kode Mono', monospace; color:#FF00D0; font-size:18px;
+}
+.schematic .www-ring{
+  position:absolute; right:8%; top:6%;
+  width:86px; height:86px;
+  border:1px solid #FF00D0; border-radius:50%;
+  box-shadow:0 4px 4px rgba(0,0,0,.25);
+}
+.schematic .www-ring::after{
+  content:""; position:absolute; left:8px; right:20px; top:0; bottom:0;
+  border:1px solid #FF00D0; border-radius:50%;
+}
+.schematic .www-label{
+  position:absolute; right:12%; top:9%;
+  color:#8026C3; font-weight:900;
+}
+.schematic .pins{
+  position:absolute; left:calc(8% + 18px); top:calc(28% + 11px + 54px + 16px);
+  display:flex; gap:8px;
+}
+.schematic .pins span{
+  display:inline-block; width:11px; height:90px; background:#413C3C;
+  border:1px solid rgba(0,0,0,.46); border-radius:9px;
+}
+.schematic .pins span:nth-child(odd){ width:10px; }
+.schematic .pins .cap{
+  position:absolute; bottom:-18px; width:5px; height:18px;
+  background:rgba(228,156,21,.96); border:.4px solid rgba(0,0,0,.46); border-radius:9px;
+}
+.schematic .pins .cap:nth-child(6){left:6px} .schematic .pins .cap:nth-child(7){left:29px}
+.schematic .pins .cap:nth-child(8){left:53px} .schematic .pins .cap:nth-child(9){left:76px}
+.schematic .pins .cap:nth-child(10){left:100px}
+.schematic .labels{position:absolute; inset:auto auto 12px 12px; display:flex; flex-direction:column; gap:6px; font-weight:900;}
+.schematic .labels small{font-weight:400;font-size:12px}
+
+/* Idea text */
+.idea{
+  display:flex; flex-direction:column; gap:10px; font-weight:900; font-size:16px; line-height:1.2;
+}
+
+/* FRAME 4: prototype text + two images */
+.proto-block{
+  width:var(--content-w);
+  padding-inline: clamp(0px,1vw,8px);
+  display:grid; grid-template-columns: 1fr 1fr 1fr; gap:24px; align-items:start;
+}
+.proto-text{grid-column:1 / span 1; font-weight:900; font-size:16px; line-height:1.2;}
+.proto-img{grid-column:2 / span 1;}
+.proto-img2{grid-column:3 / span 1;}
+@media (max-width:1100px){
+  .proto-block{grid-template-columns:1fr; }
+  .proto-text,.proto-img,.proto-img2{grid-column:auto;}
+}
+
+/* media cards */
+.media-card{
+  border-radius:20px; overflow:hidden; background:#f4f4f4;
+  aspect-ratio: 1 / 0.93;  /* close to your 546x508 */
+}
+.media-card img{width:100%; height:100%; object-fit:cover; display:block}
+.media-card picture{width:100%; height:100%; display:block}
+
+/* FRAME 6: video band */
+.video-band{
+  width:var(--content-w); height: clamp(280px, 55vw, 636px);
+  border-radius:30px; background:#000; overflow:hidden; display:block;
+}
+.video-band .fit{position:relative; width:100%; height:100%}
+.video-band iframe{
+  position:absolute; top:0; left:50%; height:100%; width:177.78%; /* 16:9 cover */
+  transform:translateX(-50%); border:0;
+}
+
+/* helpers */
+h3{margin:0 0 6px}
+.small{font-weight:400}
+</style>
+</head>
+<body>
+  <main class="page">
+
+    <!-- HERO -->
+    <header class="hero">
+      <div class="badge">Proto #3</div>
+      <h1>“I Am…” Insert</h1>
+      <p>
+        The following page covers a prototype creation of a prosthetics insert that helps the user to keep up with the latest trends
+        and enable us to re-create ourselves aligned with these trends. The prototype is the deliverable of the design process
+        (triggered by an ideation brief received during our “Living with your ideas” course). The purpose of this prototype is to
+        showcase how we can build a “fake” identity.
+      </p>
+    </header>
+
+    <!-- FRAME 2: schematic + idea -->
+    <section class="top-block">
+      <!-- schematic block -->
+      <div class="schematic">
+        <div class="www-ring"></div>
+        <div class="www-label">WWW</div>
+
+        <div class="screen-outer"></div>
+        <div class="screen-inner">I AM A GOOD [TREND]…</div>
+
+        <div class="pins">
+          <span></span><span></span><span></span><span></span><span></span>
+          <!-- visual caps aligned below bars -->
+          <span class="cap"></span><span class="cap"></span><span class="cap"></span><span class="cap"></span><span class="cap"></span>
+        </div>
+      </div>
+
+      <!-- idea text -->
+      <div class="idea">
+        <h3>Idea</h3>
+        <p>The receive brief highlighted that MDEF students must deliver a prosthetic solution that would help the potential users expressing / showing themselves.</p>
+        <p>The idea is to have an insert with a display on our chest with running text. The text would always start with an “I am…” and then followed by adjectives, expressions formulated based on latest trends, expectations and contextual data.</p>
+        <p>The dataset for the procedure of compiling the adjectives and phrases is coming from an internet scraping process. The purpose of this process is to collect the actual trends (e.g., from social media, studies, etc.) and identify the relevant ones for the user of the product. The insert constantly checks the location of the user to help adjusting the trends to the context.</p>
+        <p>With the insert we can easily tell others who we are and makes us likeable.</p>
+      </div>
+    </section>
+
+    <!-- FRAME 4: prototype + two images -->
+    <section class="proto-block">
+      <div class="proto-text">
+        <h3>Prototype</h3>
+        <p>
+          The current prototype is a low-fidelity one, and its purpose is to visualise the “I am…” Insert physical appearance,
+          initiate discussions on potential use and the related experience of users. In terms of functionality the current
+          prototype was made of copper-coloured wire and tape. On the tape there is marked text saying:
+        </p>
+        <p class="small">“I am” • “Good” • “Man, son, friend, designer, citizen, f*ck, cook, dancer, boy…?”</p>
+        <p>The test suggests how we want to show different sides of ourselves aligned with social standards, expectations and trends.</p>
+      </div>
+
+      <figure class="media-card proto-img">
+        <picture>
+          <source srcset="/iaac-repo/assets/media/IMG_3323.webp" type="image/webp">
+          <source srcset="/iaac-repo/assets/media/IMG_3323.jpg" type="image/jpeg">
+          <source srcset="/iaac-repo/assets/media/IMG_3323.png" type="image/png">
+          <img src="/iaac-repo/assets/media/IMG_3322 1.png" alt="Prototype copper insert on mannequin — view 1">
+        </picture>
+      </figure>
+
+      <figure class="media-card proto-img2">
+        <picture>
+          <source srcset="/iaac-repo/assets/media/IMG_3322.webp" type="image/webp">
+          <source srcset="/iaac-repo/assets/media/IMG_3322.jpg" type="image/jpeg">
+          <source srcset="/iaac-repo/assets/media/IMG_3322.png" type="image/png">
+          <img src="/iaac-repo/assets/media/IMG_3323 1.png" alt="Prototype copper insert on mannequin — view 2">
+        </picture>
+      </figure>
+    </section>
+
+    <!-- FRAME 6: video band -->
+    <section class="video-band" aria-label="Prototype demo video">
+      <div class="fit">
+        <!-- cover-fit embed -->
+        <iframe
+          src="https://player.vimeo.com/video/1132471205?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+          allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          title="IMG_3326">
+        </iframe>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="https://player.vimeo.com/api/player.js"></script>
+</body>
+</html>
