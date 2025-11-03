@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Proto #3 — "I Am…" Insert</title>
 
+<!-- ✅ Make all relative paths resolve from the repo root -->
+<base href="/iaac-repo/">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
@@ -38,6 +41,7 @@ h1{font-family:'Abril Fatface',serif;font-size:clamp(32px,4.5vw,48px);line-heigh
 @media (max-width:980px){ .grid-idea{grid-template-columns:1fr} }
 
 .card{
+  /* bugfixes */
   background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);
   padding:0;overflow:hidden;
 }
@@ -100,10 +104,11 @@ h3{font-family:'Abril Fatface',serif;font-size:26px;margin:16px 0 12px}
   <section class="grid-idea">
     <!-- Schematic card -->
     <figure class="card" style="margin:0">
+      <!-- thanks to <base>, this resolves to /iaac-repo/assets/media/Group_7.png -->
       <img src="assets/media/Group_7.png"
            alt="Schematic — Group 7"
            loading="lazy"
-           onerror="this.style.border='2px solid #e24e36';this.alt='Missing: assets/media/Group_7.png'">
+           onerror="this.style.border='2px solid #e24e36';this.alt='Missing: /iaac-repo/assets/media/Group_7.png'">
     </figure>
 
     <!-- Idea text -->
@@ -134,14 +139,14 @@ h3{font-family:'Abril Fatface',serif;font-size:26px;margin:16px 0 12px}
           <img src="assets/media/IMG_3323_1.png"
                alt="Prototype copper insert — view 1"
                loading="lazy"
-               onerror="this.style.border='2px solid #e24e36';this.alt='Missing: assets/media/IMG_3323_1.png'">
+               onerror="this.style.border='2px solid #e24e36';this.alt='Missing: /iaac-repo/assets/media/IMG_3323_1.png'">
         </figure>
 
         <figure class="shot">
           <img src="assets/media/IMG_3322_1.png"
                alt="Prototype copper insert — view 2"
                loading="lazy"
-               onerror="this.style.border='2px solid #e24e36';this.alt='Missing: assets/media/IMG_3322_1.png'">
+               onerror="this.style.border='2px solid #e24e36';this.alt='Missing: /iaac-repo/assets/media/IMG_3322_1.png'">
         </figure>
       </div>
     </div>
