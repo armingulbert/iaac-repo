@@ -44,7 +44,7 @@
       gap:24px;
       padding:0 28px;
       box-shadow:0 2px 10px rgba(0,0,0,.08);
-      max-width:25vw; /* limit to 25% of viewport width */
+      max-width:25vw; /* 25% of viewport width */
       min-width:320px; /* prevent collapse */
     }
 
@@ -88,8 +88,8 @@
     }
 
     .pdf-aspect{
-      position:relative;
-      padding-top:130%;
+      width:100%;
+      height:560px; /* fixed height */
       background:#000;
       border-radius:20px;
       overflow:hidden;
@@ -98,12 +98,11 @@
     .pdf-aspect iframe,
     .pdf-aspect object,
     .pdf-aspect embed{
-      position:absolute;
-      inset:0;
       width:100%;
       height:100%;
       border:0;
       background:#fff;
+      display:block;
     }
 
     @media (max-width:720px){
@@ -125,36 +124,4 @@
     <nav class="nav-pill">
       <div class="brand">The Log</div>
       <a href="https://armingulbert.github.io/iaac-repo/">Home</a>
-      <a href="https://armingulbert.github.io/iaac-repo/the%20project/index.html">Project</a>
-      <a href="https://armingulbert.github.io/iaac-repo/repository/index.html">Repository</a>
-    </nav>
-  </div>
-
-  <!-- MAIN -->
-  <main class="wrap">
-    <h1 class="bio-title">Bio</h1>
-
-    <section class="lead-copy">
-      <p>I was born in 1989 and raised at the countryside of Hungary. My first meet with art and design was at the age of 12. I had special classes to learn visual and art basics. In the high-school era my sister showed me Photoshop and Illustrator. From that point creation is part of my life. She asked me not to become a designer so I went to a business university where I have struggled at the beginning, but at the end I found my way there.</p>
-
-      <p>I was really into problem-solving and working with others. So I started my career in consulting and since day 1 I am driven by one topic: figuring out how technology change the lives of people and organizations. In this journey I found the way to mix my designer and business sides — this is how I became a service designer. In 2019, I joined forces with a friend to create and start an agency which is the biggest design challenge I ever faced / face.</p>
-
-      <p>My detailed portfolio:</p>
-    </section>
-
-    <!-- PDF -->
-    <section class="pdf-wrap">
-      <div class="pdf-aspect">
-        <iframe
-          src="/iaac-repo/assets/files/ArminGulbertPortfolio-compressed.pdf#toolbar=1&navpanes=0&view=FitH"
-          title="Armin Gulbert — Portfolio (PDF)">
-        </iframe>
-        <object data="/iaac-repo/assets/files/ArminGulbertPortfolio-compressed.pdf" type="application/pdf">
-          <embed src="/iaac-repo/assets/files/ArminGulbertPortfolio-compressed.pdf" type="application/pdf"/>
-        </object>
-      </div>
-    </section>
-  </main>
-
-</body>
-</html>
+      <a href="https://armingulbert.gith
