@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Proto #3 — “I Am…” Insert</title>
+<title>Proto #3 — "I Am…" Insert</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,10 +38,12 @@ h1{font-family:'Abril Fatface',serif;font-size:clamp(32px,4.5vw,48px);line-heigh
 @media (max-width:980px){ .grid-idea{grid-template-columns:1fr} }
 
 .card{
-  background:#f4f4f4;border-radius:var(--radius);box-shadow:var(--shadow);
+  /* bugfix: 'src=white' is invalid */
+  background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);
   padding:0;overflow:hidden;
 }
-.card img{display:block;width:100%;height:auto}
+/* bugfix: 'display:inside' is invalid */
+.card img{display:block;width:100%;height:400px;object-fit:cover}
 
 /* Idea text */
 h2{font-family:'Abril Fatface',serif;font-size:28px;margin:0 0 12px}
@@ -83,13 +85,13 @@ h3{font-family:'Abril Fatface',serif;font-size:26px;margin:16px 0 12px}
 <header class="hero">
   <div class="inner">
     <div class="badge">Proto #3</div>
-    <h1>“I Am…” Insert</h1>
+    <h1>"I Am…" Insert</h1>
     <p class="p-hero">
       The following page covers a prototype creation of a prosthetics insert that helps the user
       to keep up with the latest trends and enables us to re-create ourselves aligned with these trends.
       The prototype is the deliverable of the design process (triggered by an ideation brief received
-      during our “Living with your ideas” course). The purpose of this prototype is to showcase
-      how we can build a “fake” identity.
+      during our "Living with your ideas" course). The purpose of this prototype is to showcase
+      how we can build a "fake" identity.
     </p>
   </div>
 </header>
@@ -98,15 +100,12 @@ h3{font-family:'Abril Fatface',serif;font-size:26px;margin:16px 0 12px}
 
   <!-- SCHEMATIC + IDEA -->
   <section class="grid-idea">
-    <!-- Schematic card as a single image (Group 7) -->
+    <!-- Schematic card loaded via media-loader (matches Group_7.png) -->
     <figure class="card" style="margin:0">
-      <picture>
-        <source srcset="/iaac-repo/assets/media/Group%207.jpg" type="image/jpeg">
-        <source srcset="/iaac-repo/assets/media/Group%207.png" type="image/png">
-        <img src="/iaac-repo/assets/media/Group%207.png"
-             alt="Schematic of the 'I Am…' insert with display and web connectivity"
-             onerror="this.onerror=null; this.src='/iaac-repo/assets/media/Group%207.jpg';">
-      </picture>
+      <img class="auto-media"
+           data-file="group_7"
+           data-alt="Schematic — Group 7"
+           loading="lazy">
     </figure>
 
     <!-- Idea text -->
@@ -114,7 +113,7 @@ h3{font-family:'Abril Fatface',serif;font-size:26px;margin:16px 0 12px}
       <h2>Idea</h2>
       <div class="copy">
         <p>The receive brief highlighted that MDEF students must deliver a prosthetic solution that would help the potential users expressing / showing themselves.</p>
-        <p>The idea is to have an insert with a display on our chest with running text. The text would always start with an “I am…” and then followed by adjectives, expressions formulated based on latest trends, expectations and contextual data.</p>
+        <p>The idea is to have an insert with a display on our chest with running text. The text would always start with an "I am…" and then followed by adjectives, expressions formulated based on latest trends, expectations and contextual data.</p>
         <p>The dataset for the procedure of compiling the adjectives and phrases is coming from an internet scraping process. The purpose of this process is to collect the actual trends (e.g., from social media, studies, etc.) and identify the relevant ones for the user of the product. The insert constantly checks the location of the user to help adjusting the trends to the context.</p>
         <p>With the insert we can easily tell others who we are and makes us likeable.</p>
       </div>
@@ -126,31 +125,25 @@ h3{font-family:'Abril Fatface',serif;font-size:26px;margin:16px 0 12px}
     <h3>Prototype</h3>
     <div class="columns-2">
       <div class="copy">
-        <p>The current prototype is a low-fidelity one, and its purpose is to visualise the “I am…” Insert physical appearance, initiate discussions on potential use and the related experience of users.</p>
+        <p>The current prototype is a low-fidelity one, and its purpose is to visualise the "I am…" Insert physical appearance, initiate discussions on potential use and the related experience of users.</p>
         <p>In terms of functionality the current prototype was made of copper-coloured wire and tape. On the tape there is marked text saying:</p>
-        <p><strong>“I am” • “Good” • “Man, son, friend, designer, citizen, f*ck, cook, dancer, boy…?”</strong></p>
+        <p><strong>"I am" • "Good" • "Man, son, friend, designer, citizen, f*ck, cook, dancer, boy…?"</strong></p>
         <p>The test suggests how we want to show different sides of ourselves aligned with social standards, expectations and trends.</p>
       </div>
 
       <div class="media-2">
         <figure class="shot">
-          <picture>
-            <source srcset="/iaac-repo/assets/media/IMG_3323.jpg" type="image/jpeg">
-            <source srcset="/iaac-repo/assets/media/IMG_3323.png" type="image/png">
-            <img src="/iaac-repo/assets/media/IMG_3323.HEIC"
-                 alt="Prototype copper insert — view 1"
-                 onerror="this.onerror=null; this.src='/iaac-repo/assets/media/IMG_3323.jpg';">
-          </picture>
+          <img class="auto-media"
+               data-file="img_3323_1"
+               data-alt="Prototype copper insert — view 1"
+               loading="lazy">
         </figure>
 
         <figure class="shot">
-          <picture>
-            <source srcset="/iaac-repo/assets/media/IMG_3322.jpg" type="image/jpeg">
-            <source srcset="/iaac-repo/assets/media/IMG_3322.png" type="image/png">
-            <img src="/iaac-repo/assets/media/IMG_3322.HEIC"
-                 alt="Prototype copper insert — view 2"
-                 onerror="this.onerror=null; this.src='/iaac-repo/assets/media/IMG_3322.jpg';">
-          </picture>
+          <img class="auto-media"
+               data-file="img_3322_1"
+               data-alt="Prototype copper insert — view 2"
+               loading="lazy">
         </figure>
       </div>
     </div>
@@ -159,7 +152,6 @@ h3{font-family:'Abril Fatface',serif;font-size:26px;margin:16px 0 12px}
   <!-- VIDEO -->
   <section class="section">
     <div class="video-well">
-      <!-- Stretched to fill the black rectangle -->
       <iframe
         src="https://player.vimeo.com/video/1132471205?badge=0&autopause=0&player_id=0&app_id=58479"
         allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
@@ -171,6 +163,32 @@ h3{font-family:'Abril Fatface',serif;font-size:26px;margin:16px 0 12px}
 
 </main>
 
+<!-- Media auto-loader from the IAAC kit -->
+<script>
+/*! tiny inline copy of the kit’s media-loader.js */
+(() => {
+  const repo = 'iaac-repo';
+  const exts = ['.jpg','.png','.jpeg','.svg'];
+  const bases = [
+    `/${repo}/assets/media/`,
+    'assets/media/','../assets/media/','../../assets/media/'
+  ];
+  const pick = (el) => {
+    const name = (el.dataset.file||'').replace(/\s+/g,'-').toLowerCase();
+    const tries = [];
+    for (const b of bases) for (const e of exts) tries.push(b+name+e);
+    const test = new Image();
+    const next = () => {
+      const url = tries.shift();
+      if(!url){el.outerHTML = `<div class='card'>Missing: ${name}</div>`;return;}
+      test.onload = () => { el.src = url; el.alt = el.dataset.alt||''; };
+      test.onerror = next; test.src = url+'?v='+Date.now();
+    };
+    next();
+  };
+  document.querySelectorAll('img.auto-media').forEach(pick);
+})();
+</script>
 <script src="https://player.vimeo.com/api/player.js"></script>
 </body>
 </html>
