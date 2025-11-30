@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Reflection on Unpacking a Tech System — The Log</title>
 
   <!-- Fonts -->
@@ -10,65 +10,314 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
 
-  <!-- Page styles -->
-  <link rel="stylesheet" href="unpacking-tech-system.css">
+  <style>
+    :root{
+      --page-bg:#1C1C1C;
+      --ink:#FFFFFF;
+      --pill:#FFFFFF;
+      --box:#D9D9D9;
+      --canvas-width:1728px;
+      --left:364px;
+      --content-width:1000px;
+    }
+
+    *{ box-sizing:border-box; }
+
+    html,body{
+      margin:0;
+      padding:0;
+    }
+
+    body{
+      background:var(--page-bg);
+      color:var(--ink);
+      font-family:'Lato',system-ui,Arial,sans-serif;
+    }
+
+    .page{
+      width:var(--canvas-width);
+      max-width:100%;
+      margin:0 auto;
+      background:var(--page-bg);
+      min-height:100vh;
+    }
+
+    /* NAVIGATION (613 × 80 at left 364 in Figma) */
+    .nav-wrap{
+      margin-top:39px;
+    }
+
+    .nav-pill{
+      width:613px;
+      height:80px;
+      margin-left:var(--left);
+      background:var(--pill);
+      border-radius:60px;
+      display:flex;
+      align-items:center;
+      padding:0 32px;
+      box-shadow:0 2px 10px rgba(0,0,0,.08);
+    }
+
+    .brand{
+      font-family:'Abril Fatface',serif;
+      font-size:32px;
+      line-height:43px;
+      color:#000000;
+      margin-right:auto;
+      white-space:nowrap;
+    }
+
+    .nav-pill a{
+      font-family:'Lato',sans-serif;
+      font-style:normal;
+      font-weight:700;
+      font-size:20px;
+      line-height:24px;
+      color:#000000;
+      text-decoration:underline;
+      margin-left:24px;
+    }
+
+    /* HERO TITLE + INTRO */
+    .hero{
+      margin-top:60px;          /* places title around Figma top 138px */
+      margin-left:var(--left);
+      max-width:995px;
+    }
+
+    .hero h1{
+      margin:0 0 16px 0;
+      font-family:'Abril Fatface',serif;
+      font-style:normal;
+      font-weight:400;
+      font-size:64px;
+      line-height:86px;
+      color:#FFFFFF;
+    }
+
+    .hero .kicker{
+      margin:0;
+      max-width:var(--content-width);
+      font-family:'Lato',sans-serif;
+      font-style:normal;
+      font-weight:700;
+      font-size:24px;
+      line-height:29px;
+      color:#FFFFFF;
+    }
+
+    /* GENERIC SECTION BLOCKS (Context, Process, Outcomes, Learnings) */
+    .section{
+      margin-top:40px;
+      margin-left:var(--left);
+      max-width:var(--content-width);
+    }
+
+    .section h3{
+      font-family:'Lato',sans-serif;
+      font-style:normal;
+      font-weight:900;
+      font-size:16px;
+      line-height:19px;
+      margin:0 0 16px 0;
+      color:#FFFFFF;
+    }
+
+    .section p{
+      font-family:'Lato',sans-serif;
+      font-style:normal;
+      font-weight:400;
+      font-size:16px;
+      line-height:19px;
+      margin:0 0 18px 0;
+      color:#FFFFFF;
+    }
+
+    /* IMAGE (IMG_3410) – 349×466 at left 364 */
+    .figure{
+      margin-top:28px;
+      margin-left:var(--left);
+      width:349px;
+      height:466px;
+      border-radius:20px;
+      overflow:hidden;
+      box-shadow:0 2px 10px rgba(0,0,0,.15);
+    }
+
+    .figure img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    /* OUTCOMES BOX (Rectangle 2: 1000×477 at left 364) */
+    .doc-embed{
+      margin-top:24px;
+      margin-left:var(--left);
+      width:var(--content-width);
+      max-width:100%;
+      background:var(--box);
+      border-radius:20px;
+      overflow:hidden;
+      height:477px;
+    }
+
+    .doc-embed iframe{
+      width:100%;
+      height:100%;
+      border:0;
+      background:#FFFFFF;
+      display:block;
+    }
+
+    /* LEARNINGS LIST */
+    .learnings ol{
+      margin:0;
+      padding-left:20px;
+    }
+
+    .learnings li{
+      font-family:'Lato',sans-serif;
+      font-style:normal;
+      font-weight:900;
+      font-size:16px;
+      line-height:19px;
+      color:#FFFFFF;
+      margin-bottom:12px;
+    }
+
+    /* RESPONSIVE OVERRIDES (stack but keep style) */
+    @media (max-width:1200px){
+      .nav-pill{
+        width:auto;
+        max-width:100%;
+        min-width:0;
+        margin:0 24px;
+        justify-content:space-between;
+      }
+
+      .hero,
+      .section,
+      .figure,
+      .doc-embed{
+        margin-left:24px;
+        margin-right:24px;
+        max-width:none;
+      }
+
+      .doc-embed{
+        width:auto;
+      }
+    }
+
+    @media (max-width:600px){
+      .nav-pill{
+        padding:0 16px;
+      }
+      .brand{ font-size:24px; }
+      .nav-pill a{ font-size:16px; margin-left:12px; }
+
+      .hero h1{
+        font-size:40px;
+        line-height:1.2;
+      }
+
+      .hero .kicker{
+        font-size:18px;
+        line-height:1.4;
+      }
+
+      .figure{
+        width:100%;
+        height:auto;
+      }
+
+      .figure img{
+        height:auto;
+      }
+
+      .doc-embed{
+        height:420px;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="page">
 
-  <!-- NAV -->
-  <div class="wrap nav-wrap">
-    <nav class="nav-pill">
-      <div class="brand">The Log</div>
-      <a href="https://armingulbert.github.io/iaac-repo/">Home</a>
-      <a href="https://armingulbert.github.io/iaac-repo/the%20project/index.html">Project</a>
-      <a href="https://armingulbert.github.io/iaac-repo/repository/index.html">Repository</a>
-    </nav>
-  </div>
+    <!-- NAV -->
+    <div class="nav-wrap">
+      <nav class="nav-pill">
+        <div class="brand">The Log</div>
+        <a href="https://armingulbert.github.io/iaac-repo/">Home</a>
+        <a href="https://armingulbert.github.io/iaac-repo/the%20project/index.html">Project</a>
+        <a href="https://armingulbert.github.io/iaac-repo/repository/index.html">Repository</a>
+      </nav>
+    </div>
 
-  <!-- MAIN -->
-  <main class="wrap">
-    <!-- Title -->
-    <header class="hero">
-      <h1>Reflection on<br/>Unpacking a Tech System</h1>
-      <p class="kicker">The purpose of this page is to summarize my experience and learning I captured during the Unpacking Tech Systems course during the MDEF program. This post encapsulates my thoughts over the context, process and outcomes of the unpacking of a 3D printer.</p>
-    </header>
+    <!-- MAIN -->
+    <main>
 
-    <!-- Content sections -->
-    <section class="content">
-      <h3>Context</h3>
-      <p>On our first week, our team selected a 3D printer machine that seemed to be in a good condition. The same day we had to formulate our teams based on our key skills / background. For the purposes of this course I selected a not-so-skill role, but to be the “coder” of our team, as our MDEF group has coding / tech architect background.</p>
+      <!-- HERO -->
+      <header class="hero">
+        <h1>Reflection on<br/>Unpacking a Tech System</h1>
+        <p class="kicker">
+          The purpose of this page is to summarize my experience and learning I captured during the Unpacking Tech Systems course during the MDEF program. This post encapsulates my thoughts over the context, process and outcomes of the unpacking of a 3D printer.
+        </p>
+      </header>
 
-      <h3>Process</h3>
-      <p>The requirement we received was to completely unpack the printer, understand how it works, assess the condition of each component, try to solve what caused the decommissioning of the machine. The expected outcome was two documents: One comprehensive forensic report on the complete machine, the second one was a brief report on one dedicated component.</p>
-      <p>I usually arrive prepared to a new project, this situation was not any different, and before the second day I did my due diligence: how 3D printers work, in my “coder” role, I focused on the components, the working fundamentals, information and signal flows. As we could identify the model I had an easy job to get prepared: I had the machine with a label, a working frame where I have free time to validate my assumptions, seek further information. By the time I arrived to IAAC, I knew what a firmware is, how information flows between parts and external sources. I also learnt that for 3D printing the .gcode typically are sliced into 0.2 mm paths. That helped me to actively participate in discussions with the FabLab experts. I can say, this course complemented my other classes related to 3D printing and modelling.</p>
+      <!-- CONTEXT -->
+      <section class="section">
+        <h3>Context</h3>
+        <p>On our first week, our team selected a 3D printer machine that seemed to be in a good condition. The same day we had to formulate our teams based on our key skills / background. For the purposes of this course I selected a not-so-skill role, but to be the “coder” of our team, as our MDEF group has coding / tech architect background.</p>
+      </section>
 
-      <!-- Image -->
+      <!-- PROCESS -->
+      <section class="section">
+        <h3>Process</h3>
+        <p>The requirement we received was to completely unpack the printer, understand how it works, assess the condition of each component, try to solve what caused the decommissioning of the machine. The expected outcome was two documents: One comprehensive forensic report on the complete machine, the second one was a brief report on one dedicated component.</p>
+
+        <p>I usually arrive prepared to a new project, this situation was not any different, and before the second day I did my due diligence: how 3D printers work, in my “coder” role, I focused on the components, the working fundamentals, information and signal flows. As we could identify the model I had an easy job to get prepared: I had the machine with a label, a working frame where I have free time to validate my assumptions, seek further information. By the time I arrived to IAAC, I knew what a firmware is, how information flows between parts and external sources. I also learnt that for 3D printing the .gcode typically are sliced into 0.2 mm paths. That helped me to actively participate in discussions with the FabLab experts. I can say, this course complemented my other classes related to 3D printing and modelling.</p>
+      </section>
+
+      <!-- IMAGE -->
       <figure class="figure">
-        <!-- Adjust the path if needed -->
         <img src="/iaac-repo/assets/media/IMG_3410.png" alt="Notebook sketch during the unpacking exercise">
-      
       </figure>
 
-      <p>Our team was really structured and worked in a good rhythm, however, before we could verify if the machine still works, my teammates started the unpacking process from the versioning. I was looking for power source cable connectors. I used this time to ask around the FabLab staff on their learnings and the history of the machine. I also found out that the gadget box where we found the machine was full with firmware/older new versions, the condition of the machine might be the result of the one that caused the failure and the life-cycle of the printer.</p>
+      <!-- PROCESS CONTINUED -->
+      <section class="section">
+        <p>Our team was really structured and worked in a good rhythm, however, before we could verify if the machine still works, my teammates started the unpacking process from the versioning. I was looking for power source cable connectors. I used this time to ask around the FabLab staff on their learnings and the history of the machine.</p>
 
-      <h3>Outcomes</h3>
-      <p>The final outcome of our work can be read here:</p>
+        <p>I also found out that the gadget box where we found the machine was full with firmware/older new versions, the condition of the machine might be the result of the one that caused the failure and the life-cycle of the printer.</p>
+      </section>
 
-      <!-- White box embed -->
+      <!-- OUTCOMES -->
+      <section class="section">
+        <h3>Outcomes</h3>
+        <p>The final outcome of our work can be read here:</p>
+      </section>
+
+      <!-- GOOGLE DOC EMBED IN WHITE RECTANGLE -->
       <div class="doc-embed">
         <iframe src="https://docs.google.com/document/d/e/2PACX-1vSXRFo_cOdO1QXVMCEzjfdsIqoQBKon11J--1fvosaIXD9qNYpnw4UtrDTvhKQggisWIjYjmFqXuOw-/pub?embedded=true" title="Unpacking Tech System — Google Doc"></iframe>
       </div>
 
-      <h3>Learnings</h3>
-      <div class="footer-notes">
-        <p>1. My “be prepared” attitude is tested and proven, it worth the effort and time.</p>
-        <p>2. Adding the hardware perspective of a known task / process can generate totally new situations.</p>
-        <p>3. Having an initial structure for a document, for a process — is essential and helps the team.</p>
-        <p>4. I could manage stand-up structure time and task management of the team better, but I did not want to over-dominate the work.</p>
-        <p>5. Know what you talk about. This is something that I tell my team at work. It was interesting to be in a situation where my knowledge / vocabulary was short.</p>
-      </div>
-    </section>
-  </main>
+      <!-- LEARNINGS -->
+      <section class="section learnings">
+        <h3>Learnings</h3>
+        <ol>
+          <li>1. My “be prepared” attitude is tested and proven, it worth the effort and time.</li>
+          <li>2. Adding the hardware perspective of a known task / process can generate totally new situations.</li>
+          <li>3. Having an initial structure for a document, for a process — is essential and helps the team.</li>
+          <li>4. I could manage stand-up structure time and task management of the team better, but I did not want to over-dominate the work.</li>
+          <li>5. Know what you talk about. This is something that I tell my team at work. It was interesting to be in a situation where my knowledge / vocabulary was short.</li>
+        </ol>
+      </section>
 
+    </main>
+  </div>
 </body>
 </html>
