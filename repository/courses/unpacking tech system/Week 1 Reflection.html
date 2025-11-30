@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Reflection on Unpacking a Tech System — The Log</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --page-bg:#1C1C1C;
+      --ink:#fff;
+      --pill:#fff;
+      --box:#D9D9D9;
+      --mx:80px;
+      --content-max:1000px; /* matches your spec widths */
+    }
+
+    /* Base */
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{background:var(--page-bg); color:var(--ink); font-family:'Lato',system-ui,Arial,sans-serif}
+
+    /* Global width & margins */
+    .wrap{ margin-inline:var(--mx); }
+    main{ margin-block: 32px 80px; }
+
+    /* NAV */
+    .nav-wrap{ margin-top:28px; }
+    .nav-pill{
+      background:var(--pill);
+      height:80px;
+      border-radius:60px;
+      display:inline-flex;
+      align-items:center;
+      gap:24px;
+      padding:0 28px;
+      box-shadow:0 2px 10px rgba(0,0,0,.08);
+      width:fit-content;
+      max-width:420px;          /* compact, but fits all links */
+      min-width:360px;
+    }
+    .brand{
+      font-family:'Abril Fatface',serif;
+      font-size:28px;
+      color:#000;
+      white-space:nowrap;
+      margin-right:auto;
+    }
+    .nav-pill a{
+      font-weight:700; font-size:16px; color:#000; text-decoration:underline;
+    }
+
+    /* Title block */
+    .hero{ margin-top:64px; max-width:995px; }
+    .hero h1{
+      font-family:'Abril Fatface',serif;
+      font-weight:400;
+      font-size:64px;
+      line-height:86px;
+      margin:0 0 24px 0;
+      color:#fff;
+    }
+    .kicker{
+      font-weight:700;
+      font-size:24px;
+      line-height:29px;
+      margin:0 0 40px 0;
+      color:#fff;
+      max-width:var(--content-max);
+    }
+
+    /* Content blocks (map your “RRMPSubtile” specs) */
+    .content{ max-width:var(--content-max); }
+    .content p{
+      font-size:16px; line-height:19px; margin:0 0 18px 0;
+    }
+
+    /* Image card */
+    .figure{
+      margin:28px 0 32px 0;
+      width:349px; height:466px; border-radius:20px; overflow:hidden;
+      box-shadow:0 2px 10px rgba(0,0,0,.15);
+    }
+    .figure img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+    /* Bottom embed “white rectangle” */
+    .doc-embed{
+      margin-top:40px;
+      width:var(--content-max);
+      max-width:100%;
+      background:var(--box);
+      border-radius:20px;
+      overflow:hidden;
+      height:477px; /* per spec */
+    }
+    .doc-embed iframe{
+      width:100%;
+      height:100%;
+      border:0;
+      background:#fff;
+      display:block;
+    }
+
+    /* Section headers inside flow */
+    h3{
+      font-weight:900;
+      font-size:16px;
+      line-height:19px;
+      margin:28px 0 12px 0;
+      color:#fff;
+    }
+
+    /* Footer spacing for last notes */
+    .footer-notes{ max-width:var(--content-max); }
+
+    /* Responsive tweaks */
+    @media (max-width:720px){
+      :root{ --mx:20px; }
+      .nav-pill{ width:100%; max-width:100%; min-width:0; justify-content:space-between; padding:0 18px; }
+      .brand{ font-size:22px; }
+      .nav-pill a{ font-size:14px; }
+      .hero h1{ font-size:40px; line-height:1.2; }
+      .kicker{ font-size:18px; line-height:1.4; }
+      .figure{ width:100%; height:auto; }
+      .figure img{ height:auto; }
+      .doc-embed{ height:420px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <div class="wrap nav-wrap">
+    <nav class="nav-pill">
+      <div class="brand">The Log</div>
+      <a href="https://armingulbert.github.io/iaac-repo/">Home</a>
+      <a href="https://armingulbert.github.io/iaac-repo/the%20project/index.html">Project</a>
+      <a href="https://armingulbert.github.io/iaac-repo/repository/index.html">Repository</a>
+    </nav>
+  </div>
+
+  <!-- MAIN -->
+  <main class="wrap">
+    <!-- Title -->
+    <header class="hero">
+      <h1>Reflection on<br/>Unpacking a Tech System</h1>
+      <p class="kicker">The purpose of this page is to summarize my experience and learning I captured during the Unpacking Tech Systems course during the MDEF program. This post encapsulates my thoughts over the context, process and outcomes of the unpacking of a 3D printer.</p>
+    </header>
+
+    <!-- Content sections -->
+    <section class="content">
+      <h3>Context</h3>
+      <p>On our first week, our team selected a 3D printer machine that seemed to be in a good condition. The same day we had to formulate our teams based on our key skills / background. For the purposes of this course I selected a not-so-skill role, but to be the “coder” of our team, as our MDEF group has coding / tech architect background.</p>
+
+      <h3>Process</h3>
+      <p>The requirement we received was to completely unpack the printer, understand how it works, assess the condition of each component, try to solve what caused the decommissioning of the machine. The expected outcome was two documents: One comprehensive forensic report on the complete machine, the second one was a brief report on one dedicated component.</p>
+      <p>I usually arrive prepared to a new project, this situation was not any different, and before the second day I did my due diligence: how 3D printers work, in my “coder” role, I focused on the components, the working fundamentals, information and signal flows. As we could identify the model I had an easy job to get prepared: I had the machine with a label, a working frame where I have free time to validate my assumptions, seek further information. By the time I arrived to IAAC, I knew what a firmware is, how information flows between parts and external sources. I also learnt that for 3D printing the .gcode typically are sliced into 0.2 mm paths. That helped me to actively participate in discussions with the FabLab experts. I can say, this course complemented my other classes related to 3D printing and modelling.</p>
+
+      <!-- Image -->
+      <figure class="figure">
+        <!-- Update the path if needed; this is a common GitHub Pages path -->
+        <img src="/iaac-repo/assets/media/IMG_3410.png" alt="Notebook sketch during the unpacking exercise">
+      </figure>
+
+      <p>Our team was really structured and worked in a good rhythm, however, before we could verify if the machine still works, my teammates started the unpacking process from the versioning. I was looking for power source cable connectors. I used this time to ask around the FabLab staff on their learnings and the history of the machine. I also found out that the gadget box where we found the machine was full with firmware/older new versions, the condition of the machine might be the result of the one that caused the failure and the life-cycle of the printer.</p>
+
+      <h3>Outcomes</h3>
+      <p>The final outcome of our work can be read here:</p>
+
+      <!-- White box embed -->
+      <div class="doc-embed">
+        <iframe src="https://docs.google.com/document/d/e/2PACX-1vSXRFo_cOdO1QXVMCEzjfdsIqoQBKon11J--1fvosaIXD9qNYpnw4UtrDTvhKQggisWIjYjmFqXuOw-/pub?embedded=true" title="Unpacking Tech System — Google Doc"></iframe>
+      </div>
+
+      <h3>Learnings</h3>
+      <div class="footer-notes">
+        <p>1. My “be prepared” attitude is tested and proven, it worth the effort and time.</p>
+        <p>2. Adding the hardware perspective of a known task / process can generate totally new situations.</p>
+        <p>3. Having an initial structure for a document, for a process — is essential and helps the team.</p>
+        <p>4. I could manage stand-up structure time and task management of the team better, but I did not want to over-dominate the work.</p>
+        <p>5. Know what you talk about. This is something that I tell my team at work. It was interesting to be in a situation where my knowledge / vocabulary was short.</p>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>
