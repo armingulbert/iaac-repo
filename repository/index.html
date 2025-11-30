@@ -59,8 +59,7 @@
       overflow: hidden;
       display:flex; flex-direction:column;
     }
-    .thumb { aspect-ratio: 16/9; background:#f2f2f2 center/cover no-repeat; }
-    .card-body { padding: var(--space-md); display:flex; flex-direction:column; gap:.5rem; }
+        .card-body { padding: var(--space-md); display:flex; flex-direction:column; gap:.5rem; }
     .badge {
       display:inline-block; padding:.25rem .6rem; border-radius:999px;
       font-size:.8rem; font-weight:700; background:#faf6e3; color:#7a5d00;
@@ -81,8 +80,7 @@
       <h1>Repository</h1>
       <p>
         Browse all deliverables I’ve created across courses. Use the filter to switch
-        between courses; each card links to the corresponding page inside
-        <code>/repository/courses/&lt;course&gt;/</code>.
+        between courses; each card links to the corresponding page.
       </p>
     </div>
   </header>
@@ -109,45 +107,32 @@
 
   <script>
     /* ========== DATA: add your deliverables here ========== */
-    const deliverables = [
-      /* Studio 1 */
-      {
-        title: "Problem Statement",
-        course: "studio 1",
-        href: "/iaac-repo/repository/courses/studio%201/problem%20statement.html",
-        thumb: "/iaac-repo/assets/media/thumb-problem-statement.jpg",
-        date: "2025-10-12",
-        tags: ["challenge", "research", "studio1"]
-      },
-      {
-        title: "Embodied Criticism",
-        course: "studio 1",
-        href: "/iaac-repo/repository/courses/studio%201/emboded%20criticism.html",
-        thumb: "/iaac-repo/assets/media/thumb-embodied.jpg",
-        date: "2025-10-19",
-        tags: ["sprint 1", "video", "manifest", "studio1"]
-      },
+   const fs = require('fs');
+const path = require('path');
 
-      /* Other Species */
-      {
-        title: "Cottage Industry",
-        course: "other species",
-        href: "/iaac-repo/repository/courses/other%20species/cottage-industry.html",
-        thumb: "/iaac-repo/assets/media/thumb-cottage.jpg",
-        date: "2025-10-14",
-        tags: ["micro-industry", "poster", "other species"]
-      },
+const coursesDir = './repository/courses';
+const deliverables = [];
 
-      /* Studio 0 – add yours as you publish */
-      // {
-      //   title: "…",
-      //   course: "studio 0",
-      //   href: "/iaac-repo/repository/courses/studio%200/your-file.html",
-      //   thumb: "/iaac-repo/assets/media/thumb-yourfile.jpg",
-      //   date: "2025-09-29",
-      //   tags: ["tag1","tag2"]
-      // },
-    ];
+fs.readdirSync(coursesDir).forEach(courseFolder => {
+  const coursePath = path.join(coursesDir, courseFolder);
+  fs.readdirSync(coursePath)
+    .filter(f => f.endsWith('.html'))
+    .forEach(file => {
+      deliverables.push({
+        title: getTitleFromFile(file), // You may want to parse <title> from each file
+        course: decodeURIComponent(courseFolder),
+        href: `/iaac-repo/repository/courses/${encodeURIComponent(courseFolder)}/${encodeURIComponent(file)}`,
+        thumb: getThumbForFile(file), // custom logic
+        date: getDateForFile(file), // custom logic
+        tags: getTagsForFile(file), // custom logic
+      });
+    });
+});
+
+fs.writeFileSync(
+  path.join(coursesDir, 'index.json'),
+  JSON.stringify(deliverables, null, 2)
+);
 
     /* ========== UI wiring ========== */
     const galleryEl = document.getElementById('gallery');
@@ -189,7 +174,6 @@
       const bg = d.thumb ? `style="background-image:url('${d.thumb}')"`: '';
       return `
         <article class="card">
-          <a class="thumb" ${bg} href="${d.href}" aria-label="${escapeHTML(d.title)}"></a>
           <div class="card-body">
             <span class="badge">${titleCase(d.course)}</span>
             <h3 class="title">${escapeHTML(d.title)}</h3>
