@@ -10,7 +10,7 @@
 
   <style>
     /* ---------- page tweaks ---------- */
-    body { margin:0; background:#fff; }
+    body { margin:0; background:#E24E36; }
     header.hero {
       background:#E24E36; color:#fff;
       padding: var(--space-lg) var(--space-md);
@@ -59,13 +59,22 @@
       overflow: hidden;
       display:flex; flex-direction:column;
     }
-        .card-body { padding: var(--space-md); display:flex; flex-direction:column; gap:.5rem; }
+    .card-thumbnail {
+      width: 100%;
+      height: 200px;
+      background: #4a4a4a;
+      border-radius: 12px;
+      margin: var(--space-md);
+      flex-shrink: 0;
+    }
+    .card-body { padding: var(--space-md); display:flex; flex-direction:column; gap:.5rem; }
     .badge {
       display:inline-block; padding:.25rem .6rem; border-radius:999px;
-      font-size:.8rem; font-weight:700; background:#faf6e3; color:#7a5d00;
-      border:1px solid #f1e6b1;
+      font-size:.75rem; font-weight:700; background:#4B7AFF; color:#fff;
+      border: none;
+      width: fit-content;
     }
-    .title { font-weight:700; font-size:1.05rem; margin:0; }
+    .title { font-weight:700; font-size:1.25rem; margin:0; line-height:1.3; }
     .meta { font-size:.9rem; opacity:.75; }
     .card-actions { margin-top:auto; }
     .primary-btn { width:100%; text-align:center; }
@@ -106,100 +115,142 @@
   </main>
 
   <script>
-    /* ========== DATA: add your deliverables here ========== */
-   const fs = require('fs');
-const path = require('path');
+    /* ========== Dynamic course loading ========== */
+    const COURSES_DIR = '/iaac-repo/repository/courses/';
+    const COURSES = [
+      'Fundamentals for Future Makers',
+      'living with your own ideas',
+      'other species',
+      'studio 0',
+      'studio 1',
+      'unpacking tech system'
+    ];
 
-const coursesDir = './repository/courses';
-const deliverables = [];
+    let deliverables = [];
 
-fs.readdirSync(coursesDir).forEach(courseFolder => {
-  const coursePath = path.join(coursesDir, courseFolder);
-  fs.readdirSync(coursePath)
-    .filter(f => f.endsWith('.html'))
-    .forEach(file => {
-      deliverables.push({
-        title: getTitleFromFile(file), // You may want to parse <title> from each file
-        course: decodeURIComponent(courseFolder),
-        href: `/iaac-repo/repository/courses/${encodeURIComponent(courseFolder)}/${encodeURIComponent(file)}`,
-        thumb: getThumbForFile(file), // custom logic
-        date: getDateForFile(file), // custom logic
-        tags: getTagsForFile(file), // custom logic
-      });
-    });
-});
+    // Fetch a file and extract title from <title> tag
+    async function fetchTitle(url) {
+      try {
+        const response = await fetch(url);
+        const html = await response.text();
+        const titleMatch = html.match(/<title>([^<]+)<\/title>/i);
+        return titleMatch ? titleMatch[1] : 'Untitled';
+      } catch (e) {
+        console.warn(`Failed to fetch ${url}:`, e);
+        return 'Untitled';
+      }
+    }
 
-fs.writeFileSync(
-  path.join(coursesDir, 'index.json'),
-  JSON.stringify(deliverables, null, 2)
-);
+    // Load all deliverables from course folders
+    async function loadDeliverables() {
+      const promises = [];
+
+      for (const courseName of COURSES) {
+        const encodedCourse = encodeURIComponent(courseName);
+        const courseUrl = `${COURSES_DIR}${encodedCourse}/`;
+
+        // Fetch the folder contents by trying to load index.html to get directory info
+        // For simplicity, we'll try common file patterns
+        const files = ['index.html', 'prototype 1.html', 'prototype 2.html', 'prototype 3.html', 
+                       'summary report.html', 'course reflection.html', 'cottage-industry.html',
+                       'design bet.html', 'the log.html', 'evolution/index.html',
+                       'vision & overview', 'Action Dossier.html', 'emboded criticism.html',
+                       'problem statement.html', 'Week 1 Reflection.html', 'Week 2 Reflection.html'];
+
+        for (const file of files) {
+          const fileUrl = courseUrl + encodeURIComponent(file);
+          const promise = fetchTitle(fileUrl)
+            .then(title => {
+              if (title !== 'Untitled' || file.endsWith('.html')) {
+                return {
+                  title: title,
+                  course: courseName,
+                  href: fileUrl.replace(encodeURIComponent(file), file),
+                  fileName: file
+                };
+              }
+              return null;
+            })
+            .catch(() => null);
+          promises.push(promise);
+        }
+      }
+
+      const results = await Promise.all(promises);
+      deliverables = results.filter(d => d !== null);
+      
+      initializeUI();
+    }
 
     /* ========== UI wiring ========== */
-    const galleryEl = document.getElementById('gallery');
-    const courseFilterEl = document.getElementById('courseFilter');
-    const searchBoxEl = document.getElementById('searchBox');
-    const resultCountEl = document.getElementById('resultCount');
-    const emptyEl = document.getElementById('emptyState');
+    function initializeUI() {
+      const galleryEl = document.getElementById('gallery');
+      const courseFilterEl = document.getElementById('courseFilter');
+      const searchBoxEl = document.getElementById('searchBox');
+      const resultCountEl = document.getElementById('resultCount');
+      const emptyEl = document.getElementById('emptyState');
 
-    // Build distinct course list + query param support (?course=studio%201)
-    const urlParams = new URLSearchParams(location.search);
-    const qpCourse = (urlParams.get('course') || '').toLowerCase();
+      // Build distinct course list + query param support
+      const urlParams = new URLSearchParams(location.search);
+      const qpCourse = (urlParams.get('course') || '').toLowerCase();
 
-    const courses = Array.from(new Set(deliverables.map(d => d.course.toLowerCase()))).sort();
-    courseFilterEl.innerHTML = [
-      `<option value="all">All courses</option>`,
-      ...courses.map(c => `<option value="${c}">${titleCase(c)}</option>`)
-    ].join('');
-    if (qpCourse && courses.includes(qpCourse)) courseFilterEl.value = qpCourse;
+      const courses = Array.from(new Set(deliverables.map(d => d.course.toLowerCase()))).sort();
+      courseFilterEl.innerHTML = [
+        `<option value="all">All courses</option>`,
+        ...courses.map(c => `<option value="${c}">${titleCase(c)}</option>`)
+      ].join('');
+      if (qpCourse && courses.includes(qpCourse)) courseFilterEl.value = qpCourse;
 
-    // Render
-    function render() {
-      const q = searchBoxEl.value.trim().toLowerCase();
-      const selected = courseFilterEl.value;
+      // Render
+      function render() {
+        const q = searchBoxEl.value.trim().toLowerCase();
+        const selected = courseFilterEl.value;
 
-      const filtered = deliverables.filter(d => {
-        const matchesCourse = selected === 'all' || d.course.toLowerCase() === selected;
-        const hay = [d.title, ...(d.tags||[])].join(' ').toLowerCase();
-        const matchesSearch = !q || hay.includes(q);
-        return matchesCourse && matchesSearch;
-      });
+        const filtered = deliverables.filter(d => {
+          const matchesCourse = selected === 'all' || d.course.toLowerCase() === selected;
+          const hay = [d.title, d.fileName].join(' ').toLowerCase();
+          const matchesSearch = !q || hay.includes(q);
+          return matchesCourse && matchesSearch;
+        });
 
-      galleryEl.innerHTML = filtered.map(cardHTML).join('');
-      resultCountEl.textContent = `${filtered.length} item${filtered.length!==1?'s':''}`;
-      emptyEl.hidden = filtered.length !== 0;
-    }
+        galleryEl.innerHTML = filtered.map(cardHTML).join('');
+        resultCountEl.textContent = `${filtered.length} item${filtered.length!==1?'s':''}`;
+        emptyEl.hidden = filtered.length !== 0;
+      }
 
-    function cardHTML(d){
-      const date = d.date ? new Date(d.date).toLocaleDateString(undefined, {year:'numeric', month:'short', day:'2-digit'}) : '';
-      const bg = d.thumb ? `style="background-image:url('${d.thumb}')"`: '';
-      return `
-        <article class="card">
-          <div class="card-body">
-            <span class="badge">${titleCase(d.course)}</span>
-            <h3 class="title">${escapeHTML(d.title)}</h3>
-            <div class="meta">${date}</div>
-            <div class="card-actions">
-              <a class="primary-btn" href="${d.href}">Open</a>
+      function cardHTML(d){
+        return `
+          <article class="card">
+            <div class="card-thumbnail"></div>
+            <div class="card-body">
+              <span class="badge">${titleCase(d.course)}</span>
+              <h3 class="title">${escapeHTML(d.title)}</h3>
+              <div class="card-actions">
+                <a class="primary-btn" href="${d.href}">Open</a>
+              </div>
             </div>
-          </div>
-        </article>`;
+          </article>`;
+      }
+
+      function escapeHTML(s){return s.replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+      function titleCase(s){ return s.replace(/\b\w/g, c => c.toUpperCase()); }
+
+      // Events
+      courseFilterEl.addEventListener('change', () => {
+        const v = courseFilterEl.value;
+        const p = new URLSearchParams(location.search);
+        if (v==='all') { p.delete('course'); } else { p.set('course', v); }
+        history.replaceState({}, '', `${location.pathname}?${p.toString()}`);
+        render();
+      });
+      searchBoxEl.addEventListener('input', render);
+
+      // Initial render
+      render();
     }
 
-    function escapeHTML(s){return s.replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
-    function titleCase(s){ return s.replace(/\b\w/g, c => c.toUpperCase()); }
-
-    // Events
-    courseFilterEl.addEventListener('change', () => {
-      const v = courseFilterEl.value;
-      const p = new URLSearchParams(location.search);
-      if (v==='all') { p.delete('course'); } else { p.set('course', v); }
-      history.replaceState({}, '', `${location.pathname}?${p.toString()}`);
-      render();
-    });
-    searchBoxEl.addEventListener('input', render);
-
-    // Initial render
-    render();
+    // Load on page load
+    document.addEventListener('DOMContentLoaded', loadDeliverables);
   </script>
 </body>
 </html>
