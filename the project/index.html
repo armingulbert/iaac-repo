@@ -2,325 +2,475 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Challenge Statement – Studio 1</title>
+  <title>Changing Human-Technology Dialogues</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <!-- IAAC Design System -->
   <link rel="stylesheet" href="/iaac-repo/design-system/design-system.css" />
 
   <style>
-    /* ---------- Page-specific styles ---------- */
-
-    /* Full-width hero */
-    .hero {
-      background: #E24E36;
-      color: #fff;
-      padding: var(--space-lg) var(--space-md) calc(var(--space-lg) * 1.2);
-    }
-    .hero .content { max-width: 1200px; }
-
-    .badge {
-      display: inline-block;
-      background: #fff;
-      color: #000;
-      border-radius: 999px;
-      padding: 0.4em 0.9em;
-      font-weight: 700;
-      font-size: .9rem;
-      margin-bottom: var(--space-sm);
-    }
-    .hero h1 {
-      color: #fff;
-      font-size: clamp(2.2rem, 4.5vw, 3.5rem);
-      margin-bottom: .2em;
-      font-family: var(--font-display);
-      font-weight: 400;
-    }
-    .hero p { color: #fff; max-width: 60ch; }
-
-    /* Page card */
-    .page {
-      background: #fff;
-      box-shadow: 0 2px 12px var(--color-shadow);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-card);
-      margin-top: calc(var(--space-lg) * -1.2);
-      margin-bottom: var(--space-lg);
-    }
-    .page .content { max-width: 1200px; }
-
-    /* Layout — “magazine style” balance */
-    .layout {
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr; /* subtle left emphasis */
-      gap: var(--space-lg);
-      align-items: start;
-    }
-    @media (max-width: 980px){
-      .layout { grid-template-columns: 1fr; }
+    * {
+      box-sizing: border-box;
     }
 
-    /* Research table */
-    .table-wrap { overflow-x: auto; }
-    table.methods {
-      width: 100%;
-      border-collapse: collapse;
-      table-layout: fixed;
-      border: 1px solid var(--color-border);
-      font-size: 0.95rem;
-    }
-    .methods thead th {
-      background: #E24E36;
-      color: #fff;
-      text-align: left;
-      padding: 10px 12px;
-      font-weight: 700;
-    }
-    .methods tbody td {
-      background: #fff;
-      color: #1c1c1c;
-      padding: 10px 12px;
-      border-top: 1px solid var(--color-border);
-      word-wrap: break-word;
-    }
-
-    /* Orange numbered list (Vox-style) */
-    .next-steps-list {
-      list-style: none;
+    body {
       margin: 0;
       padding: 0;
-      counter-reset: step-counter;
+      background: #fff;
+      font-family: 'Lato', var(--font-main);
+      font-weight: 400;
+      color: #1c1c1c;
     }
-    .next-steps-list li {
-      counter-increment: step-counter;
+
+    .page-container {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      background: #fff;
+      padding: 40px;
+    }
+
+    .scoping-tag {
+      position: relative;
+      display: inline-block;
+      width: 94px;
+      height: 32px;
+      background: #1c1c1c;
+      border-radius: 36px;
       display: flex;
-      align-items: flex-start;
-      gap: 1em;
-      padding: 1em 0;
-      border-bottom: 1px dotted var(--color-border);
-      font-size: 1rem;
-      line-height: 1.5;
-    }
-    .next-steps-list li::before {
-      content: counter(step-counter);
-      display: inline-flex;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
-      width: 26px; height: 26px;
-      border-radius: 50%;
-      background: #E24E36;
+      margin-bottom: 30px;
+    }
+
+    .scoping-tag span {
+      font-family: 'Lato';
+      font-weight: 900;
+      font-size: 12px;
       color: #fff;
-      font-weight: 700;
-      font-size: 0.9rem;
-      margin-top: 0.2em;
-    }
-    .next-steps-list li:last-child { border-bottom: none; }
-
-    /* Page number */
-    .page-number {
-      font-family: var(--font-display);
-      color: var(--color-primary);
-      opacity: .85;
-      text-align: right;
-      font-size: 1.1rem;
-      margin-top: var(--space-md);
+      text-align: center;
     }
 
-    /* ===== Statement visual band ===== */
-    .image-statement-band{
-      position: relative;
-      display: grid;
-      grid-template-columns: minmax(220px,27vw) 1fr minmax(260px,27vw);
-      align-items: center;
-      gap: clamp(12px,2vw,32px);
-      background: #000;
-      padding: clamp(10px,1.8vw,24px) 0;
-      margin: var(--space-lg) 0;
-      overflow: hidden;
-      border-radius: var(--radius-card);
-    }
-
-    .image-statement-band .img-wrap{
-      overflow: hidden;
-    }
-    .image-statement-band .img-wrap img{
-      width: 100%;
-      height: clamp(260px, 42vh, 480px);
-      object-fit: cover;
-      display: block;
-      margin: 0;
-      border-radius: 0;
-      box-shadow: none;
-    }
-
-    .image-statement-band .statement-card{
-      background: #E24E36;
-      color: #fff;
-      padding: clamp(16px,2vw,28px) clamp(22px,3vw,40px);
-      border-radius: var(--radius-card);
-      justify-self: center;
-      max-width: 60ch;
-    }
-    .image-statement-band .statement-card h2{
-      margin: 0;
-      font-family: var(--font-display);
+    .page-title {
+      font-family: 'Abril Fatface';
+      font-size: 48px;
       font-weight: 400;
-      line-height: 1.15;
-      font-size: clamp(1.4rem, 2.6vw, 2.2rem);
-      color: #fff;
+      line-height: 65px;
+      color: #000;
+      margin: 0 0 80px 0;
+      max-width: 900px;
     }
 
-    @media (max-width: 900px){
-      .image-statement-band{
-        grid-template-columns: 1fr;
-        gap: var(--space-md);
-        padding: var(--space-md);
+    .three-col-headers {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .section-header {
+      font-family: 'Abril Fatface';
+      font-size: 32px;
+      font-weight: 400;
+      line-height: 43px;
+      color: #000;
+      text-align: left;
+    }
+
+    .section-header.center {
+      text-align: center;
+    }
+
+    .section-header.right {
+      text-align: right;
+    }
+
+    .main-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 60px;
+      margin-top: 60px;
+    }
+
+    .content-col {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .content-block {
+      font-family: 'Lato';
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 19px;
+      color: #000;
+      max-width: 450px;
+    }
+
+    .content-block p {
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .image-block {
+      width: 100%;
+      max-width: 450px;
+      aspect-ratio: 16/9;
+      background: #e24e36;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    .center-diagram {
+      position: relative;
+      width: 100%;
+      height: 800px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+    }
+
+    .circle {
+      position: absolute;
+      border: 4px solid #e24e36;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .circle-lg {
+      width: 493px;
+      height: 493px;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .circle-md {
+      width: 203px;
+      height: 203px;
+    }
+
+    .circle-center-top {
+      left: 50%;
+      top: 0;
+      transform: translate(-50%, -50%);
+    }
+
+    .circle-right-top {
+      right: 0;
+      top: 0;
+    }
+
+    .circle-right {
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .circle-right-bottom {
+      right: 0;
+      bottom: 0;
+    }
+
+    .circle-center-bottom {
+      left: 50%;
+      bottom: 0;
+      transform: translate(-50%, 50%);
+    }
+
+    .circle-left-bottom {
+      left: 0;
+      bottom: 0;
+    }
+
+    .circle-left {
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .circle-left-top {
+      left: 0;
+      top: 0;
+    }
+
+    .polygon {
+      position: absolute;
+      width: 238px;
+      height: 238px;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-family: 'Abril Fatface';
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 27px;
+      text-align: center;
+      padding: 20px;
+      clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);
+    }
+
+    .polygon-left {
+      left: 25%;
+      top: 50%;
+      transform: translate(-50%, -50%) scaleX(-1);
+    }
+
+    .polygon-center {
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .polygon-right {
+      right: 25%;
+      top: 50%;
+      transform: translate(50%, -50%) scaleX(-1);
+    }
+
+    .circle-label {
+      font-family: 'Abril Fatface';
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 24px;
+      text-align: center;
+      color: #000;
+      padding: 15px;
+      z-index: 10;
+    }
+
+    .right-col-title {
+      font-family: 'Abril Fatface';
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 27px;
+      color: #000;
+      margin: 0 0 15px 0;
+    }
+
+    .right-col-item {
+      font-family: 'Abril Fatface';
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 24px;
+      color: #000;
+      margin-bottom: 20px;
+    }
+
+    .section-title-overlay {
+      position: absolute;
+      font-family: 'Abril Fatface';
+      font-size: 40px;
+      font-weight: 400;
+      line-height: 54px;
+      text-align: center;
+      color: #000;
+    }
+
+    .title-top {
+      top: -120px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 540px;
+    }
+
+    .title-bottom {
+      bottom: -140px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 270px;
+    }
+
+    .title-right {
+      right: -220px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 222px;
+    }
+
+    @media (max-width: 1400px) {
+      .page-container {
+        padding: 30px;
       }
-      .image-statement-band .img-wrap img{
-        height: 42vw;
-        border-radius: var(--radius-card);
+      .three-col-headers {
+        gap: 30px;
+      }
+      .main-content {
+        gap: 40px;
+      }
+      .center-diagram {
+        height: 600px;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .three-col-headers {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .section-header {
+        text-align: left !important;
+      }
+      .main-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      .center-diagram {
+        position: relative;
+        transform: none;
+        height: 500px;
+        margin: 60px 0;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- HERO -->
-  <header class="hero">
-    <div class="content">
-      <div class="badge">Studio 1</div>
-      <h1>Challenge Statement</h1>
-      <p>
-        This document provides an overview on my challenge statement identification process and result in the scope of Studio 1.
-        Additionally it gives an overview on the discovery and research process to understand the validity, depth and aspects of the challenge.
-      </p>
-      <p style="font-size:.75rem; margin-top:.6em; opacity:.9;">
-        by Armin Gulbert, IAAC MDEF 1st year &nbsp;•&nbsp; 12 October 2025
-      </p>
+  <div class="page-container">
+
+    <!-- Badge -->
+    <div class="scoping-tag">
+      <span>Scoping</span>
     </div>
-  </header>
 
-  <!-- PAGE BODY -->
-  <main class="page">
-    <div class="content">
-      <div class="layout">
+    <!-- Main Title -->
+    <h1 class="page-title">Changing Human-Technology Dialogues</h1>
 
-        <!-- LEFT COLUMN -->
-        <section>
-          <h2>The Brief &amp; Context</h2>
-          <p>
-            At the first session of Studio 1 our group received an assignment to define a topics that we individually research
-            to have better understanding how different factors can impact humans and other species’ life. As I was raised by a
-            teacher mother I was always surrounded by teaching and the difficulties of it. As an adult, I started to have more
-            discussions with her on the rising difficulites of the profession of hers and others (ie. friends of her, teachers
-            in my network...etc.)
-          </p>
-
-          <h2>Fact / Validity Check</h2>
-          <p>
-            The National Education Association ran a research in 2024, discovering the well-being / difficulties teachers face daily.
-            The survey concluded that stress and burnout is the top consering factor, and it is heavily impacted by student/discipline.
-            In 2025, the University of Missouri surveyed teachers if they plan to leave their current job. The research showed due to lack of
-            support, workload and challenging students make them leave their profession. The Education Week magazine introduced the
-            Teacher-Morale-Index to see the state of teaching in the US. Their latest index concluded that on a −100 to +100 scale the current
-            TMI is at −13. The OECD has framework for well-being of teachers.
-          </p>
-          <p>
-            <strong>Sources:</strong><br />
-            1. <a href="https://cea.org/wp-content/uploads/2024/11/2024-CEA-member-survey-results.pdf">CEA 2024 (PDF)</a><br />
-            2. <a href="https://www.edweek.org/teaching-learning/introducing-the-teacher-morale-index/2024/03">EdWeek 2024</a><br />
-            3. <a href="https://www.oecd.org/content/dam/oecd/en/publications/reports/2020/01/teachers-well-being_bdafdeaf/c36fc9d3-en.pdf">OECD 2020 (PDF)</a>
-          </p>
-
-          <h2>Formulated Statement</h2>
-          <p>Based on the desk research, discussions with teachers the following statement gives the scope of my work:</p>
-
-          <!-- IMAGE BAND -->
-          <section class="image-statement-band" aria-label="Statement visual">
-            <div class="img-wrap">
-              <img src="../../../assets/media/Firefly_teacher%20struggling%20with%20teaching%20students%20326508.jpg"
-                   alt="Teacher in classroom raising hand">
-            </div>
-            <div class="statement-card">
-              <h2>The future will require<br>a new prototype of teachers</h2>
-            </div>
-            <div class="img-wrap">
-              <img src="../../../assets/media/Firefly_teacher%20struggling%20with%20teaching%20students%20195437.jpg"
-                   alt="Teacher standing in classroom">
-            </div>
-          </section>
-        </section>
-
-        <!-- RIGHT COLUMN -->
-        <aside>
-          <h2>Discovery &amp; Research Approach</h2>
-          <p>
-            Considering the context and background of the problem, scope of the statement, requirements of the course and the timing
-            constraints, the following research approach has been defined.
-          </p>
-
-          <h3>1. Research Design Principles</h3>
-          <ul>
-            <li>Using a 1st person perspective to validate and discover the problem</li>
-            <li>Combining quantitative and qualitative methods</li>
-          </ul>
-
-          <h3>2. Research methods</h3>
-          <div class="table-wrap">
-            <table class="methods">
-              <thead>
-                <tr>
-                  <th style="width: 26%;">Type</th>
-                  <th style="width: 34%;">Method</th>
-                  <th style="width: 40%;">Reasoning</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Exploratory Research</td>
-                  <td>Review and analyze researches in the subject</td>
-                  <td>Collecting patterns and stats; supporting the interview preparation</td>
-                </tr>
-                <tr>
-                  <td>Qualitative Research</td>
-                  <td>1:1 Interviews; Focus group meeting</td>
-                  <td>Receiving direct feedback from teachers on their experience to identify patterns for large sample validation</td>
-                </tr>
-                <tr>
-                  <td>Quantitative Research</td>
-                  <td>Survey for teachers</td>
-                  <td>Large pattern / sample validation of insights collected</td>
-                </tr>
-                <tr>
-                  <td>Ethnographic Research</td>
-                  <td>School- and class visits</td>
-                  <td>Collecting first-person-view through observations</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <section class="mt-lg">
-            <h2>Next steps</h2>
-            <ul class="next-steps-list">
-              <li>Validate the problem statement and research method</li>
-              <li>Adjust statement and / or research method (optional step)</li>
-              <li>Organize 1st round interviews and school visits</li>
-              <li>Run deeper desk research on problem statement</li>
-              <li>Compile interview guide</li>
-              <li>Input gathering: Interviews and focus group; School visits</li>
-              <li>Compile, share and assess survey</li>
-              <li>Synthesizing results</li>
-              <li>Formulate research summary report</li>
-            </ul>
-            <div class="page-number">2</div>
-          </section>
-        </aside>
-
+    <!-- Three Column Headers -->
+    <div class="three-col-headers">
+      <div>
+        <h2 class="section-header">Background and topic identification</h2>
+      </div>
+      <div>
+        <h2 class="section-header center">Framing and breakdown of work</h2>
+      </div>
+      <div>
+        <h2 class="section-header right">Outcomes and results</h2>
       </div>
     </div>
-  </main>
+
+    <!-- Main Content Grid -->
+    <div class="main-content">
+
+      <!-- LEFT COLUMN -->
+      <div class="content-col">
+        <div class="content-block">
+          <p>Formulated Design Bet Based on my professional background, experience and articles, I have crafted the following bet:</p>
+        </div>
+
+        <div class="image-block"></div>
+
+        <div class="content-block">
+          <p>Evolution through expirements and reviews Since the topic selection the following interactions helped me to receive new perspectives and learnings:</p>
+          <p>• Think outside of the corporate context<br>• Find my narrative, what's the purpose<br>• Deep listenting excercise and reading list at Extended Intelligence classes<br>• Own experiment: overwhelming, situations and limitations</p>
+        </div>
+
+        <div class="image-block"></div>
+        <div class="image-block"></div>
+
+        <div class="content-block">
+          <p>Exploratory and inspirational research To extended my perspective I conducated research activities to see topics, methods and narratives of others within the subject area:</p>
+        </div>
+
+        <div class="image-block"></div>
+      </div>
+
+      <!-- CENTER DIAGRAM -->
+      <div class="center-diagram">
+        <!-- Large center circle -->
+        <div class="circle circle-lg"></div>
+
+        <!-- Top circle -->
+        <div class="circle circle-md circle-center-top">
+          <div class="circle-label">Privacy</div>
+        </div>
+
+        <!-- Right top circle -->
+        <div class="circle circle-md circle-right-top">
+          <div class="circle-label">Apps and tools</div>
+        </div>
+
+        <!-- Right circle -->
+        <div class="circle circle-md circle-right">
+          <div class="circle-label">Data collection</div>
+        </div>
+
+        <!-- Right bottom circle -->
+        <div class="circle circle-md circle-right-bottom">
+          <div class="circle-label">Devices and objectes</div>
+        </div>
+
+        <!-- Bottom circle -->
+        <div class="circle circle-md circle-center-bottom">
+          <div class="circle-label">Skills and capabilities</div>
+        </div>
+
+        <!-- Left bottom circle -->
+        <div class="circle circle-md circle-left-bottom">
+          <div class="circle-label">Attitude and behaviour</div>
+        </div>
+
+        <!-- Left circle -->
+        <div class="circle circle-md circle-left">
+          <div class="circle-label">Body and Well-being</div>
+        </div>
+
+        <!-- Left top circle -->
+        <div class="circle circle-md circle-left-top">
+          <div class="circle-label">Power, communication</div>
+        </div>
+
+        <!-- Center polygons -->
+        <div class="polygon polygon-left">
+          <div class="circle-label">Passive- active interaction</div>
+        </div>
+        <div class="polygon polygon-center">
+          <div class="circle-label">Human with Media</div>
+        </div>
+        <div class="polygon polygon-right">
+          <div class="circle-label">Passive- active interaction</div>
+        </div>
+
+        <!-- Section titles overlaid -->
+        <div class="section-title-overlay title-top">Pop-culture and gaming</div>
+        <div class="section-title-overlay title-bottom">Questioning, critique</div>
+        <div class="section-title-overlay title-right">Prototype</div>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="content-col">
+        <div>
+          <h3 class="right-col-title">Constraints and directions</h3>
+          <div class="right-col-item">Keep the scope in the context of work</div>
+          <div class="right-col-item">Limit the scope how humans interact with technology to solve a problem</div>
+          <div class="right-col-item">Investigate the impact on well-being, capabilities and attitudes</div>
+          <div class="right-col-item">Investigate the role of power and communication</div>
+        </div>
+
+        <div style="margin-top: 60px;">
+          <h3 class="right-col-title">Narrative and mindset</h3>
+          <div class="right-col-item">Keep the scope in the context of work</div>
+          <div class="right-col-item">Limit the scope how humans interact with technology to solve a problem</div>
+          <div class="right-col-item">Investigate the impact on well-being, capabilities and attitudes</div>
+          <div class="right-col-item">Investigate the role of power and communication</div>
+        </div>
+
+        <div style="margin-top: 60px;">
+          <h3 class="right-col-title">Research / design questions</h3>
+          <div class="right-col-item">What would we give up to be efficient and successfull with AI?</div>
+          <div class="right-col-item">Can we build a human-to-human dialogue between humand and tech?</div>
+          <div class="right-col-item">What's the future of work clothes?</div>
+          <div class="right-col-item">How will our workspace look like?</div>
+          <div class="right-col-item">Will earbuds conqure the work device market?</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
 
 </body>
 </html>
