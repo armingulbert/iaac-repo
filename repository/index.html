@@ -120,19 +120,6 @@
 
     let deliverables = [];
 
-    // Fetch a file and extract title from <title> tag
-    async function fetchTitle(url) {
-      try {
-        const response = await fetch(url);
-        const html = await response.text();
-        const titleMatch = html.match(/<title>([^<]+)<\/title>/i);
-        return titleMatch ? titleMatch[1] : 'Untitled';
-      } catch (e) {
-        console.warn(`Failed to fetch ${url}:`, e);
-        return 'Untitled';
-      }
-    }
-
     // Load all deliverables from course folders
     async function loadDeliverables() {
       const promises = [];
@@ -150,16 +137,26 @@
 
         for (const file of files) {
           const fileUrl = courseUrl + encodeURIComponent(file);
-          const promise = fetchTitle(fileUrl)
-            .then(title => {
-              // Only include if title was successfully fetched (file exists)
-              if (title !== 'Untitled') {
-                return {
-                  title: title,
-                  course: courseName,
-                  href: fileUrl.replace(encodeURIComponent(file), file),
-                  fileName: file
-                };
+          const promise = fetch(fileUrl, { method: 'HEAD' })
+            .then(response => {
+              if (response.ok && response.status === 200) {
+                // File exists, now fetch title
+                return fetch(fileUrl)
+                  .then(r => r.text())
+                  .then(html => {
+                    const titleMatch = html.match(/<title>([^<]+)<\/title>/i);
+                    const title = titleMatch ? titleMatch[1] : null;
+                    if (title && title !== 'Untitled') {
+                      return {
+                        title: title,
+                        course: courseName,
+                        href: fileUrl.replace(encodeURIComponent(file), file),
+                        fileName: file
+                      };
+                    }
+                    return null;
+                  })
+                  .catch(() => null);
               }
               return null;
             })
