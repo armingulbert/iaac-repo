@@ -249,7 +249,7 @@
       width: 481px;
       height: 86px;
       left: 364px;
-      top: 1921px;
+      top: 1960px;
       font-family: 'Lato';
       font-style: normal;
       font-weight: 700;
@@ -286,7 +286,7 @@
       width: 423px;
       height: 783px;
       left: 371px;
-      top: 2046px;
+      top: 2100px;
       font-family: 'Lato';
       font-style: normal;
       font-weight: 700;
@@ -307,6 +307,16 @@
     }
 
     /* Framing Section */
+    .framing-bg {
+      position: absolute;
+      width: 1728px;
+      height: 1534px;
+      left: 0;
+      top: 2917px;
+      background: #FFFFFF;
+      z-index: 1;
+    }
+
     .title-framing {
       position: absolute;
       width: 563px;
@@ -318,8 +328,9 @@
       font-weight: 400;
       font-size: 32px;
       line-height: 43px;
-      color: #FFFFFF;
+      color: #000000;
       margin: 0;
+      z-index: 2;
     }
 
     .image-framing-center {
@@ -331,6 +342,7 @@
       /* Position inferred to be between title (2917) and next section (4451) */
       height: auto;
       object-fit: contain;
+      z-index: 2;
     }
 
     /* Outcomes Section */
@@ -680,6 +692,7 @@
     </div>
 
     <!-- Framing -->
+    <div class="framing-bg"></div>
     <h2 class="title-framing">Framing and breakdown of work</h2>
     <img src="/iaac-repo/assets/media/TheProjectSummaryChart.png" alt="Project Summary Chart"
       class="image-framing-center">
