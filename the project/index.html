@@ -24,6 +24,7 @@
       width: 100%;
       min-height: 100vh;
       background: #1C1C1C;
+      padding-top: 0;
     }
 
     /* Navigation */
@@ -32,7 +33,7 @@
       width: 613px;
       height: 80px;
       left: 364px;
-      top: 39px;
+      top: 0px;
     }
 
     .nav-container {
@@ -72,7 +73,7 @@
     .title-section {
       position: absolute;
       left: 364px;
-      top: 186px;
+      top: 120px;
     }
 
     .page-title {
@@ -103,7 +104,29 @@
 
     /* Background and Topic Identification Section */
     .section-background {
-      top: 631px;
+      top: 500px;
+    }
+
+    .research-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 75px;
+      font-family: 'Lato';
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 19px;
+      color: #FFFFFF;
+    }
+
+    .research-table th,
+    .research-table td {
+      padding: 12px;
+      text-align: left;
+      border: none;
+    }
+
+    .research-table tr {
+      border: none;
     }
 
     .section-title {
@@ -221,13 +244,25 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 100px;
+      margin-bottom: 40px;
+    }
+
+    .framing-image-wrapper {
+      position: relative;
+      width: 700px;
+      padding: 40px;
+      background: #FFFFFF;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .framing-image {
-      width: 600px;
-      height: 600px;
+      width: 100%;
+      height: auto;
       object-fit: contain;
+      aspect-ratio: 1 / 1;
     }
 
     .framing-left {
@@ -257,15 +292,16 @@
     /* Outcomes Section */
     .section-outcomes {
       position: absolute;
-      left: calc(50% - 563px/2);
-      top: 4451px;
+      left: 50%;
+      top: 4200px;
+      transform: translateX(-50%);
       text-align: center;
       width: 100%;
     }
 
     .section-outcomes .section-title {
       text-align: center;
-      width: 563px;
+      width: auto;
       margin-left: auto;
       margin-right: auto;
     }
@@ -274,7 +310,7 @@
     .constraints-container {
       position: absolute;
       left: 50%;
-      top: 4561px;
+      top: 4300px;
       transform: translateX(-50%);
       text-align: center;
       width: 660px;
@@ -303,7 +339,7 @@
     .narrative-container {
       position: absolute;
       left: 50%;
-      top: 4986px;
+      top: 4850px;
       transform: translateX(-50%);
       text-align: center;
       width: 409px;
@@ -332,7 +368,7 @@
     .questions-container {
       position: absolute;
       left: 50%;
-      top: 5447px;
+      top: 5400px;
       transform: translateX(-50%);
       text-align: center;
       width: 409px;
@@ -491,7 +527,7 @@
         <p>Formulated Design Bet Based on my professional background, experience and articles, I have crafted the following bet:</p>
       </div>
 
-      <div class="image-block"></div>
+      <img src="/iaac-repo/assets/media/ProjectDesignBet.png" alt="Design Bet" class="image-block" style="background: none;">
 
       <div class="section-content">
         <p>Evolution through expirements and reviews Since the topic selection the following interactions helped me to receive new perspectives and learnings:</p>
@@ -501,13 +537,37 @@
         • Own experiment: overwhelming, situations and limitations</p>
       </div>
 
-      <div class="image-block"></div>
+      <table class="research-table">
+        <tr>
+          <td><strong>Take-aways: Design x Tech x Critical Inquiry</strong></td>
+          <td><strong>Take-aways:</strong></td>
+        </tr>
+        <tr>
+          <td>Address social and cultural issues<br>
+          Extensive prototyping<br>
+          Speculative design<br>
+          Signals and formats</td>
+          <td>Importance of trust and empathy<br>
+          Solving tasks<br>
+          Impact on behaviour and wellbeing<br>
+          Perception on AI<br>
+          Surveillance<br>
+          Creating space and situations<br>
+          Hardware, sensors<br>
+          Privacy<br>
+          Recognize sound<br>
+          How to solve complex tasks<br>
+          Personalization<br>
+          Cognitive and skill development<br>
+          Conversation and sound design</td>
+        </tr>
+      </table>
 
       <div class="section-content">
         <p>Exploratory and inspirational research To extended my perspective I conducated research activities to see topics, methods and narratives of others within the subject area:</p>
       </div>
 
-      <div class="image-block"></div>
+      <img src="/iaac-repo/assets/media/ProjectMTI.png" alt="MIT Inspiration" class="image-block" style="background: none;">
 
       <div class="inspiration">
         <p><strong>Biggest inspiration:</strong> MIT Media Labs - Critical Matter research group <a href="https://www.media.mit.edu/groups/critical-matter/overview/">https://www.media.mit.edu/groups/critical-matter/overview/</a></p>
@@ -530,31 +590,7 @@
       </div>
     </div>
 
-    <!-- Take-aways boxes -->
-    <div class="takeaways-left">
-      <p><strong>Take-aways: Design x Tech x Critical Inquiry</strong></p>
-      <p>Address social and cultural issues<br>
-      Extensive prototyping<br>
-      Speculative design<br>
-      Signals and formats</p>
-    </div>
-
-    <div class="takeaways-right">
-      <p><strong>Take-aways:</strong></p>
-      <p>Importance of trust and empathy<br>
-      Solving tasks<br>
-      Impact on behaviour and wellbeing<br>
-      Perception on AI<br>
-      Surveillance<br>
-      Creating space and situations<br>
-      Hardware, sensors<br>
-      Privacy<br>
-      Recognize sound<br>
-      How to solve complex tasks<br>
-      Personalization<br>
-      Cognitive and skill development<br>
-      Conversation and sound design</p>
-    </div>
+    <!-- Take-aways boxes are now in the research table above -->
 
     <!-- Framing and Breakdown Section -->
     <div class="section-container section-framing">
@@ -564,7 +600,9 @@
         <div class="framing-left">
           <!-- Left side content for framing -->
         </div>
-        <img src="/iaac-repo/assets/media/TheProjectSummaryChart.png" alt="Project Summary Chart" class="framing-image">
+        <div class="framing-image-wrapper">
+          <img src="/iaac-repo/assets/media/TheProjectSummaryChart.png" alt="Project Summary Chart" class="framing-image">
+        </div>
         <div class="framing-right">
           <!-- Right side content for framing -->
         </div>
