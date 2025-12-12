@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sleep-O-Meter — Proto #2</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --orange:#E24E36;
+  --ink:#1c1c1c;
+  --cream:#fff;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#fff;color:var(--ink);font-family:'Lato',Arial,Helvetica,sans-serif}
+
+/* Page scaffold */
+.page{width:100%;display:flex;flex-direction:column;gap:2rem}
+
+/* Hero */
+.hero{
+  background:var(--orange);
+  color:#fff;
+  width:100%;
+}
+.hero-inner{
+  max-width:1200px;
+  margin:0 auto;
+  padding:32px 20px 28px;
+  position:relative;
+}
+.badge{
+  position:absolute;left:20px;top:32px;
+  background:#fff;color:#000;border-radius:36px;
+  padding:8px 14px;font-weight:900;font-size:14px
+}
+.hero h1{
+  font-family:'Abril Fatface',serif;
+  font-size:clamp(32px,5vw,48px);line-height:1.2;margin:40px 0 8px
+}
+.hero p{max-width:800px;font-weight:900}
+
+/* Content sections use responsive grids */
+.section{width:100%;}
+.section-inner{max-width:1200px;margin:0 auto;padding:0 20px;}
+
+/* Idea + schematic */
+.idea-wrap{
+  display:grid;gap:24px;align-items:start;
+  grid-template-columns: 1fr 1fr;
+  padding-top:24px
+}
+@media (max-width:900px){
+  .idea-wrap{grid-template-columns:1fr}
+}
+.idea h2{margin:0 0 10px;font-size:18px}
+.idea p{margin:0 0 10px;font-weight:900}
+
+/* Schematic panel */
+.panel{
+  position:relative;aspect-ratio: 485/492;
+  width:100%;background:linear-gradient(180deg,#EAE8E8 0%, rgba(132,131,131,0.37) 100%);
+  border-radius:19px;overflow:hidden;
+}
+.panel-inner{position:absolute;inset:0}
+.panel .bar{position:absolute;background:#413C3C;border:1px solid rgba(0,0,0,.46);border-radius:9px}
+.panel .cap{position:absolute;background:rgba(228,156,21,.96);border:.4px solid rgba(0,0,0,.46);border-radius:9px}
+.panel .stack-line{position:absolute;background:#F4F4F4;border:1px solid rgba(0,0,0,.12);border-radius:9px}
+.panel .stack-box{position:absolute;background:#F4F4F4;border:1px solid rgba(0,0,0,.27);border-radius:9px}
+.panel .pill{position:absolute;background:#E4E1E1;border:1px solid rgba(0,0,0,.27);border-radius:9px}
+.panel .c1,.panel .c2{position:absolute;border:1px solid rgba(0,0,0,.16);border-radius:50%;background:#F4E8E8}
+.panel .c2{box-shadow:0 4px 4px rgba(0,0,0,.25), inset 0 4px 4px rgba(0,0,0,.12)}
+.panel .dot{position:absolute;background:#444;border-radius:12px}
+.panel .line{position:absolute;border:1px solid rgba(0,0,0,.37)}
+.panel .lbl{position:absolute;font-weight:900}
+
+/* placements */
+.panel .bar.b1{left:41%;top:59%;width:2.1%;height:24%}
+.panel .bar.b2{left:43.5%;top:59%;width:2.4%;height:24%}
+.panel .bar.b3{left:46.5%;top:59%;width:2.1%;height:24%}
+.panel .bar.b4{left:49%;top:59%;width:2.4%;height:24%}
+.panel .bar.b5{left:52%;top:59%;width:2.1%;height:24%}
+.panel .cap.c1{left:41.5%;top:81%;width:1.05%;height:3.6%}
+.panel .cap.c2{left:44%;top:81%;width:1.05%;height:3.6%}
+.panel .cap.c3{left:47%;top:81%;width:1.05%;height:3.6%}
+.panel .cap.c4{left:49.5%;top:81%;width:1.05%;height:3.6%}
+.panel .cap.c5{left:52.5%;top:81%;width:1.05%;height:3.6%}
+.panel .stack-line.l1{left:37%;top:44%;width:.25%;height:14%}
+.panel .stack-line.l2{left:56.9%;top:49%;width:.25%;height:9%}
+.panel .stack-box{left:36.3%;top:38%;width:22.5%;height:23%}
+.panel .pill.p1{left:38.4%;top:51%;width:2.4%;height:7.2%}
+.panel .pill.p2{left:41.2%;top:51%;width:2.4%;height:7.2%}
+.panel .pill.p3{left:44.1%;top:51%;width:2.4%;height:7.2%}
+.panel .pill.p4{left:46.9%;top:51%;width:2.4%;height:7.2%}
+.panel .pill.p5{left:49.7%;top:51%;width:2.4%;height:7.2%}
+.panel .pill.p6{left:52.6%;top:51%;width:2.4%;height:7.2%}
+.panel .c1{left:33.4%;top:20%;width:29%;height:29%}
+.panel .c2{left:36.8%;top:23.2%;width:23%;height:23%}
+.panel .dot.d1{left:47.1%;top:19%;width:1.6%;height:1.6%}
+.panel .dot.d2{left:47.1%;top:45%;width:1.1%;height:1.1%}
+.panel .dot.d3{left:59.9%;top:33.3%;width:1.3%;height:1.3%}
+.panel .line.la{left:52.2%;top:10.4%;width:11.5%;height:0;transform:rotate(-45deg)}
+.panel .line.lb{left:52.5%;top:47.1%;width:13.5%;height:0;transform:rotate(10deg)}
+.panel .lbl.bird{left:61.9%;top:5%;font-size:16px}
+.panel .lbl.bear{left:69.5%;top:47.8%;font-size:16px}
+
+/* Prototype + stills */
+.proto-wrap{
+  display:grid;gap:20px;align-items:start;
+  grid-template-columns: 1fr 1fr;
+  margin-top:6px
+}
+@media (max-width:1000px){ .proto-wrap{grid-template-columns:1fr} }
+.proto-copy{font-weight:900}
+.media-card{border-radius:12px;overflow:hidden}
+.media-card picture, .media-card img{display:block;width:100%;height:100%;object-fit:cover}
+
+/* Bottom: tall image + video */
+.bottom-wrap{
+  display:grid;gap:24px;align-items:start;
+  grid-template-columns: 1fr 1.05fr;
+}
+@media (max-width:1100px){ .bottom-wrap{grid-template-columns:1fr} }
+
+.tall-img{border-radius:12px;overflow:hidden}
+.tall-img picture, .tall-img img{display:block;width:100%;height:100%;object-fit:cover}
+
+.video-well{
+  background:#000;border-radius:30px;overflow:hidden;position:relative;min-height:420px
+}
+.video-well iframe{
+  position:absolute;top:0;left:50%;height:100%;width:177.78%;transform:translateX(-50%);border:0;
+}
+</style>
+</head>
+<body>
+
+<main class="page">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="badge">Proto #2</div>
+      <h1>Sleep-O-Meter</h1>
+      <p>The following page covers a prototype creation of a prosthetics heartbeat and biorhythm meter created for an ideation brief received during our “Living with your ideas” course. The purpose of this prototype is to showcase how we can extend the limitations of the human body.</p>
+    </div>
+  </section>
+
+  <!-- IDEA + SCHEMATIC -->
+  <section class="section">
+    <div class="section-inner idea-wrap">
+      <div class="panel">
+        <div class="panel-inner">
+          <div class="bar b1"></div><div class="bar b2"></div><div class="bar b3"></div><div class="bar b4"></div><div class="bar b5"></div>
+          <div class="cap c1"></div><div class="cap c2"></div><div class="cap c3"></div><div class="cap c4"></div><div class="cap c5"></div>
+          <div class="stack-line l1"></div><div class="stack-line l2"></div>
+          <div class="stack-box"></div>
+          <div class="pill p1"></div><div class="pill p2"></div><div class="pill p3"></div>
+          <div class="pill p4"></div><div class="pill p5"></div><div class="pill p6"></div>
+          <div class="c1"></div><div class="c2"></div>
+          <div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div>
+          <div class="line la"></div><div class="line lb"></div>
+          <div class="lbl bird">Sleep like a bird<br><small>12 sec micro-nap</small></div>
+          <div class="lbl bear">Sleep like a bear<br><small>Month-long deep sleep</small></div>
+        </div>
+      </div>
+
+      <article class="idea">
+        <h2>Idea</h2>
+        <p>The received brief highlighted that MDEF students must deliver a prosthetic solution that would help the potential user become something else.</p>
+        <p>There are two major triggers behind the idea of creating a Sleep-O-Meter that helps the user adjust their biorhythm and heartbeat to influence sleep demand and efficiency.</p>
+        <p>Animals can show different sleep demand and efficiency – like birds require the least amount of sleep, while certain species take long, even quarter-year-long winter sleep.</p>
+        <p>The second driver of the idea is a common situation humans face: our sleep demand can change temporarily for short or long periods, even years.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- PROTOTYPE + STILLS -->
+  <section class="section">
+    <div class="section-inner proto-wrap">
+      <div class="proto-copy">
+        <strong>Prototype</strong><br><br>
+        The current prototype is a low-fidelity one, and its purpose is to visualise the Sleep-O-Meter’s physical appearance and initiate discussions on potential use and the related user experience. In terms of functionality, the current prototype covers a simple “potmeter-type” experience — testers can rotate the top white wheel replicating an actual meter adjustment. The rest of the elements are not functional; they serve visualisation purposes only.
+      </div>
+    
+      <figure class="media-card">
+        <picture>
+          <img src="../../../assets/media/IMG_3304.png" alt="Workbench overview" loading="lazy">
+        </picture>
+      </figure>
+
+      <figure class="media-card">
+        <picture>
+          <img src="../../../assets/media/IMG_3306.png" alt="Prototype detail" loading="lazy">
+        </picture>
+      </figure>
+    </div>
+  </section>
+
+  <!-- BOTTOM: TALL IMAGE + VIDEO -->
+  <section class="section">
+    <div class="section-inner bottom-wrap">
+      <figure class="tall-img">
+        <picture>
+          <img src="../../../assets/media/IMG_3311.png" alt="Wear test on mannequin" loading="lazy">
+        </picture>
+      </figure>
+
+      <div class="video-well">
+        <iframe
+          src="https://player.vimeo.com/video/1131811743?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+          allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          title="AGLivingWithOwnIdeaProto2"></iframe>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script src="https://player.vimeo.com/api/player.js"></script>
+</body>
+</html>
