@@ -1,4 +1,4 @@
-ic<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
@@ -68,7 +68,7 @@ ic<!doctype html>
       font-family:'Abril Fatface',serif;
       font-size:clamp(56px,8vw,128px);
       line-height:1.2;
-      margin:48px 0 8px;
+      margin:28px 0 8px; /* Adjusted margin for reduced spacing */
       color:#fff;
     }
 
@@ -78,23 +78,25 @@ ic<!doctype html>
       line-height:1.5;
       color:#fff;
       max-width:660px;
+      margin-bottom:16px; /* tighten spacing below the copy */
     }
 
-   /* filename: assets/css/video-fix.css
-   Add this to your main stylesheet or the page <head> */
-.video-wrapper,
-.video-wrapper * {
+    .lead-copy p { margin: 0 0 12px; }
+
+   /* Video fixes: target the classes used in the markup (.video-wrap, .video-aspect) */
+
+.video-wrap,
+.video-wrap * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Remove default margins on figure/embed blocks (common in WP / static blocks) */
-.wp-block-embed,
-.wp-block-embed.wp-embed-aspect-16-9,
-figure.wp-block-embed,
-.embed-wrapper,
-.video-wrapper {
+/* Remove default margins on common embed/figure blocks */
+.video-wrap,
+.video-wrap .embed-wrapper,
+.video-wrap figure,
+.video-wrap .wp-block-embed {
   margin: 0;
   padding: 0;
   background: transparent;
@@ -102,44 +104,38 @@ figure.wp-block-embed,
   border-radius: 12px; /* keep if you want rounded corners */
 }
 
-/* Make iframe/embed/video fill the container exactly and remove borders */
-.video-wrapper iframe,
-.video-wrapper embed,
-.video-wrapper object,
-.video-wrapper video {
-  display: block;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background-color: #000; /* match the player background to avoid white gap */
-}
-
-/* If you're using an aspect-ratio container pattern, ensure absolute positioning */
-.video-wrapper.aspect-ratio {
+/* Aspect-ratio container for 16:9 videos */
+.video-aspect {
   position: relative;
-  padding-top: 12%; /* or whatever ratio you're using */
+  padding-top: 56.25%; /* 16:9 aspect ratio */
   height: 0;
 }
-.video-wrapper.aspect-ratio iframe {
+
+.video-aspect iframe,
+.video-aspect embed,
+.video-aspect object,
+.video-aspect video {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  border: 0;
+  background-color: #000; /* match the player background to avoid white gap */
+  display: block;
 }
 
-    {
-      .nav-pill{
-        max-width:100%;
-        justify-content:space-between;
-        gap:16px;
-        padding:0 18px;
-      }
-      .brand{font-size:22px;}
-      .nav-pill a{font-size:14px;}
-    }
+/* Responsive tweaks (was a malformed block in the original) */
+@media (max-width: 700px) {
+  .nav-pill{
+    max-width:100%;
+    justify-content:space-between;
+    gap:16px;
+    padding:0 18px;
+  }
+  .brand{font-size:22px;}
+  .nav-pill a{font-size:14px;}
+}
   </style>
 </head>
 <body>
@@ -165,12 +161,11 @@ figure.wp-block-embed,
       <p>The video can be watched here:</p>
     </section>
 
-    <!-- PDF -->
     <section class="video-wrap">
       <div class="video-aspect">
-       <div style="padding:100% 0 0 0;position:relative;">
-         <iframe src="https://player.vimeo.com/video/1160818534?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="ArminGulbertStudio2NarrativeMDEF"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
+         <iframe src="https://player.vimeo.com/video/1160818534?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="ArminGulbertStudio2NarrativeMDEF"></iframe>
       </div>
+      <script src="https://player.vimeo.com/api/player.js"></script>
     </section>
   </main>
 
