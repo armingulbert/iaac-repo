@@ -80,33 +80,57 @@ ic<!doctype html>
       max-width:660px;
     }
 
-    /* Vimeo Viewer */
-    .video-wrap{
-      width:1280px;
-      height: 800px;
-      max-width:100%;
-      margin:0px auto
-    }
+   /* filename: assets/css/video-fix.css
+   Add this to your main stylesheet or the page <head> */
+.video-wrapper,
+.video-wrapper * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    .video-aspect{
-      width:100%;
-      height:768px; /* fixed height */
-      background:#000;
-      border-radius:20px;
-      overflow:hidden;
-    }
+/* Remove default margins on figure/embed blocks (common in WP / static blocks) */
+.wp-block-embed,
+.wp-block-embed.wp-embed-aspect-16-9,
+figure.wp-block-embed,
+.embed-wrapper,
+.video-wrapper {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  overflow: hidden;
+  border-radius: 12px; /* keep if you want rounded corners */
+}
 
-    .video-aspect iframe,
-    .video-aspect object,
-    .video-aspect embed{
-      width:100%;
-      height:100%;
-      border:0;
-      background:#fff;
-      display:block;
-    }
+/* Make iframe/embed/video fill the container exactly and remove borders */
+.video-wrapper iframe,
+.video-wrapper embed,
+.video-wrapper object,
+.video-wrapper video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background-color: #000; /* match the player background to avoid white gap */
+}
 
-    @media (max-width:720px){
+/* If you're using an aspect-ratio container pattern, ensure absolute positioning */
+.video-wrapper.aspect-ratio {
+  position: relative;
+  padding-top: 56.25%; /* or whatever ratio you're using */
+  height: 0;
+}
+.video-wrapper.aspect-ratio iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+    {
       .nav-pill{
         max-width:100%;
         justify-content:space-between;
