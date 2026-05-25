@@ -1,20 +1,21 @@
 /* ========== DESIGN SYSTEM: IAAC PORTFOLIO) ========== */
 
 /* -------- GOOGLE FONTS -------- */
-@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lato:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Boldonse&family=Roboto+Slab:wght@400;700&display=swap');
 
 /* -------- VARIABLES -------- */
 :root {
-  --color-bg: #f8f9fa;
-  --color-primary: #111827;
+  --color-bg: #000000;
+  --color-primary: #ffffff;
   --color-accent: #e6c700;
-  --color-link: #2962ff;
-  --color-card: #fff;
-  --color-border: #e5e7eb;
-  --color-shadow: rgba(0,0,0,0.10);
+  --color-link: #64b5f6;
+  --color-card: #000000;
+  --color-border: #ffffff;
+  --color-shadow: rgba(255,255,255,0.15);
+  --color-headline: #FF3F42;
 
-  --font-main: 'Lato', Arial, Helvetica, sans-serif;
-  --font-display: 'Abril Fatface', serif;
+  --font-main: 'Boldonse', serif;
+  --font-display: 'Roboto Slab', serif;
   --font-size-base: 1rem;
   --font-size-h1: 2.1rem;
   --font-size-h2: 1.3rem;
@@ -48,7 +49,7 @@ h1 {
   font-weight: 400;
   margin-top: 0;
   margin-bottom: var(--space-sm);
-  color: var(--color-primary);
+  color: var(--color-headline);
 }
 
 h2 {
@@ -57,7 +58,7 @@ h2 {
   font-weight: 700;
   margin-top: 0;
   margin-bottom: var(--space-sm);
-  color: var(--color-primary);
+  color: var(--color-headline);
 }
 
 h3 {
@@ -66,7 +67,7 @@ h3 {
   font-weight: 600;
   margin-top: 0;
   margin-bottom: var(--space-sm);
-  color: var(--color-primary);
+  color: var(--color-headline);
 }
 
 a {
