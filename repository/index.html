@@ -111,12 +111,35 @@
     const COURSES_DIR = '/iaac-repo/repository/courses/';
     const COURSES = [
       'Fundamentals for Future Makers',
+      'atlas of weak signals',
+      'cognitive orgies',
+      'design with others',
+      'extended intelligence ',
       'living with your own ideas',
+      'narrative II',
       'other species',
+      'situated design practices',
       'studio 0',
       'studio 1',
+      'studio 2',
       'unpacking tech system'
     ];
+
+    const COURSE_PAGES = {
+      'Fundamentals for Future Makers': ['course reflection.html'],
+      'atlas of weak signals': ['community testing of cards.html'],
+      'cognitive orgies': ['week one reflection.html', 'week two reflection.html'],
+      'design with others': ['reflection.html'],
+      'extended intelligence ': ['AIManifesto.html', 'agent creation reflection.html', 'novel writing with AI.html', 'regulate LOI manifesto.html'],
+      'living with your own ideas': ['prototype 1.html', 'prototype 2.html', 'prototype 3.html', 'summary report.html'],
+      'narrative II': ['one-pager summary.html'],
+      'other species': ['cottage-industry.html', 'extend attention GMO.html'],
+      'situated design practices': ['reflection.html'],
+      'studio 0': ['index.html', 'atlas of weak signals.html'],
+      'studio 1': ['Action Dossier.html', 'Narrative I.html', 'emboded criticism.html', 'problem statement.html'],
+      'studio 2': ['problematize ethics.html', 'problematize myself.html', 'problematize narrative.html', 'problematize space.html'],
+      'unpacking tech system': ['Week 1 Reflection.html', 'Week 2 Reflection.html']
+    };
 
     let deliverables = [];
 
@@ -128,12 +151,7 @@
         const encodedCourse = encodeURIComponent(courseName);
         const courseUrl = `${COURSES_DIR}${encodedCourse}/`;
 
-        // Only include specific end-page files that are direct children of course folders
-        const files = ['index.html', 'prototype 1.html', 'prototype 2.html', 'prototype 3.html', 
-                       'summary report.html', 'course reflection.html', 'cottage-industry.html',
-                       'design bet.html', 'the log.html',
-                       'Action Dossier.html', 'emboded criticism.html',
-                       'problem statement.html', 'Week 1 Reflection.html', 'Week 2 Reflection.html'];
+        const files = COURSE_PAGES[courseName] || [];
 
         for (const file of files) {
           const fileUrl = courseUrl + encodeURIComponent(file);
