@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<!--
+  AI Chapel
+  ─────────
+  A browser-based confessional installation.
+  Speak your relationship with AI. Three saints respond.
+
+  Requires: OpenAI API key (sk-…)
+  Browser:  Chrome or Edge (mic access required)
+  No server. No data saved. Runs entirely in the browser.
+
+  Usage:
+  1. Open index.html (or ai-chapel.html) in Chrome
+  2. Enter your OpenAI API key
+  3. Speak your confession
+  4. Say "I am done" when finished
+
+  Built with: Whisper (STT) · GPT-4o (assessment) · OpenAI TTS (voice)
+  Design: IAAC Barcelona · MAS Design for Emerging Futures · 2026
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AI Chapel — a confessional installation where you speak your relationship with artificial intelligence, and three saints respond.">
+<meta property="og:title" content="AI Chapel">
+<meta property="og:description" content="Confess your AI use. The Teacher, Therapist, and Neuroscientist will respond.">
+<meta property="og:type" content="website">
+<title>AI Chapel</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&family=DM+Mono:wght@300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg0:   #0d0814;
+  --bg1:   #130a1f;
+  --bg2:   #1a0d2e;
+  --bg3:   #21103a;
+  --accent:#7c3fa0;
+  --glow:  #a855d4;
+  --text:  rgba(230,210,255,0.88);
+  --muted: rgba(200,175,240,0.55);
+  --dim:   rgba(180,150,220,0.32);
+  --gold:  rgba(220,190,255,0.7);
+}
+
+html, body {
+  width:100%; height:100%; overflow:hidden;
+  background: radial-gradient(ellipse 120% 120% at 50% 20%,
+    var(--bg2) 0%, var(--bg1) 45%, var(--bg0) 100%);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic; font-weight: 300;
+  color: var(--text);
+}
+
+/* ── SPIRAL BACKGROUND ── */
+#spiralCanvas {
+  position: fixed; inset: 0; z-index: 0;
+  width:100%; height:100%;
+  pointer-events: none; opacity: 0.18;
+}
+
+/* ── GRAIN ── */
+body::before {
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:0.6;
+}
+
+/* ── VIGNETTE ── */
+body::after {
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background: radial-gradient(ellipse 65% 65% at 50% 50%, transparent 25%, rgba(6,2,14,0.72) 100%);
+}
+
+* { position:relative; z-index:1; }
+
+/* ── API OVERLAY ── */
+#apiOverlay {
+  position:fixed; inset:0; z-index:300;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:22px;
+  background:rgba(8,3,18,0.97);
+}
+#apiOverlay .o-title {
+  font-size:18px; letter-spacing:0.1em; color:var(--muted);
+  margin-bottom:4px; text-align:center;
+}
+#apiOverlay .o-sub {
+  font-size:13px; color:var(--dim); text-align:center;
+  max-width:300px; line-height:1.7;
+}
+#apiOverlay input {
+  width:300px; background:transparent;
+  border:none; border-bottom:1px solid rgba(160,120,220,0.25);
+  color:var(--text); font-family:'Cormorant Garamond',serif;
+  font-style:italic; font-size:16px; letter-spacing:0.08em;
+  padding:8px 4px; outline:none; text-align:center;
+}
+#apiOverlay input::placeholder { color:var(--dim); }
+#apiOverlay button {
+  background:none; border:none; border-bottom:1px solid rgba(160,120,220,0.3);
+  color:var(--muted); font-family:'Cormorant Garamond',serif;
+  font-style:italic; font-size:14px; letter-spacing:0.2em;
+  padding:4px 0; cursor:pointer; transition:all 0.3s; margin-top:6px;
+}
+#apiOverlay button:hover { color:var(--text); border-color:var(--glow); }
+
+.o-folder-btn {
+  font-size:12px; letter-spacing:0.14em; color:var(--dim);
+  border-bottom-color:rgba(160,120,220,0.18) !important;
+  margin-top:-4px !important;
+}
+#folderStatus {
+  font-family:'DM Mono',monospace; font-style:normal;
+  font-size:9px; letter-spacing:0.12em; color:rgba(160,120,220,0.4);
+  text-align:center;
+}
+
+/* ── FADE VEIL ── */
+#fadeVeil {
+  position:fixed; inset:0; z-index:200;
+  background:rgba(6,2,14,1); opacity:0; pointer-events:none;
+  transition:opacity 2s ease;
+}
+#fadeVeil.dark { opacity:1; pointer-events:all; }
+
+/* ── STAGE ── */
+#stage { position:fixed; inset:0; z-index:1; }
+video, #camCanvas { display:none; }
+
+/* ── SCREENS ── */
+.screen { position:absolute; inset:0; display:none; align-items:center; justify-content:center; flex-direction:column; }
+.screen.active { display:flex; }
+
+/* ── WELCOME ── */
+.chapel-text { width:min(780px,88vw); text-align:center; line-height:1.9; }
+.cline {
+  display:block; font-size:clamp(24px,3vw,36px);
+  opacity:0; transform:translateY(6px);
+  transition:opacity 1.4s ease, transform 1.4s ease;
+}
+.cline.show { opacity:1; transform:translateY(0); }
+.cline.small {
+  font-size:clamp(14px,1.6vw,18px); letter-spacing:0.16em;
+  color:var(--muted); margin-top:6px;
+}
+
+/* ── LISTENING ── */
+#liveTranscript {
+  font-size:clamp(18px,2.2vw,26px); color:var(--muted);
+  width:min(780px,88vw); text-align:center; line-height:1.8; min-height:80px;
+}
+#breathDot {
+  width:5px; height:5px; border-radius:50%;
+  background:rgba(168,85,212,0.5); margin-top:44px;
+  animation:breathe 3.5s ease-in-out infinite;
+}
+@keyframes breathe {
+  0%,100%{ transform:scale(1); opacity:0.2; }
+  50%    { transform:scale(2.2); opacity:0.6; }
+}
+
+/* ── REFLECTING ── */
+#screenReflecting { text-align:center; }
+.reflecting-text { font-size:clamp(22px,2.8vw,34px); opacity:0; animation:fadein 1.5s ease 0.3s forwards; }
+@keyframes fadein { to { opacity:1; } }
+
+/* ── SAINTS PANEL ── */
+#screenSaints { flex-direction:row; align-items:stretch; overflow:hidden; }
+.saints-wrap { width:100%; height:100%; display:grid; grid-template-columns:1fr 1fr 1fr; }
+
+.saint-panel {
+  border-right:1px solid rgba(100,60,150,0.3);
+  display:flex; flex-direction:column;
+  padding:clamp(22px,3vw,44px) clamp(18px,2.5vw,32px);
+  opacity:0; transition:opacity 1.8s ease;
+  overflow-y:auto; height:100%;
+}
+.saint-panel::-webkit-scrollbar { display:none; }
+.saint-panel:last-child { border-right:none; }
+.saint-panel.show { opacity:1; }
+
+.saint-label {
+  font-family:'DM Mono',monospace; font-style:normal; font-size:7.5px;
+  letter-spacing:0.26em; text-transform:uppercase; color:rgba(168,85,212,0.5);
+  margin-bottom:20px; padding-bottom:11px;
+  border-bottom:1px solid rgba(100,60,150,0.3); flex-shrink:0;
+}
+
+/* teacher — complexity */
+.cpx-display { display:flex; flex-direction:column; align-items:center; margin-bottom:18px; gap:5px; flex-shrink:0; }
+.cpx-ring-wrap { position:relative; width:88px; height:88px; }
+.cpx-ring-wrap svg { width:88px; height:88px; transform:rotate(-90deg); }
+.cpx-track { fill:none; stroke:rgba(80,40,120,0.4); stroke-width:3; }
+.cpx-fill  { fill:none; stroke:rgba(168,85,212,0.85); stroke-width:3; stroke-linecap:round;
+             stroke-dasharray:245; stroke-dashoffset:245; transition:stroke-dashoffset 2.2s ease 0.6s; }
+.cpx-num { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+           font-family:'Cormorant Garamond',serif; font-style:normal; font-size:26px; color:var(--gold); }
+.cpx-sub { font-family:'DM Mono',monospace; font-style:normal; font-size:7px; letter-spacing:0.14em;
+           text-transform:uppercase; color:var(--dim); text-align:center; }
+.cpx-bars { width:100%; display:flex; flex-direction:column; gap:7px; margin-bottom:16px; flex-shrink:0; }
+.cpx-bar-item { display:flex; flex-direction:column; gap:2px; }
+.cpx-bar-lbl { font-family:'DM Mono',monospace; font-style:normal; font-size:6.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--dim); }
+.cpx-bar-track { height:1.5px; background:rgba(80,40,120,0.3); overflow:hidden; }
+.cpx-bar-fill { height:100%; background:rgba(168,85,212,0.55); width:0%; transition:width 2.2s ease 1s; }
+
+/* therapist — emotion */
+.emo-tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px; flex-shrink:0; }
+.emo-tag {
+  font-family:'DM Mono',monospace; font-style:normal; font-size:8px; letter-spacing:0.12em; text-transform:uppercase;
+  padding:3px 9px; border:1px solid rgba(160,120,220,0.2); color:var(--muted);
+  opacity:0; transform:translateY(4px); transition:opacity 0.6s ease, transform 0.6s ease;
+}
+.emo-tag.pos { border-color:rgba(130,220,140,0.35); color:rgba(150,230,160,0.85); }
+.emo-tag.neg { border-color:rgba(220,120,180,0.35); color:rgba(230,140,190,0.85); }
+.emo-tag.neu { border-color:rgba(160,120,220,0.2); color:var(--muted); }
+.emo-tag.show { opacity:1; transform:translateY(0); }
+.emo-schema { font-family:'DM Mono',monospace; font-style:normal; font-size:7px; letter-spacing:0.14em;
+              text-transform:uppercase; color:rgba(200,150,255,0.6); margin-bottom:14px; flex-shrink:0; min-height:16px; }
+
+/* neuro — brain */
+.brain-wrap { width:100%; position:relative; margin-bottom:14px; flex-shrink:0; }
+#brainCanvas { display:block; width:100%; height:auto; }
+.brain-region-label {
+  position:absolute; bottom:6px; left:0; right:0; text-align:center;
+  font-family:'DM Mono',monospace; font-style:normal; font-size:6.5px; letter-spacing:0.14em; text-transform:uppercase;
+  color:rgba(200,160,255,0.8); opacity:0; transition:opacity 0.8s;
+}
+
+/* shared */
+.saint-text {
+  font-size:clamp(13px,1.3vw,16px); color:var(--muted); line-height:1.75; letter-spacing:0.01em;
+  flex:1; opacity:0; transform:translateY(6px); transition:opacity 1.4s ease 1.2s, transform 1.4s ease 1.2s;
+}
+.saint-text.show { opacity:1; transform:translateY(0); }
+.saint-closing {
+  margin-top:22px; padding-top:12px; border-top:1px solid rgba(100,60,150,0.25);
+  font-size:clamp(12px,1.2vw,15px); color:var(--dim); text-align:center; letter-spacing:0.02em;
+  opacity:0; transition:opacity 2s ease 3.5s; flex-shrink:0;
+}
+.saint-closing.show { opacity:1; }
+
+/* ── SUMMARY SCREEN ── */
+#screenSummary {
+  flex-direction:column; align-items:center; justify-content:center;
+  text-align:center;
+}
+.summary-wrap { width:min(560px,86vw); display:flex; flex-direction:column; align-items:center; gap:20px; }
+.summary-symbol {
+  font-family:'DM Mono',monospace; font-style:normal;
+  font-size:clamp(10px,1.2vw,13px); line-height:1.2;
+  color:rgba(168,85,212,0.7); white-space:pre; letter-spacing:0.05em;
+  opacity:0; animation:fadein 1.5s ease 0.4s forwards;
+}
+.summary-title {
+  font-size:clamp(20px,2.4vw,28px); color:var(--text); letter-spacing:0.04em;
+  opacity:0; animation:fadein 1.5s ease 0.8s forwards;
+}
+.summary-desc {
+  font-size:clamp(14px,1.5vw,17px); color:var(--muted); line-height:1.7;
+  opacity:0; animation:fadein 1.5s ease 1.2s forwards;
+}
+.summary-rec {
+  font-family:'DM Mono',monospace; font-style:normal;
+  font-size:9px; letter-spacing:0.2em; text-transform:uppercase;
+  color:rgba(168,85,212,0.55); border-top:1px solid rgba(100,60,150,0.3);
+  padding-top:14px; width:100%;
+  opacity:0; animation:fadein 1.5s ease 1.6s forwards;
+}
+
+</style>
+</head>
+<body>
+
+<!-- SPIRAL CANVAS -->
+<canvas id="spiralCanvas"></canvas>
+
+<!-- API OVERLAY -->
+<div id="apiOverlay">
+  <div class="o-title">AI Chapel</div>
+  <div class="o-sub">the chapel remembers everything</div>
+  <input type="password" id="apiKey" placeholder="openai  sk-…" autocomplete="off"/>
+  <button onclick="openChapel()">enter the chapel</button>
+</div>
+
+<div id="fadeVeil"></div>
+
+<div id="stage">
+  <video id="camVideo" autoplay playsinline muted></video>
+  <canvas id="camCanvas"></canvas>
+
+  <div class="screen active" id="screenWelcome">
+    <div class="chapel-text" id="welcomeText"></div>
+  </div>
+
+  <div class="screen" id="screenListening">
+    <div id="liveTranscript"></div>
+    <div id="breathDot"></div>
+  </div>
+
+  <div class="screen" id="screenReflecting">
+    <div class="reflecting-text">The chapel is listening to your confession.</div>
+  </div>
+
+  <div class="screen" id="screenSaints">
+    <div class="saints-wrap">
+      <div class="saint-panel" id="panelTeacher">
+        <div class="saint-label">the teacher</div>
+        <div class="cpx-display">
+          <div class="cpx-ring-wrap">
+            <svg viewBox="0 0 88 88">
+              <circle class="cpx-track" cx="44" cy="44" r="39"/>
+              <circle class="cpx-fill" cx="44" cy="44" r="39" id="cpxArc"/>
+            </svg>
+            <div class="cpx-num" id="cpxNum">—</div>
+          </div>
+          <div class="cpx-sub" id="cpxLabel">complexity</div>
+        </div>
+        <div class="cpx-bars">
+          <div class="cpx-bar-item">
+            <div class="cpx-bar-lbl">vocabulary depth</div>
+            <div class="cpx-bar-track"><div class="cpx-bar-fill" id="barVocab"></div></div>
+          </div>
+          <div class="cpx-bar-item">
+            <div class="cpx-bar-lbl">word count</div>
+            <div class="cpx-bar-track"><div class="cpx-bar-fill" id="barWc"></div></div>
+          </div>
+          <div class="cpx-bar-item">
+            <div class="cpx-bar-lbl">self-reference</div>
+            <div class="cpx-bar-track"><div class="cpx-bar-fill" id="barSelf"></div></div>
+          </div>
+        </div>
+        <div class="saint-text" id="textTeacher"></div>
+        <div class="saint-closing" id="closingTeacher"></div>
+      </div>
+
+      <div class="saint-panel" id="panelTherapist">
+        <div class="saint-label">the therapist</div>
+        <div class="emo-tags" id="emoTags"></div>
+        <div class="emo-schema" id="emoSchema"></div>
+        <div class="saint-text" id="textTherapist"></div>
+        <div class="saint-closing" id="closingTherapist"></div>
+      </div>
+
+      <div class="saint-panel" id="panelNeuro">
+        <div class="saint-label">the neuroscientist</div>
+        <div class="brain-wrap">
+          <canvas id="brainCanvas"></canvas>
+          <div class="brain-region-label" id="regionLabel"></div>
+        </div>
+        <div class="saint-text" id="textNeuro"></div>
+        <div class="saint-closing" id="closingNeuro"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUMMARY SCREEN -->
+  <div class="screen" id="screenSummary">
+    <div class="summary-wrap">
+      <pre class="summary-symbol" id="summarySymbol"></pre>
+      <div class="summary-title"  id="summaryTitle"></div>
+      <div class="summary-desc"   id="summaryDesc"></div>
+      <div class="summary-rec"    id="summaryRec"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── CONFIG ────────────────────────────────────────────────────────────────────
+let API_KEY = '';
+const TTS_VOICE = 'nova', TTS_SPEED = 0.76;
+
+
+
+// ── SYSTEM PROMPT ─────────────────────────────────────────────────────────────
+const SYSTEM_SAINTS = `You are the voice of the AI Chapel — a confessional installation where people speak their relationship with artificial intelligence.
+You speak through three saints: the Teacher, the Therapist, the Neuroscientist.
+CRITICAL: Your responses must be grounded in the specific words, examples, and topics the confessor actually said. Do not give generic AI reflections. Reference what they told you directly.
+
+Given the confession below, return ONLY valid JSON — no markdown, no extra text:
+
+{
+  "teacher": "2-3 sentences grounded in their specific words. Address how their particular AI use affected their thinking and ability to solve problems alone.",
+  "therapist": "2-3 sentences grounded in their specific words. Address the emotional attachment, dependency, and what was surrendered as they described it.",
+  "neuroscientist": "2-3 sentences grounded in their specific words. Address the cognitive consequence of the exact patterns they described.",
+  "keywords": [{"word":"delegating","polarity":"neg"},{"word":"curious","polarity":"pos"},{"word":"exhausted","polarity":"neg"},{"word":"asking","polarity":"neu"}],
+  "schema": "Dependence",
+  "regions": ["prefrontal","hippocampus"],
+  "closing": "The chapel remembers. You may go."
+}
+
+schema: one of Dependence, Failure, Standards, Defectiveness, none
+regions: from prefrontal, broca, hippocampus, amygdala, parietal, visual
+Gender-neutral. Never judge. Observe and reflect only. Max 45 words per saint.`;
+
+const SYSTEM_SUMMARY = `You are the archivist of the AI Chapel — a confessional installation where people speak their relationship with artificial intelligence.
+CRITICAL: Your summary must reference specific things the confessor actually said, not generic observations about AI.
+
+Return ONLY valid JSON — no markdown, no extra text:
+
+{
+  "title": "3-5 word poetic title drawn from the specific content of this confession",
+  "description": "One sentence (max 25 words) capturing the specific essence of what this person confessed.",
+  "recommendation": "One sentence (max 20 words) — what the chapel specifically recommends this confessor tends to.",
+  "symbol": "A 7-line ASCII art symbol (each line max 15 chars) representing this confession. Use only . o O @ * - | / \\ characters. Make it feel like a spiral or organic form."
+}`;
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let audioCtx, analyser, mediaStream;
+let mediaRecorder, chunks = [];
+let confessionParts = [];
+let chapelActive = false, currentPhase = 'idle';
+let vadRecording = false, silTimer = null, lastStop = 0;
+const RMS_THRESH = 0.016, SIL_MS = 2200, COOLDOWN = 2000;
+let currentSummary = null;
+
+// ── SPIRAL BACKGROUND ─────────────────────────────────────────────────────────
+(function drawSpiral() {
+  const c = document.getElementById('spiralCanvas');
+  const W = window.innerWidth, H = window.innerHeight;
+  c.width = W; c.height = H;
+  const ctx = c.getContext('2d');
+  const cx = W / 2, cy = H / 2;
+  ctx.clearRect(0, 0, W, H);
+
+  // Draw multiple Archimedean spirals at different scales
+  const spirals = [
+    { a: 0, b: 28, turns: 8,  alpha: 0.5, width: 0.6 },
+    { a: 0, b: 52, turns: 6,  alpha: 0.3, width: 0.4 },
+    { a: 0, b: 14, turns: 11, alpha: 0.2, width: 0.3 },
+  ];
+  spirals.forEach(({ a, b, turns, alpha, width }) => {
+    const steps = turns * 360;
+    ctx.beginPath();
+    for (let i = 0; i <= steps; i++) {
+      const angle = (i * Math.PI) / 180;
+      const r = a + b * angle;
+      const x = cx + r * Math.cos(angle);
+      const y = cy + r * Math.sin(angle);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = `rgba(168,85,212,${alpha})`;
+    ctx.lineWidth = width;
+    ctx.stroke();
+  });
+
+  // Concentric rings at Fibonacci radii
+  [34, 55, 89, 144, 233, 377].forEach(r => {
+    if (r > Math.min(W, H) * 0.55) return;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(120,60,180,0.12)';
+    ctx.lineWidth = 0.5;
+    ctx.stroke();
+  });
+})();
+window.addEventListener('resize', () => {
+  const c = document.getElementById('spiralCanvas');
+  c.width = window.innerWidth; c.height = window.innerHeight;
+});
+
+// ── BRAIN ─────────────────────────────────────────────────────────────────────
+const REGION_MAP = {
+  prefrontal:  { cx:0.50,cy:0.22,r:0.22,color:[168,85,212], label:'planning · writing'  },
+  broca:       { cx:0.28,cy:0.38,r:0.16,color:[140,80,200], label:'language · speech'   },
+  hippocampus: { cx:0.50,cy:0.55,r:0.14,color:[120,60,180], label:'memory · learning'   },
+  amygdala:    { cx:0.38,cy:0.52,r:0.12,color:[180,80,200], label:'emotion · feeling'   },
+  parietal:    { cx:0.65,cy:0.38,r:0.15,color:[150,90,210], label:'logic · analysis'    },
+  visual:      { cx:0.50,cy:0.70,r:0.14,color:[130,70,195], label:'image · spatial'     },
+};
+let activeRegions=[], bFrame=0, bParts=[];
+
+function initBrain(){
+  const c=document.getElementById('brainCanvas');
+  const W=c.offsetWidth||240, H=Math.round(W*0.7);
+  c.width=W*2; c.height=H*2; c.style.height=H+'px';
+  const ctx=c.getContext('2d'); ctx.scale(2,2);
+  bParts=[];
+  for(let i=0;i<400;i++){
+    let nx,ny,a=0;
+    do{nx=0.07+Math.random()*0.86;ny=0.06+Math.random()*0.82;a++;}
+    while(!insideB(nx,ny)&&a<30);
+    bParts.push({nx,ny,x:nx*W,y:ny*H,vx:(Math.random()-.5)*.04,vy:(Math.random()-.5)*.04,
+      bR:Math.random()*.8+.3,r:Math.random()*.8+.3,bA:Math.random()*.22+.08,alpha:Math.random()*.22+.08,
+      fs:Math.random()*.04+.01,fo:Math.random()*Math.PI*2,color:[100,60,160]});
+  }
+  drawBrain();
+}
+function insideB(nx,ny){const dx=(nx-.5)/.43,dy=(ny-.47)/.40;if(nx>.4&&nx<.6&&ny>.86)return false;return dx*dx+dy*dy<1.0;}
+function lerp(a,b,t){return a+(b-a)*t;}
+function drawBrain(){
+  const c=document.getElementById('brainCanvas');
+  const W=c.width/2,H=c.height/2,ctx=c.getContext('2d');
+  ctx.clearRect(0,0,W,H); bFrame++;
+  ctx.beginPath();ctx.ellipse(W*.5,H*.47,W*.43,H*.40,0,0,Math.PI*2);
+  ctx.strokeStyle='rgba(140,80,200,0.2)';ctx.lineWidth=0.8;ctx.stroke();
+  for(let i=0;i<bParts.length;i+=2){
+    const p=bParts[i];
+    for(let j=i+1;j<bParts.length;j+=2){
+      const q=bParts[j],dx=p.x-q.x,dy=p.y-q.y,d=Math.sqrt(dx*dx+dy*dy);
+      if(d<13){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);
+        ctx.strokeStyle=`rgba(150,90,210,${(1-d/13)*.07*Math.max(p.alpha,q.alpha)*4})`;ctx.lineWidth=0.35;ctx.stroke();}
+    }
+  }
+  for(const p of bParts){
+    p.x+=p.vx;p.y+=p.vy;p.nx=p.x/W;p.ny=p.y/H;
+    if(!insideB(p.nx,p.ny)){p.vx*=-1;p.vy*=-1;p.x+=p.vx*2;p.y+=p.vy*2;p.nx=p.x/W;p.ny=p.y/H;}
+    const flk=Math.sin(bFrame*p.fs+p.fo);
+    let inR=false,rc=null;
+    for(const k of activeRegions){const reg=REGION_MAP[k];if(!reg)continue;
+      const dx=p.nx-reg.cx,dy=p.ny-reg.cy;if(Math.sqrt(dx*dx+dy*dy)<reg.r){inR=true;rc=reg.color;break;}}
+    if(inR){p.alpha=lerp(p.alpha,.82+flk*.1,.07);p.r=lerp(p.r,2.2+flk*.4,.07);p.color=rc;}
+    else{p.alpha=lerp(p.alpha,p.bA+flk*.025,.03);p.r=lerp(p.r,p.bR,.03);p.color=[100,60,160];}
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(${p.color[0]},${p.color[1]},${p.color[2]},${p.alpha})`;ctx.fill();
+  }
+  for(const k of activeRegions){
+    const reg=REGION_MAP[k];if(!reg)continue;
+    const cx=reg.cx*W,cy=reg.cy*H,pulse=.85+Math.sin(bFrame*.04)*.15;
+    const gr=ctx.createRadialGradient(cx,cy,0,cx,cy,reg.r*W*pulse);
+    gr.addColorStop(0,`rgba(${reg.color[0]},${reg.color[1]},${reg.color[2]},0.28)`);
+    gr.addColorStop(.6,`rgba(${reg.color[0]},${reg.color[1]},${reg.color[2]},0.08)`);
+    gr.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.beginPath();ctx.arc(cx,cy,reg.r*W*pulse,0,Math.PI*2);ctx.fillStyle=gr;ctx.fill();
+  }
+  requestAnimationFrame(drawBrain);
+}
+
+// ── OPEN ──────────────────────────────────────────────────────────────────────
+async function openChapel(){
+  const k=document.getElementById('apiKey').value.trim();
+  if(!k.startsWith('sk-')){alert('Valid OpenAI key required.');return;}
+  API_KEY=k;
+  document.getElementById('apiOverlay').style.display='none';
+  chapelActive=true;
+  await initAudio();
+  initWebcam();
+  showScreen('screenWelcome');
+  await runWelcome();
+}
+
+// ── WELCOME ───────────────────────────────────────────────────────────────────
+async function runWelcome(){
+  currentPhase='welcome';
+  // Clear and render lines immediately (while still in crossfade dark)
+  const el=document.getElementById('welcomeText'); el.innerHTML='';
+  const lines=[
+    {text:'AI Chapel.',                               delay:0   },
+    {text:'What you gave the machine today —',      delay:900 },
+    {text:'speak it now.',                          delay:1900},
+    {text:'When you are finished, say: I am done.', delay:3200, small:true},
+  ];
+  // Pre-populate DOM before fade-in so text is ready
+  lines.forEach(({text,small})=>{
+    const s=document.createElement('span');
+    s.className='cline'+(small?' small':'');
+    s.textContent=text; el.appendChild(s);
+  });
+  // Stagger show after a short breath (fade-in already lifted by caller)
+  const spans=el.querySelectorAll('.cline');
+  lines.forEach(({delay},i)=>{
+    setTimeout(()=>spans[i]?.classList.add('show'), delay+200);
+  });
+  // Wait for last line to appear, then speak
+  await wait(3600);
+  await speak('Welcome to the AI Chapel. Confess your AI use — what you asked for, what you gave away, what you let it carry. When you are finished, say: I am done.');
+  await wait(1200);
+  await crossfade(()=>{showScreen('screenListening');beginListening();});
+}
+
+// ── SCREENS ───────────────────────────────────────────────────────────────────
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function renderLines(id,lines){
+  const el=document.getElementById(id); el.innerHTML='';
+  lines.forEach(({text,delay,small})=>{
+    const s=document.createElement('span');
+    s.className='cline'+(small?' small':''); s.textContent=text; el.appendChild(s);
+    setTimeout(()=>s.classList.add('show'),delay+200);
+  });
+}
+
+// ── AUDIO ─────────────────────────────────────────────────────────────────────
+async function initAudio(){
+  mediaStream=await navigator.mediaDevices.getUserMedia({audio:true,video:false});
+  audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  if(audioCtx.state==='suspended')await audioCtx.resume();
+  const src=audioCtx.createMediaStreamSource(mediaStream);
+  analyser=audioCtx.createAnalyser(); analyser.fftSize=512;
+  src.connect(analyser);
+}
+
+// ── LISTENING ─────────────────────────────────────────────────────────────────
+function beginListening(){
+  currentPhase='listening'; confessionParts=[];
+  document.getElementById('liveTranscript').textContent='';
+  startVAD();
+}
+function startVAD(){
+  const buf=new Float32Array(analyser.fftSize);
+  (function tick(){
+    if(currentPhase!=='listening')return;
+    analyser.getFloatTimeDomainData(buf);
+    let rms=0; for(const v of buf)rms+=v*v; rms=Math.sqrt(rms/buf.length);
+    if(rms>=RMS_THRESH){
+      if(!vadRecording&&Date.now()-lastStop>COOLDOWN)startSeg();
+      if(silTimer){clearTimeout(silTimer);silTimer=null;}
+    }else if(vadRecording){
+      if(!silTimer)silTimer=setTimeout(stopSeg,SIL_MS);
+    }
+    requestAnimationFrame(tick);
+  })();
+}
+function startSeg(){
+  vadRecording=true;chunks=[];
+  const mime=MediaRecorder.isTypeSupported('audio/webm;codecs=opus')?'audio/webm;codecs=opus':'audio/webm';
+  mediaRecorder=new MediaRecorder(mediaStream,{mimeType:mime});
+  mediaRecorder.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};
+  mediaRecorder.start(100);
+}
+async function stopSeg(){
+  if(!vadRecording)return;
+  vadRecording=false;lastStop=Date.now();
+  if(silTimer){clearTimeout(silTimer);silTimer=null;}
+  mediaRecorder.stop();
+  mediaRecorder.onstop=async()=>{
+    const blob=new Blob(chunks,{type:'audio/webm'});
+    if(blob.size<2500)return;
+    const text=await transcribe(blob);
+    if(!text)return;
+    if(/\bi\s*am\s*done\b/i.test(text)||/\bdone\b/i.test(text)){endConfession();return;}
+    confessionParts.push(text);
+    document.getElementById('liveTranscript').textContent=confessionParts.slice(-2).join(' … ');
+  };
+}
+
+// ── END ───────────────────────────────────────────────────────────────────────
+async function endConfession(){
+  currentPhase='reflecting';
+  await crossfade(()=>showScreen('screenReflecting'));
+  await speak('The chapel is listening to your confession.');
+  await wait(1600);
+  const confession=confessionParts.join(' ');
+  const [saintsData, summaryData] = await Promise.all([
+    getAssessment(confession),
+    getSummary(confession)
+  ]);
+  currentSummary = summaryData;
+  if(!saintsData)return;
+  await crossfade(()=>{showScreen('screenSaints');renderSaints(saintsData);});
+  const full=`${saintsData.teacher} ${saintsData.therapist} ${saintsData.neuroscientist} ${saintsData.closing}`;
+  await speak(full);
+  currentPhase='done';
+  // Show summary after saints
+  await wait(3000);
+  await crossfade(()=>{ showScreen('screenSummary'); renderSummary(summaryData, saintsData); });
+  if(summaryData){ await speak(`${summaryData.title}. ${summaryData.description} ${summaryData.recommendation}`); }
+  // Save to file
+  await saveEntry(confession, saintsData, summaryData);
+  // Reset after pause — pre-populate welcome text BEFORE crossfade so lines animate in after veil lifts
+  setTimeout(async () => {
+    // Build welcome DOM while still on summary screen
+    const el = document.getElementById('welcomeText');
+    el.innerHTML = '';
+    [
+      { text:'AI Chapel.',                               small:false },
+      { text:'What you gave the machine today —',      small:false },
+      { text:'speak it now.',                          small:false },
+      { text:'When you are finished, say: I am done.', small:true  },
+    ].forEach(({ text, small }) => {
+      const s = document.createElement('span');
+      s.className = 'cline' + (small ? ' small' : '');
+      s.textContent = text; el.appendChild(s);
+    });
+    // Crossfade: veil closes → switch screen → veil opens
+    await crossfade(() => { showScreen('screenWelcome'); });
+    // Veil is now open — stagger the line reveals
+    const spans = el.querySelectorAll('.cline');
+    [0, 900, 1900, 3200].forEach((d, i) => {
+      setTimeout(() => spans[i]?.classList.add('show'), d + 200);
+    });
+    currentPhase = 'welcome';
+    await wait(3800);
+    await speak('Welcome to the AI Chapel. Confess your AI use — what you asked for, what you gave away, what you let it carry. When you are finished, say: I am done.');
+    await wait(1200);
+    await crossfade(() => { showScreen('screenListening'); beginListening(); });
+  }, 18000);
+}
+
+// ── RENDER SAINTS ─────────────────────────────────────────────────────────────
+function renderSaints(data){
+  const text=confessionParts.join(' '), words=text.split(/\s+/), wc=words.length;
+  const unique=new Set(words.map(w=>w.toLowerCase().replace(/[^a-z]/g,''))).size;
+  const selfC=(text.match(/\b(i|my|me|myself)\b/gi)||[]).length;
+  const reflC=(text.match(/\b(think|feel|believe|wonder|maybe|consider|realise|noticed)\b/gi)||[]).length;
+  const score=Math.max(5,Math.min(100,Math.round((wc*.5)+(unique/Math.max(wc,1)*40)+(reflC*4))));
+  document.getElementById('cpxNum').textContent=score;
+  document.getElementById('cpxLabel').textContent=score>65?'high complexity':score>40?'moderate depth':'low depth';
+  setTimeout(()=>{document.getElementById('cpxArc').style.strokeDashoffset=245-(score/100)*245;},300);
+  setTimeout(()=>{
+    document.getElementById('barVocab').style.width=Math.min(100,unique/Math.max(wc,1)*180)+'%';
+    document.getElementById('barWc').style.width=Math.min(100,wc*1.2)+'%';
+    document.getElementById('barSelf').style.width=Math.min(100,selfC*9)+'%';
+  },600);
+  document.getElementById('textTeacher').textContent=data.teacher||'';
+  const tagEl=document.getElementById('emoTags'); tagEl.innerHTML='';
+  (data.keywords||[]).forEach((k,i)=>{
+    const t=document.createElement('span');
+    t.className=`emo-tag ${k.polarity}`; t.textContent=k.word; tagEl.appendChild(t);
+    setTimeout(()=>t.classList.add('show'),500+i*120);
+  });
+  document.getElementById('emoSchema').textContent=
+    data.schema&&data.schema!=='none'?`schema detected · ${data.schema.toLowerCase()}`:'';
+  document.getElementById('textTherapist').textContent=data.therapist||'';
+  activeRegions=data.regions||[];
+  const rl=document.getElementById('regionLabel');
+  if(activeRegions.length){rl.textContent=activeRegions.map(r=>REGION_MAP[r]?.label||r).join(' · ');rl.style.opacity='1';}
+  document.getElementById('textNeuro').textContent=data.neuroscientist||'';
+  ['closingTeacher','closingTherapist'].forEach(id=>{document.getElementById(id).textContent='';});
+  document.getElementById('closingNeuro').textContent=data.closing||'';
+  ['panelTeacher','panelTherapist','panelNeuro'].forEach((id,i)=>{
+    setTimeout(()=>{
+      const panel=document.getElementById(id); panel.classList.add('show');
+      panel.querySelector('.saint-text')?.classList.add('show');
+      setTimeout(()=>panel.querySelector('.saint-closing')?.classList.add('show'),800);
+    },i*700);
+  });
+  setTimeout(initBrain,800);
+}
+
+// ── RENDER SUMMARY ────────────────────────────────────────────────────────────
+function renderSummary(summary, saints){
+  if(!summary) return;
+  document.getElementById('summarySymbol').textContent = summary.symbol || '';
+  document.getElementById('summaryTitle').textContent  = summary.title || '';
+  document.getElementById('summaryDesc').textContent   = summary.description || '';
+  document.getElementById('summaryRec').textContent    = '→  ' + (summary.recommendation || '');
+
+}
+
+// ── SAVE ENTRY (web version — no local saving) ───────────────────────────────
+async function saveEntry(){ /* disabled in web version */ }
+
+// ── API CALLS ─────────────────────────────────────────────────────────────────
+async function transcribe(blob){
+  const fd=new FormData();
+  fd.append('file',blob,'audio.webm');fd.append('model','whisper-1');
+  try{
+    const r=await fetch('https://api.openai.com/v1/audio/transcriptions',
+      {method:'POST',headers:{Authorization:'Bearer '+API_KEY},body:fd});
+    return((await r.json()).text||'').trim();
+  }catch{return '';}
+}
+
+async function getAssessment(confession){
+  try{
+    const r=await fetch('https://api.openai.com/v1/chat/completions',{
+      method:'POST',
+      headers:{Authorization:'Bearer '+API_KEY,'Content-Type':'application/json'},
+      body:JSON.stringify({model:'gpt-4o',max_tokens:600,
+        messages:[{role:'system',content:SYSTEM_SAINTS},{role:'user',content:confession||'The viewer did not speak.'}]})
+    });
+    const raw=(await r.json()).choices?.[0]?.message?.content?.trim()||'';
+    return JSON.parse(raw.replace(/```json|```/g,'').trim());
+  }catch(e){console.error('saints error',e);return null;}
+}
+
+async function getSummary(confession){
+  try{
+    const r=await fetch('https://api.openai.com/v1/chat/completions',{
+      method:'POST',
+      headers:{Authorization:'Bearer '+API_KEY,'Content-Type':'application/json'},
+      body:JSON.stringify({model:'gpt-4o',max_tokens:300,
+        messages:[{role:'system',content:SYSTEM_SUMMARY},{role:'user',content:confession||'The viewer did not speak.'}]})
+    });
+    const raw=(await r.json()).choices?.[0]?.message?.content?.trim()||'';
+    return JSON.parse(raw.replace(/```json|```/g,'').trim());
+  }catch(e){console.error('summary error',e);return null;}
+}
+
+async function speak(text){
+  try{
+    const r=await fetch('https://api.openai.com/v1/audio/speech',{
+      method:'POST',
+      headers:{Authorization:'Bearer '+API_KEY,'Content-Type':'application/json'},
+      body:JSON.stringify({model:'tts-1',voice:TTS_VOICE,input:text,speed:TTS_SPEED})
+    });
+    if(!r.ok)return;
+    const ab=await r.arrayBuffer();
+    const buf=await audioCtx.decodeAudioData(ab);
+    const src=audioCtx.createBufferSource();
+    src.buffer=buf;src.connect(audioCtx.destination);
+    return new Promise(res=>{src.onended=res;src.start();});
+  }catch(e){console.error('TTS',e);}
+}
+
+// ── UTILS ─────────────────────────────────────────────────────────────────────
+function crossfade(fn){
+  return new Promise(res=>{
+    const veil=document.getElementById('fadeVeil');
+    veil.classList.add('dark');
+    setTimeout(async()=>{await fn();veil.classList.remove('dark');setTimeout(res,2000);},2000);
+  });
+}
+function wait(ms){return new Promise(r=>setTimeout(r,ms));}
+
+function initWebcam(){
+  navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false}).then(stream=>{
+    const v=document.getElementById('camVideo'),c=document.getElementById('camCanvas');
+    v.srcObject=stream;v.onloadedmetadata=()=>{v.play();c.width=32;c.height=24;};
+  }).catch(()=>{});
+}
+
+// Space = done shortcut
+document.addEventListener('keydown',e=>{
+  if(!chapelActive)return;
+  if(e.code==='Space'&&currentPhase==='listening'){e.preventDefault();endConfession();}
+});
+</script>
+</body>
+</html>
