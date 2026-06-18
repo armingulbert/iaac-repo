@@ -326,7 +326,10 @@ const TTS_VOICE = 'nova', TTS_SPEED = 0.76;
 async function loadEnvFile() {
   try {
     const response = await fetch('../.env');
-    if (!response.ok) return;
+    if (!response.ok) {
+      showEnvError('Unable to load .env file.');
+      return;
+    }
     const envText = await response.text();
     const envLines = envText.split('\n');
     for (const line of envLines) {
@@ -334,25 +337,38 @@ async function loadEnvFile() {
         const apiKey = line.replace('OPENAI_API_KEY=', '').trim();
         if (apiKey && apiKey.startsWith('sk-')) {
           API_KEY = apiKey;
-          // Auto-open chapel with loaded key
           await openChapelAuto();
           return;
         }
       }
     }
+    showEnvError('OPENAI_API_KEY not found in .env.');
   } catch (error) {
-    console.log('Could not load .env file');
+    console.log('Could not load .env file', error);
+    showEnvError('Could not load .env file.');
   }
+}
+
+function showEnvError(message) {
+  const el = document.getElementById('welcomeText');
+  if (el) {
+    el.textContent = message + ' Ensure .env is present and accessible, then reload.';
+  }
+  showScreen('screenWelcome');
 }
 
 // Auto-open chapel (skip input form)
 async function openChapelAuto(){
-  document.getElementById('apiOverlay').style.display='none';
   chapelActive=true;
-  await initAudio();
-  initWebcam();
-  showScreen('screenWelcome');
-  await runWelcome();
+  try {
+    await initAudio();
+    initWebcam();
+    showScreen('screenWelcome');
+    await runWelcome();
+  } catch (error) {
+    console.error('Auto-open failed', error);
+    showEnvError('Auto-open failed. Grant microphone access and reload.');
+  }
 }
 
 // Load env on page load
@@ -516,10 +532,12 @@ function drawBrain(){
 
 // ── OPEN ──────────────────────────────────────────────────────────────────────
 async function openChapel(){
-  const k=document.getElementById('apiKey').value.trim();
+  const input = document.getElementById('apiKey');
+  const k = input ? input.value.trim() : '';
   if(!k.startsWith('sk-')){alert('Valid OpenAI key required.');return;}
   API_KEY=k;
-  document.getElementById('apiOverlay').style.display='none';
+  const overlay = document.getElementById('apiOverlay');
+  if(overlay) overlay.style.display='none';
   chapelActive=true;
   await initAudio();
   initWebcam();
