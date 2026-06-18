@@ -367,8 +367,34 @@ video, #camCanvas { display:none; }
 
 <script>
 // ── CONFIG ────────────────────────────────────────────────────────────────────
+// API key is entered by user in the form or loaded from environment
 let API_KEY = '';
 const TTS_VOICE = 'nova', TTS_SPEED = 0.76;
+
+// Load API key from .env file on page load
+async function loadEnvFile() {
+  try {
+    const response = await fetch('../.env');
+    if (!response.ok) return;
+    const envText = await response.text();
+    const envLines = envText.split('\n');
+    for (const line of envLines) {
+      if (line.startsWith('OPENAI_API_KEY=')) {
+        const apiKey = line.replace('OPENAI_API_KEY=', '').trim();
+        if (apiKey && apiKey.startsWith('sk-')) {
+          document.getElementById('apiKey').value = apiKey;
+          break;
+        }
+      }
+    }
+  } catch (error) {
+    // Silently fail - user can enter API key manually
+    console.log('Could not load .env file');
+  }
+}
+
+// Load env on page load
+window.addEventListener('DOMContentLoaded', loadEnvFile);
 
 
 
