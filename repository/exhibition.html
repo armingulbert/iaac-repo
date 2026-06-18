@@ -75,47 +75,6 @@ body::after {
 
 * { position:relative; z-index:1; }
 
-/* ── API OVERLAY ── */
-#apiOverlay {
-  position:fixed; inset:0; z-index:300;
-  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:22px;
-  background:rgba(8,3,18,0.97);
-}
-#apiOverlay .o-title {
-  font-size:18px; letter-spacing:0.1em; color:var(--muted);
-  margin-bottom:4px; text-align:center;
-}
-#apiOverlay .o-sub {
-  font-size:13px; color:var(--dim); text-align:center;
-  max-width:300px; line-height:1.7;
-}
-#apiOverlay input {
-  width:300px; background:transparent;
-  border:none; border-bottom:1px solid rgba(160,120,220,0.25);
-  color:var(--text); font-family:'Cormorant Garamond',serif;
-  font-style:italic; font-size:16px; letter-spacing:0.08em;
-  padding:8px 4px; outline:none; text-align:center;
-}
-#apiOverlay input::placeholder { color:var(--dim); }
-#apiOverlay button {
-  background:none; border:none; border-bottom:1px solid rgba(160,120,220,0.3);
-  color:var(--muted); font-family:'Cormorant Garamond',serif;
-  font-style:italic; font-size:14px; letter-spacing:0.2em;
-  padding:4px 0; cursor:pointer; transition:all 0.3s; margin-top:6px;
-}
-#apiOverlay button:hover { color:var(--text); border-color:var(--glow); }
-
-.o-folder-btn {
-  font-size:12px; letter-spacing:0.14em; color:var(--dim);
-  border-bottom-color:rgba(160,120,220,0.18) !important;
-  margin-top:-4px !important;
-}
-#folderStatus {
-  font-family:'DM Mono',monospace; font-style:normal;
-  font-size:9px; letter-spacing:0.12em; color:rgba(160,120,220,0.4);
-  text-align:center;
-}
-
 /* ── FADE VEIL ── */
 #fadeVeil {
   position:fixed; inset:0; z-index:200;
@@ -274,14 +233,6 @@ video, #camCanvas { display:none; }
 
 <!-- SPIRAL CANVAS -->
 <canvas id="spiralCanvas"></canvas>
-
-<!-- API OVERLAY -->
-<div id="apiOverlay" style="display:none;">
-  <div class="o-title">AI Chapel</div>
-  <div class="o-sub">the chapel remembers everything</div>
-  <input type="password" id="apiKey" placeholder="openai  sk-…" autocomplete="off"/>
-  <button onclick="openChapel()">enter the chapel</button>
-</div>
 
 <div id="fadeVeil"></div>
 
