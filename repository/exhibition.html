@@ -276,7 +276,7 @@ video, #camCanvas { display:none; }
 <canvas id="spiralCanvas"></canvas>
 
 <!-- API OVERLAY -->
-<div id="apiOverlay">
+<div id="apiOverlay" style="display:none;">
   <div class="o-title">AI Chapel</div>
   <div class="o-sub">the chapel remembers everything</div>
   <input type="password" id="apiKey" placeholder="openai  sk-…" autocomplete="off"/>
@@ -382,15 +382,26 @@ async function loadEnvFile() {
       if (line.startsWith('OPENAI_API_KEY=')) {
         const apiKey = line.replace('OPENAI_API_KEY=', '').trim();
         if (apiKey && apiKey.startsWith('sk-')) {
-          document.getElementById('apiKey').value = apiKey;
-          break;
+          API_KEY = apiKey;
+          // Auto-open chapel with loaded key
+          await openChapelAuto();
+          return;
         }
       }
     }
   } catch (error) {
-    // Silently fail - user can enter API key manually
     console.log('Could not load .env file');
   }
+}
+
+// Auto-open chapel (skip input form)
+async function openChapelAuto(){
+  document.getElementById('apiOverlay').style.display='none';
+  chapelActive=true;
+  await initAudio();
+  initWebcam();
+  showScreen('screenWelcome');
+  await runWelcome();
 }
 
 // Load env on page load
