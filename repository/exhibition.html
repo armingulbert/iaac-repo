@@ -75,6 +75,47 @@ body::after {
 
 * { position:relative; z-index:1; }
 
+/* ── API OVERLAY ── */
+#apiOverlay {
+  position:fixed; inset:0; z-index:300;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:22px;
+  background:rgba(8,3,18,0.97);
+}
+#apiOverlay .o-title {
+  font-size:18px; letter-spacing:0.1em; color:var(--muted);
+  margin-bottom:4px; text-align:center;
+}
+#apiOverlay .o-sub {
+  font-size:13px; color:var(--dim); text-align:center;
+  max-width:300px; line-height:1.7;
+}
+#apiOverlay input {
+  width:300px; background:transparent;
+  border:none; border-bottom:1px solid rgba(160,120,220,0.25);
+  color:var(--text); font-family:'Cormorant Garamond',serif;
+  font-style:italic; font-size:16px; letter-spacing:0.08em;
+  padding:8px 4px; outline:none; text-align:center;
+}
+#apiOverlay input::placeholder { color:var(--dim); }
+#apiOverlay button {
+  background:none; border:none; border-bottom:1px solid rgba(160,120,220,0.3);
+  color:var(--muted); font-family:'Cormorant Garamond',serif;
+  font-style:italic; font-size:14px; letter-spacing:0.2em;
+  padding:4px 0; cursor:pointer; transition:all 0.3s; margin-top:6px;
+}
+#apiOverlay button:hover { color:var(--text); border-color:var(--glow); }
+
+.o-folder-btn {
+  font-size:12px; letter-spacing:0.14em; color:var(--dim);
+  border-bottom-color:rgba(160,120,220,0.18) !important;
+  margin-top:-4px !important;
+}
+#folderStatus {
+  font-family:'DM Mono',monospace; font-style:normal;
+  font-size:9px; letter-spacing:0.12em; color:rgba(160,120,220,0.4);
+  text-align:center;
+}
+
 /* ── FADE VEIL ── */
 #fadeVeil {
   position:fixed; inset:0; z-index:200;
@@ -234,6 +275,14 @@ video, #camCanvas { display:none; }
 <!-- SPIRAL CANVAS -->
 <canvas id="spiralCanvas"></canvas>
 
+<!-- API OVERLAY -->
+<div id="apiOverlay">
+  <div class="o-title">AI Chapel</div>
+  <div class="o-sub">Enter your OpenAI API key to start.</div>
+  <input type="password" id="apiKey" placeholder="openai  sk-…" autocomplete="off" />
+  <button onclick="openChapel()">enter the chapel</button>
+</div>
+
 <div id="fadeVeil"></div>
 
 <div id="stage">
@@ -318,61 +367,21 @@ video, #camCanvas { display:none; }
 
 <script>
 // ── CONFIG ────────────────────────────────────────────────────────────────────
-// API key is entered by user in the form or loaded from environment
+// API key is entered by the user in the frontend form
 let API_KEY = '';
 const TTS_VOICE = 'nova', TTS_SPEED = 0.76;
 
-// Load API key from .env file on page load
-async function loadEnvFile() {
-  try {
-    const response = await fetch('../.env');
-    if (!response.ok) {
-      showEnvError('Unable to load .env file.');
-      return;
-    }
-    const envText = await response.text();
-    const envLines = envText.split('\n');
-    for (const line of envLines) {
-      if (line.startsWith('OPENAI_API_KEY=')) {
-        const apiKey = line.replace('OPENAI_API_KEY=', '').trim();
-        if (apiKey && apiKey.startsWith('sk-')) {
-          API_KEY = apiKey;
-          await openChapelAuto();
-          return;
-        }
-      }
-    }
-    showEnvError('OPENAI_API_KEY not found in .env.');
-  } catch (error) {
-    console.log('Could not load .env file', error);
-    showEnvError('Could not load .env file.');
-  }
-}
-
-function showEnvError(message) {
-  const el = document.getElementById('welcomeText');
-  if (el) {
-    el.textContent = message + ' Ensure .env is present and accessible, then reload.';
-  }
-  showScreen('screenWelcome');
-}
-
-// Auto-open chapel (skip input form)
-async function openChapelAuto(){
-  chapelActive=true;
-  try {
-    await initAudio();
-    initWebcam();
-    showScreen('screenWelcome');
-    await runWelcome();
-  } catch (error) {
-    console.error('Auto-open failed', error);
-    showEnvError('Auto-open failed. Grant microphone access and reload.');
-  }
-}
-
 // Load env on page load
-window.addEventListener('DOMContentLoaded', loadEnvFile);
+// The page uses frontend API key input. No .env fetch is required.
+
+// If a previous user key is stored locally, restore it
+window.addEventListener('DOMContentLoaded', () => {
+  const savedKey = localStorage.getItem('OPENAI_API_KEY');
+  const input = document.getElementById('apiKey');
+  if (savedKey && input) {
+    input.value = savedKey;
+  }
+});
 
 
 
@@ -536,6 +545,7 @@ async function openChapel(){
   const k = input ? input.value.trim() : '';
   if(!k.startsWith('sk-')){alert('Valid OpenAI key required.');return;}
   API_KEY=k;
+  localStorage.setItem('OPENAI_API_KEY', k);
   const overlay = document.getElementById('apiOverlay');
   if(overlay) overlay.style.display='none';
   chapelActive=true;
